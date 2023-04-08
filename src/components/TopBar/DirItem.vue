@@ -19,7 +19,12 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+
+.dir-item {
+	--dir-item-background: var(--topbar-item-background);
+	--dir-item-background-focused: var(--topbar-item-background-focused);
+}
 
 .dir-item {
 	
@@ -29,7 +34,7 @@ export default {
 	padding-right: 0.7rem;
 	margin-left: 1rem;
 	margin-right: 1rem;
-	background-color: #b0c5e0;
+	background-color: var(--dir-item-background);
 	border-radius: 6px;
 	
 	display: flex;
@@ -39,7 +44,7 @@ export default {
 }
 
 .dir-item:hover {
-	background-color: #809ed4;
+	background-color: var(--dir-item-background-focused);
 }
 
 .dir-item > img {

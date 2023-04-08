@@ -27,7 +27,36 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+
+.window-controller {
+	
+	--window-controller-button-size: 14px;
+	
+	--window-controller-buttons-spacing-top: 20px;
+	--window-controller-buttons-spacing-side: 15px;
+	--window-controller-button-spacing: 10px;
+	
+	
+}
+
+.window-button {
+	
+	--button-basic: var(--topbar-item-background);
+	--button-exit: #e18a74;
+	--button-maxize: #e7deb0;
+	--button-minimal: #b3e2bf;
+	
+}
+
+.window-button:hover {
+	
+	--button-basic: var(--topbar-item-background-focused);
+	--button-exit: #de3318;
+	--button-maxize: #d7bd14;
+	--button-minimal: #35d05c;
+	
+}
 
 .window-controller {
 	
@@ -36,44 +65,33 @@ export default {
 	
 	display: flex;
 	flex-direction: row;
-	align-items: center;
-	margin-right: 1rem;
+	
+	padding-top: var(--window-controller-buttons-spacing-top);
+	padding-right: var(--window-controller-buttons-spacing-side);
 	
 }
 
 .window-button {
 	
-	height: 16px;
-	width: 16px;
-	margin-left: 0.7rem;
-	background-color: #b0c5e0;
+	height: var(--window-controller-button-size);
+	width: var(--window-controller-button-size);
+	margin-left: var(--window-controller-button-spacing);
+	background-color: var(--button-basic);
 	border-radius: 30px;
 	border: 0;
 	
 }
 
 #button-exit {
-	background-color: #e18a74;
-}
-
-#button-exit:hover {
-	background-color: #de3318;
+	background-color: var(--button-exit);
 }
 
 #button-max {
-	background-color: #e7deb0;
-}
-
-#button-max:hover {
-	background-color: #d7bd14;
+	background-color: var(--button-maxize);
 }
 
 #button-minimal {
-	background-color: #b3e2bf;
-}
-
-#button-minimal:hover {
-	background-color: #35d05c;
+	background-color: var(--button-minimal);
 }
 
 </style>

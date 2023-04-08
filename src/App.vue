@@ -8,26 +8,32 @@
 import TopBar from './components/TopBar/TopBar.vue';
 
 export default {
+	
 	name: 'App',
 	components: {
-		TopBar
-	}
+		TopBar,
+	},
+	
 }
 
 </script>
 
 <style>
+
+@font-face {
+	font-family: "Alibaba Puhuiti";
+	src: url(./assets/fonts/Alibaba-PuHuiTi-Regular.ttf);
+}
+
 head, body, #app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
+	font-family: "Alibaba Puhuiti", Arial, sans-serif;
 	margin: 0;
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
+	color: #2c3e50;
 	background-color: #f4f6f8;
 }
+
 </style>

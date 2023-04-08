@@ -1,8 +1,14 @@
 <template>
 	<div id="top-bar">
-		<DirItem item-name="Ann ToolBox" item-logo="/assets/logo.png"></DirItem>
+		<DirItem
+				item-name="Ann ToolBox" item-logo="/assets/logo.png"
+				@click="rightClickMenuToogle()"></DirItem>
 		<div class="empty"></div>
 		<WindowControllers id="window-controller"></WindowControllers>
+		<IconsRightClickMenu
+				top="50" left="10"
+				:style=" { display: rightCickMenuShow ? 'block' : 'none' }"
+				@click="rightClickMenuClicked()"></IconsRightClickMenu>
 	</div>
 </template>
 
@@ -10,18 +16,42 @@
 
 import DirItem from './DirItem.vue';
 import WindowControllers from './WindowController.vue';
+import IconsRightClickMenu from './IconsRightClickMenu.vue';
 
 export default {
+	
 	name: "TopBar",
 	components: {
 		DirItem,
-		WindowControllers
+		WindowControllers,
+		IconsRightClickMenu
+	},
+	
+	data() {
+		return {
+			rightCickMenuShow: false
+		}
+	},
+	
+	methods: {
+		rightClickMenuToogle() {
+			this.rightCickMenuShow = true;
+		},
+		rightClickMenuClicked() {
+			this.rightCickMenuShow = false;
+		}
 	}
+	
 }
 
 </script>
 
-<style>
+<style scoped>
+
+#top-bar {
+	--topbar-item-background: #b0c5e0;
+	--topbar-item-background-focused: #809ed4;
+}
 
 #top-bar {
 	

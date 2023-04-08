@@ -44,6 +44,10 @@ async function createWindow() {
 	ipcMain.on('window-exit', () => {
 		win.close();
 	})
+	
+	ipcMain.on('call-dev-tools', () => {
+		win.webContents.openDevTools();
+	})
 
 	if (process.env.WEBPACK_DEV_SERVER_URL) {
 		// Load the url of the dev server if in development mode
@@ -86,6 +90,7 @@ app.on('ready', async () => {
 		}
 	}
 	createWindow()
+	
 })
 
 // Exit cleanly on request from parent process in development mode.
