@@ -7,7 +7,6 @@ defineProps<{
 
 </script>
 
-
 <template>
 	
 	<div class="title-item">

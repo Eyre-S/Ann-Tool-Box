@@ -2,8 +2,27 @@
 
 import TitleItem from './TitleItem.vue';
 import WindowController from './WindowController.vue';
+import AppIconMenu from './AppIconMenu.vue';
+
+import { computed, ref } from 'vue';
 
 import icon from '../../assets/icon.png';
+
+const showAppIconMenu = ref(false);
+
+const showAppIconMenuStyle = computed(() => {
+	return {
+		display: showAppIconMenu.value ? 'block' : 'none'
+	}
+})
+
+function rightClickMenuToogle(): void {
+	showAppIconMenu.value = true;
+}
+
+function rightClickMenuClicked(): void {
+	showAppIconMenu.value = false;
+}
 
 </script>
 
@@ -11,9 +30,13 @@ import icon from '../../assets/icon.png';
 	
 	<div class="title-bar">
 		
-		<TitleItem title="Ann ToolBox" :icon="icon"></TitleItem>
+		<TitleItem title="Ann ToolBox" :icon="icon" @click="rightClickMenuToogle"></TitleItem>
 		<div class="empty"></div>
 		<WindowController id="window-controller"></WindowController>
+		<AppIconMenu
+				top="50" left="10"
+				:style="showAppIconMenuStyle"
+				@click="rightClickMenuClicked"></AppIconMenu>
 		
 	</div>
 	
