@@ -30,7 +30,7 @@ function window_close() {
 	
 	--window-controller-button-size: 14px;
 	
-	--window-controller-buttons-spacing-top: 20px;
+	--window-controller-buttons-spacing-top: 10px;
 	--window-controller-buttons-spacing-side: 15px;
 	--window-controller-button-spacing: 10px;
 	
@@ -57,11 +57,13 @@ function window_close() {
 
 .window-controller {
 	
+	box-sizing: border-box;
 	width: auto;
 	height: 100%;
 	
 	display: flex;
 	flex-direction: row;
+	align-items: flex-start;
 	
 	padding-top: var(--window-controller-buttons-spacing-top);
 	padding-right: var(--window-controller-buttons-spacing-side);

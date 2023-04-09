@@ -28,6 +28,8 @@ const menuBodyPosition = computed(() => {
 
 .menu-body {
 	
+	z-index: 1100;
+	
 	position: absolute;
 	
 	display: flex;

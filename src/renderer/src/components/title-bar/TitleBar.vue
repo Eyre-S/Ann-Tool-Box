@@ -7,6 +7,7 @@ import AppIconMenu from './AppIconMenu.vue';
 import { computed, ref } from 'vue';
 
 import icon from '../../assets/icon.png';
+import { AppCoverController } from '../AppCoverController';
 
 const showAppIconMenu = ref(false);
 
@@ -16,11 +17,21 @@ const showAppIconMenuStyle = computed(() => {
 	}
 })
 
-function rightClickMenuToogle(): void {
+function setupOpenMenu (): void {
+	openMenu();
+	AppCoverController.setup(closeMenu);
+}
+
+function selfCloseMenu (): void {
+	closeMenu();
+	AppCoverController.itemClosed();
+}
+
+function openMenu (): void {
 	showAppIconMenu.value = true;
 }
 
-function rightClickMenuClicked(): void {
+function closeMenu (): void {
 	showAppIconMenu.value = false;
 }
 
@@ -30,13 +41,13 @@ function rightClickMenuClicked(): void {
 	
 	<div class="title-bar">
 		
-		<TitleItem title="Ann ToolBox" :icon="icon" @click="rightClickMenuToogle"></TitleItem>
+		<TitleItem title="Ann ToolBox" :icon="icon" @click="setupOpenMenu"></TitleItem>
 		<div class="empty"></div>
 		<WindowController id="window-controller"></WindowController>
 		<AppIconMenu
-				top="50" left="10"
+				:top='50' :left='10'
 				:style="showAppIconMenuStyle"
-				@click="rightClickMenuClicked"></AppIconMenu>
+				@click="selfCloseMenu"></AppIconMenu>
 		
 	</div>
 	

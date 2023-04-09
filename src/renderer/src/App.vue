@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import AppCover from './components/AppCover.vue';
+import MainContainer from './components/main/MainContainer.vue';
 import TitleBar from './components/title-bar/TitleBar.vue';
 
 </script>
@@ -7,6 +9,10 @@ import TitleBar from './components/title-bar/TitleBar.vue';
 <template>
 	
 	<TitleBar></TitleBar>
+	
+	<MainContainer></MainContainer>
+	
+	<AppCover></AppCover>
 	
 </template>
 
