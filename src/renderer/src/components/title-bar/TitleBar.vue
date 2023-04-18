@@ -41,7 +41,7 @@ function closeMenu (): void {
 	
 	<div class="title-bar">
 		
-		<TitleItem title="Ann ToolBox" :icon="icon" @click="setupOpenMenu"></TitleItem>
+		<TitleItem title="Ann. ToolBox" :icon="icon" @click="setupOpenMenu"></TitleItem>
 		<div class="empty"></div>
 		<WindowController id="window-controller"></WindowController>
 		<AppIconMenu

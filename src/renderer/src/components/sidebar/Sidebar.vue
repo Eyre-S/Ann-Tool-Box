@@ -26,14 +26,19 @@ function openAbout () {
 	<div id="sidebar-container">
 		<nav id="sidebar-box" :class="sidebarClass">
 			<div id="sidebar-body">
+				
 				<SidebarItem
 						uname=""
 						icon="nf-md-menu"
 						@click="sidebarToggle"></SidebarItem>
+				
+				<div class="empty"></div>
+				
 				<SidebarItem
 						uname="About"
 						icon="nf-md-information"
 						@click="openAbout"></SidebarItem>
+				
 			</div>
 		</nav>
 	</div>
