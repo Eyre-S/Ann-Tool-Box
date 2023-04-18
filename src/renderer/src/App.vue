@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import AppCover from './components/AppCover.vue';
-import MainContainer from './components/main/MainContainer.vue';
+import MainContainer from './components/MainContainer.vue';
 import TitleBar from './components/title-bar/TitleBar.vue';
 
 </script>

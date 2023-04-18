@@ -3,9 +3,6 @@
 import { computed, ref } from 'vue';
 import SidebarItem from './SidebarItem.vue';
 
-import iconMenu from "../../../assets/icons/menu.png";
-import iconAbout from "../../../assets/icons/about.jpg";
-
 const sidebarIsOpening = ref(true);
 
 const sidebarClass = computed(()=>{
@@ -30,30 +27,32 @@ function openAbout () {
 		<div id="sidebar-body">
 			<SidebarItem
 					uname=""
-					:icon="iconMenu"
+					icon="nf-md-menu"
 					@click="sidebarToggle"></SidebarItem>
 			<SidebarItem
 					uname="About"
-					:icon="iconAbout"
+					icon="nf-md-information"
 					@click="openAbout"></SidebarItem>
 		</div>
 	</nav>
 	
 </template>
 
-<style scoped lang="css">
+<style scoped lang="less">
+
+@import url("./sidebar-vars.less");
 
 #sidebar-container {
 	
 	box-sizing: border-box;
 	height: 100%;
-	width: 50px;
-	transition-duration: 300ms;
+	width: @item-size + @content-border-width * 2;
+	transition-duration: @open-transition;
 	
 }
 
 #sidebar-container.opening {
-	width: 270px;
+	width: @full-width;
 }
 
 #sidebar-body {
@@ -66,10 +65,10 @@ function openAbout () {
 	flex-direction: column;
 	flex-wrap: nowrap;
 	align-content: stretch;
-	padding: 5px;
+	padding: @content-border-width;
 	
-	background-color: #e2e8ef;
-	border-radius: 10px;
+	background-color: @sidebar-base;
+	border-radius: @border-radiu-level-0;
 	overflow-x: hidden;
 	
 }
