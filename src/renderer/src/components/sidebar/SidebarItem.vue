@@ -52,6 +52,10 @@ defineProps<{
 		
 		color: @text-color;
 		
+		> .title {
+			font-size: 15px;
+		}
+		
 		> .icon-container {
 			
 			flex-grow: 0;

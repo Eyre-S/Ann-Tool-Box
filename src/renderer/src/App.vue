@@ -1,16 +1,18 @@
 <script setup lang="ts">
 
 import AppCover from './components/AppCover.vue';
-import MainContainer from './components/MainContainer.vue';
+import AppBody from './components/AppBody.vue';
 import TitleBar from './components/title-bar/TitleBar.vue';
 
 </script>
 
 <template>
 	
-	<TitleBar></TitleBar>
+	<TitleBar id="window-title"></TitleBar>
 	
-	<MainContainer id="main-container"></MainContainer>
+	<div id="app-body-box">
+		<AppBody id="app-body"></AppBody>
+	</div>
 	
 	<AppCover></AppCover>
 	
@@ -27,6 +29,26 @@ import TitleBar from './components/title-bar/TitleBar.vue';
 
 #app {
 	
+	#window-title {
+		flex: 0 0 50px;
+	}
+	
+	#app-body-box {
+		
+		flex: 1 1 0;
+		position: relative;
+		
+		#app-body {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			overflow: hidden;
+		}
+		
+	}
+	
 	width: 100vw;
 	height: 100vh;
 	padding: 0;
@@ -34,6 +56,7 @@ import TitleBar from './components/title-bar/TitleBar.vue';
 	
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
 	
 }
 

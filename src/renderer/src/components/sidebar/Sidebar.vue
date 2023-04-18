@@ -23,18 +23,20 @@ function openAbout () {
 
 <template>
 	
-	<nav id="sidebar-container" :class="sidebarClass">
-		<div id="sidebar-body">
-			<SidebarItem
-					uname=""
-					icon="nf-md-menu"
-					@click="sidebarToggle"></SidebarItem>
-			<SidebarItem
-					uname="About"
-					icon="nf-md-information"
-					@click="openAbout"></SidebarItem>
-		</div>
-	</nav>
+	<div id="sidebar-container">
+		<nav id="sidebar-box" :class="sidebarClass">
+			<div id="sidebar-body">
+				<SidebarItem
+						uname=""
+						icon="nf-md-menu"
+						@click="sidebarToggle"></SidebarItem>
+				<SidebarItem
+						uname="About"
+						icon="nf-md-information"
+						@click="openAbout"></SidebarItem>
+			</div>
+		</nav>
+	</div>
 	
 </template>
 
@@ -44,14 +46,22 @@ function openAbout () {
 
 #sidebar-container {
 	
-	box-sizing: border-box;
+	@container-margin: 10px;
+	
+	margin-right: @container-margin;
 	height: 100%;
+	
+}
+
+#sidebar-box {
+	
 	width: @item-size + @content-border-width * 2;
+	height: 100%;
 	transition-duration: @open-transition;
 	
 }
 
-#sidebar-container.opening {
+#sidebar-box.opening {
 	width: @full-width;
 }
 
