@@ -12,7 +12,9 @@ defineProps<{
 	</div>
 </template>
 
-<style scoped lang="css">
+<style scoped lang="less">
+
+@import "../../../assets/css/theme.less";
 
 .menu-item {
 	
@@ -23,13 +25,13 @@ defineProps<{
 	padding: 8px 15px;
 	user-select: none;
 	
-	color: rgb(88, 85, 85);
+	color: @menu-item-text-color;
 	font-size: 14px;
 	
-}
-
-.menu-item:hover {
-	background-color: #f6f8fa;
+	&:hover {
+		background-color: @menu-item-onfocus;
+	}
+	
 }
 
 </style>

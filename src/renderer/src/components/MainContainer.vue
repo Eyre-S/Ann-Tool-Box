@@ -6,15 +6,15 @@ import Sidebar from './sidebar/Sidebar.vue';
 
 <template>
 	
-	<div id="main-container">
+	<div class="main-container">
 		<Sidebar></Sidebar>
 	</div>
 	
 </template>
 
-<style scoped lang="css">
+<style scoped lang="less">
 
-#main-container {
+.main-container {
 	
 	flex: 1;
 	

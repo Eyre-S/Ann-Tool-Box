@@ -24,7 +24,9 @@ function window_close() {
 	</div>
 </template>
 
-<style scoped lang="css">
+<style scoped lang="less">
+
+@import "../../assets/css/theme.less";
 
 .window-controller {
 	
@@ -34,24 +36,23 @@ function window_close() {
 	--window-controller-buttons-spacing-side: 15px;
 	--window-controller-button-spacing: 10px;
 	
-	
 }
 
 .window-button {
 	
-	--button-basic: var(--topbar-item-background);
-	--button-close: #e18a74;
-	--button-maxize: #e7deb0;
-	--button-minimal: #b3e2bf;
+	--button-basic: @window-button-basic;
+	--button-close: @window-button-close;
+	--button-maxize: @window-button-maxize;
+	--button-minimal: @window-button-minimal;
 	
 }
 
 .window-button:hover {
 	
-	--button-basic: var(--topbar-item-background-focused);
-	--button-close: #de3318;
-	--button-maxize: #d7bd14;
-	--button-minimal: #35d05c;
+	--button-basic: @window-button-basic-onfocus;
+	--button-close: @window-button-close-onfocus;
+	--button-maxize: @window-button-maxize-onfocus;
+	--button-minimal: @window-button-minimal-onfocus;
 	
 }
 

@@ -16,7 +16,9 @@ defineProps<{
 	
 </template>
 
-<style lang="css" scoped>
+<style lang="less" scoped>
+
+@import "../../assets/css/theme.less";
 
 .title-item {
 	
@@ -26,7 +28,7 @@ defineProps<{
 	padding-right: 0.7rem;
 	margin-left: 1rem;
 	margin-right: 1rem;
-	background-color: #b0c5e0;
+	background-color: @window-title-bg;
 	border-radius: 6px;
 	
 	display: flex;
@@ -36,7 +38,7 @@ defineProps<{
 }
 
 .title-item:hover {
-	background-color: #809ed4;
+	background-color: @window-title-bg-onfocus;
 }
 
 .title-item > img {
@@ -47,7 +49,7 @@ defineProps<{
 }
 
 .title-item > span {
-	color: aliceblue;
+	color: @window-title-fg;
 	font-size: 13px;
 	font-weight: bold;
 }

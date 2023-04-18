@@ -10,13 +10,15 @@ import TitleBar from './components/title-bar/TitleBar.vue';
 	
 	<TitleBar></TitleBar>
 	
-	<MainContainer></MainContainer>
+	<MainContainer id="main-container"></MainContainer>
 	
 	<AppCover></AppCover>
 	
 </template>
 
-<style lang="css">
+<style lang="less">
+
+@import "./assets/css/styles.less";
 
 @font-face {
 	font-family: 'Alibaba Puhuiti';
@@ -25,28 +27,13 @@ import TitleBar from './components/title-bar/TitleBar.vue';
 
 #app {
 	
-	font-family: 'Alibaba Puhuiti', Arial, sans-serif;
-	
-	color: #2c3e50;
-	background-color: #f4f6f8;
-	
-}
-
-#app {
-	
-	display: flex;
-	flex-direction: column;
-	
-}
-
-html,
-body,
-#app {
-	
 	width: 100vw;
 	height: 100vh;
 	padding: 0;
 	margin: 0;
+	
+	display: flex;
+	flex-direction: column;
 	
 }
 
