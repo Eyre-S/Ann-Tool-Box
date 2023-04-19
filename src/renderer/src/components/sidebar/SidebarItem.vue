@@ -1,22 +1,30 @@
 <script setup lang="ts">
 
 import I from "@renderer/components/util/I.vue";
+import { computed } from "vue";
 
-defineProps<{
+const props = defineProps<{
 	uname: string
 	icon: string
+	isSpecial?: boolean
+	active?: boolean
 }>()
+
+const iconStatus = computed(()=> { return {
+	'roll': props.isSpecial,
+	'roll-on': props.active
+}})
 
 </script>
 
 <template>
 	
-	<div class="item-box">
+	<div :class="['item-box', { 'sp': isSpecial }]">
 		<div class="content">
 			<div class="icon-container">
-				<I class="icon" :i="icon"></I>
+				<I :class="['icon', iconStatus]" :i="icon"></I>
 			</div>
-			<span class="title">{{ uname }}</span>
+			<span v-if="!isSpecial" class="title">{{ uname }}</span>
 		</div>
 	</div>
 	
@@ -40,6 +48,9 @@ defineProps<{
 		background-color: @item-hover;
 	}
 	
+	&.sp { width: @item-size; }
+	&.sp > .content { width: @item-size; }
+	
 	> .content {
 		
 		width: @full-width - @content-border-width * 2;
@@ -53,7 +64,10 @@ defineProps<{
 		color: @text-color;
 		
 		> .title {
-			font-size: 15px;
+			font-size: @title-font;
+			letter-spacing: 0.03em;
+			line-height: 1;
+			margin-bottom: -0.15em;
 		}
 		
 		> .icon-container {
@@ -71,8 +85,20 @@ defineProps<{
 			justify-content: center;
 			
 			> .icon {
+				
 				font-size: @icon-size;
 				color: @icon-color;
+				
+				&.roll {
+					
+					transition-duration: 300ms ;
+					transform: rotate(0);
+					&.roll-on {
+						transform: rotate(180deg);
+					}
+					
+				}
+				
 			}
 			
 		}

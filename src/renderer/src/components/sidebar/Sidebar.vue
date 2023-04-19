@@ -2,6 +2,7 @@
 
 import { computed, ref } from 'vue';
 import SidebarItem from './SidebarItem.vue';
+import { pages, page_setActive } from '../pages';
 
 const sidebarIsOpening = ref(true);
 
@@ -15,10 +16,6 @@ function sidebarToggle () {
 	sidebarIsOpening.value = !sidebarIsOpening.value;
 }
 
-function openAbout () {
-	alert('TODO ;; this is the About page')
-}
-
 </script>
 
 <template>
@@ -30,14 +27,28 @@ function openAbout () {
 				<SidebarItem
 						uname=""
 						icon="nf-md-menu"
+						isSpecial :active="sidebarIsOpening"
 						@click="sidebarToggle"></SidebarItem>
+				
+				<template v-for="page of pages">
+					<SidebarItem
+							v-if="page.config.isAfter !== true"
+							:uname="page.config.title"
+							:icon="page.config.icon"
+							@click="page_setActive(page)">
+					</SidebarItem>
+				</template>
 				
 				<div class="empty"></div>
 				
-				<SidebarItem
-						uname="About"
-						icon="nf-md-information"
-						@click="openAbout"></SidebarItem>
+				<template v-for="page of pages">
+					<SidebarItem
+							v-if="page.config.isAfter === true"
+							:uname="page.config.title"
+							:icon="page.config.icon"
+							@click="page_setActive(page)">
+					</SidebarItem>
+				</template>
 				
 			</div>
 		</nav>
@@ -85,6 +96,11 @@ function openAbout () {
 	background-color: @sidebar-base;
 	border-radius: @border-radiu-level-0;
 	overflow-x: hidden;
+	
+	> .empty {
+		width: 100%;
+		margin-top: auto;
+	}
 	
 }
 

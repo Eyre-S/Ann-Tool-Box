@@ -2,9 +2,8 @@
 
 import Sidebar from './sidebar/Sidebar.vue';
 
-import PageAbout from './main/about/PageAbout.vue';
-
 import { AppWindow } from '@renderer/app-window';
+import { page_active } from './pages';
 
 </script>
 
@@ -14,7 +13,7 @@ import { AppWindow } from '@renderer/app-window';
 		<Sidebar class="sidebar"></Sidebar>
 		<div class="main-box">
 			<main class="main-body">
-				<PageAbout></PageAbout>
+				<component :is="page_active.component"></component>
 			</main>
 		</div>
 	</div>
