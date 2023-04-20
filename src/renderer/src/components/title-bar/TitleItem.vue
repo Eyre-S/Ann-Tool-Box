@@ -3,13 +3,14 @@
 defineProps<{
 	title: string
 	icon?: string
+	clickable?: boolean
 }>()
 
 </script>
 
 <template>
 	
-	<div class="title-item">
+	<div :class="['title-item', { 'clickable': clickable }]">
 		<img v-if="icon != null" :src="icon" />
 		<span>{{ title }}</span>
 	</div>
@@ -37,7 +38,7 @@ defineProps<{
 	
 }
 
-.title-item:hover {
+.title-item.clickable:hover {
 	background-color: @window-title-bg-onfocus;
 }
 

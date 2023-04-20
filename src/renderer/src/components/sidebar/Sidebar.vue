@@ -2,7 +2,7 @@
 
 import { computed, ref } from 'vue';
 import SidebarItem from './SidebarItem.vue';
-import { pages, page_setActive } from '../pages';
+import { pages, page_setActive, page_active } from '../pages';
 
 const sidebarIsOpening = ref(true);
 
@@ -35,6 +35,7 @@ function sidebarToggle () {
 							v-if="page.config.isAfter !== true"
 							:uname="page.config.title"
 							:icon="page.config.icon"
+							:active="page.id === page_active.id"
 							@click="page_setActive(page)">
 					</SidebarItem>
 				</template>
@@ -46,6 +47,7 @@ function sidebarToggle () {
 							v-if="page.config.isAfter === true"
 							:uname="page.config.title"
 							:icon="page.config.icon"
+							:active="page.id === page_active.id"
 							@click="page_setActive(page)">
 					</SidebarItem>
 				</template>

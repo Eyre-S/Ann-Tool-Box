@@ -18,15 +18,26 @@
 @window-title-bg: #b0c5e0;
 @window-title-bg-onfocus: #809ed4;
 @window-title-fg: aliceblue;
+@window-title-separator-color: #a0a3ae;
 
 // menu
 @menu-bg: #ffffff;
 @menu-shadow: -1px 1px 12px 1px #e3e3e3;
+@menu-separator: darken(@menu-bg, 8);
 @menu-item-text-color: #585555;
 @menu-item-onfocus: #f6f8fa;
 
 // sidebar
-@sidebar-base-color: #f0f4fa;
-@sidebar-item-hover-color: darken(#f0f4fa, 3%);
+@sidebar-base-color: @card-background;
+@sidebar-item-hover-color: darken(@sidebar-base-color, 3%);
 @sidebar-icon-color: #646464;
 @sidebar-text-color: #363636;
+@sidebar-active-marker: darken(@sidebar-base-color, 32%);
+
+// page global
+@card-background: #f0f4fa;
+
+// page settings
+@setting-title-color: #333333;
+@setting-title-group-color: #aaaaaa;
+@setting-description-color: #686868;

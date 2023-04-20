@@ -47,7 +47,7 @@ import { page_active } from './pages';
 			left: 0;
 			right: 0;
 			overflow: hidden;
-			overflow-y: auto;
+			overflow-y: overlay;
 			
 			border-radius: 10px;
 			

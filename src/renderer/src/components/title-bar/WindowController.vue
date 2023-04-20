@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import I from '../util/I.vue';
+
 const { ipcRenderer } = window.electron;
 
 function window_minimal() {
@@ -18,9 +20,9 @@ function window_close() {
 
 <template>
 	<div class="window-controller">
-		<button class="window-button minimal" @click="window_minimal"></button>
-		<button class="window-button maxize" @click="window_maxize"></button>
-		<button class="window-button close" @click="window_close"></button>
+		<button class="window-button minimal" @click="window_minimal"><I i="nf-fa-minus"></I></button>
+		<button class="window-button maxize" @click="window_maxize"><I i="nf-fa-window_maximize"></I></button>
+		<button class="window-button close" @click="window_close"><I i="nf-fa-close"></I></button>
 	</div>
 </template>
 
@@ -92,6 +94,23 @@ function window_close() {
 
 .window-button.minimal {
 	background-color: var(--button-minimal);
+}
+
+.window-button {
+	position: relative;
+	> ii {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: white;
+		font-size: 8px;
+		// font-weight: bold;
+		display: none;
+	}
+	&:hover > ii {
+		display: block;
+	}
 }
 
 </style>

@@ -19,7 +19,7 @@ const iconStatus = computed(()=> { return {
 
 <template>
 	
-	<div :class="['item-box', { 'sp': isSpecial }]">
+	<div :class="['item-box', { 'sp': isSpecial, 'active': active }]">
 		<div class="content">
 			<div class="icon-container">
 				<I :class="['icon', iconStatus]" :i="icon"></I>
@@ -33,23 +33,40 @@ const iconStatus = computed(()=> { return {
 <style scoped lang="less">
 
 @import url("sidebar-vars.less");
+@import "../../assets/css/theme.less";
 
 .item-box {
 	
 	box-sizing: border-box;
 	width: 100%;
 	height: @item-size;
+	position: relative;
 	
 	border-radius: @border-radiu-level-1;
 	
-	user-select: none;
 	
+	// &.active:not(.sp),
 	&:hover {
 		background-color: @item-hover;
 	}
 	
 	&.sp { width: @item-size; }
 	&.sp > .content { width: @item-size; }
+	
+	&.active:not(.sp) {
+		&:before {
+			
+			content: '';
+			position: absolute;
+			left: @marker-whitespace;
+			top: calc(50% - (@marker-height/2));
+			width: @marker-width;
+			height: @marker-height;
+			border-radius: @marker-width;
+			background-color: @sidebar-active-marker;
+			
+		}
+	}
 	
 	> .content {
 		

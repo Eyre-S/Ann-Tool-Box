@@ -3,6 +3,7 @@
 import { Page, page_setActive } from '../pages';
 import MenuBody from '../util/menu/MenuBody.vue';
 import MenuItem from '../util/menu/MenuItem.vue';
+import MenuSeparator from "../util/menu/MenuSeparator.vue";
 import PageAbout from '../main/about/PageAbout.vue';
 
 const { ipcRenderer } = window.electron;
@@ -25,6 +26,7 @@ function openDevTools() {
 <template>
 	<MenuBody>
 		<MenuItem uname="About" @click="page_setActive(page_about)"></MenuItem>
+		<MenuSeparator></MenuSeparator>
 		<MenuItem uname="Open DevTools" @click="openDevTools()"></MenuItem>
 	</MenuBody>
 </template>

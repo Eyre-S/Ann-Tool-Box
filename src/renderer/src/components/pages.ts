@@ -1,12 +1,13 @@
 import { reactive, Ref, ref } from "vue";
 
-import PageAbout from "./main/about/PageAbout.vue";
 import PageHome from "./main/PageHome.vue"
+import PageSetting from "./main/settings/PageSetting.vue"
 
 interface IPageConfigs {
 	title?: string,
 	icon?: string,
-	isAfter?: boolean
+	isAfter?: boolean,
+	isHome?: boolean
 }
 
 export class Page {
@@ -24,7 +25,7 @@ export class Page {
 }
 
 const page_settings: Page = new Page(
-	PageAbout, 'setting',
+	PageSetting, 'setting',
 	{
 		title: "Settings",
 		icon: "nf-cod-settings_gear",
@@ -36,7 +37,8 @@ const page_home: Page = new Page(
 	PageHome, 'home',
 	{
 		title: "Home",
-		icon: "nf-cod-home"
+		icon: "nf-cod-home",
+		isHome: true
 	}
 );
 

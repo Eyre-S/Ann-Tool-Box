@@ -3,11 +3,13 @@
 import TitleItem from './TitleItem.vue';
 import WindowController from './WindowController.vue';
 import AppIconMenu from './AppIconMenu.vue';
+import I from '../util/I.vue';
 
 import { computed, ref } from 'vue';
 
 import icon from '../../assets/icon.png';
 import { AppCoverController } from '../AppCoverController';
+import { page_active } from '../pages';
 
 const showAppIconMenu = ref(false);
 
@@ -41,8 +43,12 @@ function closeMenu (): void {
 	
 	<div class="title-bar">
 		
-		<TitleItem title="Ann. ToolBox" :icon="icon" @click="setupOpenMenu"></TitleItem>
+		<TitleItem title="Ann. ToolBox" :icon="icon" @click="setupOpenMenu" clickable></TitleItem>
+		<div v-if="page_active.config.isHome !== true" class="separator"><I class="icon" i="nf-fa-chevron_right"></I></div>
+		<TitleItem v-if="page_active.config.isHome !== true" :title="page_active.config.title"></TitleItem>
+		
 		<div class="empty"></div>
+		
 		<WindowController id="window-controller"></WindowController>
 		<AppIconMenu
 				:top='50' :left='10'
@@ -53,7 +59,9 @@ function closeMenu (): void {
 	
 </template>
 
-<style lang="css" scoped>
+<style lang="less" scoped>
+
+@import "../../assets/css/theme.less";
 
 .title-bar {
 	
@@ -65,6 +73,15 @@ function closeMenu (): void {
 	align-items: center;
 	
 	user-select: none;
+	
+	> .separator {
+		display: flex;
+		align-items: center;
+		> .icon {
+			color: @window-title-separator-color;
+			font-size: 13px;
+		}
+	}
 	
 }
 
