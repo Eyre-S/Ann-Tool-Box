@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 
 const props = defineProps<{
 	i: string
 }>()
 
-const useClass = props.i.startsWith("nf-");
+const useClass = computed(() => {
+	return props.i.startsWith("nf-");
+});
 
 </script>
 

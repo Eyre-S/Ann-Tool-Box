@@ -34,6 +34,7 @@ defineProps<{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
+	gap: 20px;
 	
 	> .info { flex: 7 7 0; }
 	> .action-area { flex: 3 3 0; }

@@ -1,5 +1,6 @@
 // ui font
 @font-ui: 'Alibaba Puhuiti', Arial, sans-serif;
+@font-code: 'Fira Code', 'Ubuntu Mono', Consolas, monospace;
 
 // window
 @window-bg: #fafbff;
@@ -20,7 +21,7 @@
 @window-title-fg: aliceblue;
 @window-title-separator-color: #a0a3ae;
 
-// menu
+// component: menu
 @menu-bg: #ffffff;
 @menu-shadow: -1px 1px 12px 1px #e3e3e3;
 @menu-separator: darken(@menu-bg, 8);
@@ -38,6 +39,21 @@
 @card-background: #f0f4fa;
 
 // page settings
+@setting-page-group-title: lighten(#000000, 36%);
 @setting-title-color: #333333;
 @setting-title-group-color: #aaaaaa;
 @setting-description-color: #686868;
+
+// component: input tools
+@input-button-fg: #558cd3;
+@input-button-bg: #c8dcf7;
+@input-button-bg-onfocus: darken(@input-button-bg, 2%);
+@input-button-disabled-fg: #a1a8b1;
+@input-button-disabled-bg: #d8e0e9;
+@input-switcher-main: #c8dcf7;
+@input-switcher-onactive: #84b9fe;
+@input-switcher-onempty: lighten(@input-switcher-main, 5%);
+@input-text-bg: #ffffff;
+@input-text-text: lighten(#000000, 35%);
+@input-text-marker: #d8e0e9;
+@input-text-marker-onfocus: #3683db;
