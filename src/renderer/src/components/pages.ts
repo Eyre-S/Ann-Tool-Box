@@ -4,8 +4,8 @@ import PageHome from "./main/PageHome.vue"
 import PageSetting from "./main/settings/PageSetting.vue"
 
 interface IPageConfigs {
-	title?: string,
-	icon?: string,
+	title: string,
+	icon: string,
 	isAfter?: boolean,
 	isHome?: boolean
 }

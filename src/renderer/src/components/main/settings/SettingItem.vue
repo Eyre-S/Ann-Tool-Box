@@ -70,6 +70,7 @@ defineProps<{
 		display: flex;
 		flex-direction: column;
 		flex-wrap: nowrap;
+		gap: 10px;
 		align-items: end;
 		justify-content: center;
 		

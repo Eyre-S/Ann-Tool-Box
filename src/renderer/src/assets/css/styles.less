@@ -1,9 +1,21 @@
 @font-face {
 	font-family: 'Alibaba Puhuiti';
-	src: url(./assets/font/Alibaba-PuHuiTi-Regular.ttf);
+	src: url(../font/Alibaba-PuHuiTi-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'Sarasa Mono';
+	src: url(../font/sarasa-mono-cl-regular.ttf);
 }
 
 @import "./theme.less";
+
+:root {
+	
+	--font-ui: @font-ui;
+	--font-code: @font-code;
+	
+}
 
 html, body {
 	
@@ -29,23 +41,27 @@ body {
 
 *::-webkit-scrollbar {
 	width: 8px;
-	background-color: #00000000;
+	// background-color: #00000000;
 }
 
 *::-webkit-scrollbar-track {
 	padding: 5px;
-	background-color: #00000000;
+	background-color: @scrollbar-track;
 	
 }
 
 *::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	transition-duration: 1000ms;
-	background-color: #00000000;
+	background-color: @scrollbar-thumb;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-	background-color: #96c2ec70;
+	background-color: @scrollbar-thumb-onfocus;
+}
+
+*::selection {
+	background-color: @text-selection-background;
 }
 
 // body {

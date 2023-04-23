@@ -82,15 +82,19 @@ const testSwitcher = ref(false);
 				name="Test Icon">
 				<template v-slot:intro>用于测试图标渲染。<br>在右边的输入框填入一个图标 id，或者是一个字符，看看下面会如何渲染出来。</template>
 				<InputText v-model="iconTestIcon"></InputText>
-				<div class="shown-box" style="font-size: 15px; margin-block-start: 10px;"><I :i="iconTestIcon"></I></div>
+				<div class="shown-box" style="font-size: 15px;"><I :i="iconTestIcon"></I></div>
+				<!-- <div style="display: flex; flex-direction: row-reverse; gap: inherit; flex-wrap: warp;"> -->
+					<!-- <div class="shown-box" style="font-size: 15px; flex: 0 0; width: fit-content; height: fit-content;"><span>{{ iconTestIcon }}</span></div> -->
+					<!-- <div class="shown-box" style="font-size: 15px; flex: 0 0; width: fit-content; height: fit-content;"><I :i="iconTestIcon"></I></div> -->
+				<!-- </div> -->
 			</SettingItem>
 			<SettingItem
 				group="dev"
 				name="Test Font">
 				<template v-slot:intro>用于测试文字渲染。<br>在右边的第一行填入一些文字，第二行填入一个字体名称，看看下面会如何渲染出来。</template>
 				<InputText v-model="fontTestText"></InputText>
-				<InputText style="margin-block-start: 10px;" v-model="fontTestFontFamily"></InputText>
-				<div class="shown-box" :style="[{ fontSize: '13px', marginBlockStart: '10px' }, fontTestShownStyle]">{{ fontTestText }}</div>
+				<InputText v-model="fontTestFontFamily"></InputText>
+				<div class="shown-box" :style="[{ fontSize: '13px'}, fontTestShownStyle]">{{ fontTestText }}</div>
 			</SettingItem>
 			<SettingItem
 				group="dev"

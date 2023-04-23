@@ -41,7 +41,7 @@ const value = computed({
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	row-gap: 0.3em;
+	column-gap: 0.3em;
 	
 	> input {
 		flex: 1 1 0;

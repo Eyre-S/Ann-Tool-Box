@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Some kind of a tool box by ANNIe.",
   "author": "ANNIe Eyre",
+  "license": "All Rights Reserved",
   "main": "./out/main/index.js",
   "homepage": "",
   "scripts": {
@@ -22,6 +23,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^1.0.3",
     "@electron-toolkit/utils": "^1.0.2",
+    "electron-store": "^8.1.0",
     "electron-updater": "^5.3.0"
   },
   "devDependencies": {
