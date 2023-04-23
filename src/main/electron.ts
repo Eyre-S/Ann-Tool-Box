@@ -21,7 +21,7 @@ export class ElectronApp {
 	
 	private static onAppReady () {
 		
-		electronApp.setAppUserModelId(AppInfo.app_user_model_id);
+		electronApp.setAppUserModelId(AppInfo.app_windows_id);
 		
 		app.on('browser-window-created', (_, window) => {
 			optimizer.watchWindowShortcuts(window)
