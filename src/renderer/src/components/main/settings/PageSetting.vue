@@ -1,13 +1,19 @@
 <script setup lang="ts">
 
-import { computed, Ref, ref } from 'vue';
-
 import InputSwitcher from '@renderer/components/util/controller/InputSwitcher.vue';
 import PageCard from '@renderer/components/util/page/PageCard.vue';
 import SettingItem from './SettingItem.vue';
 import InputButton from '@renderer/components/util/controller/InputButton.vue';
 import I from '@renderer/components/util/I.vue';
 import InputText from '@renderer/components/util/controller/InputText.vue';
+
+import { computed, Ref, ref } from 'vue';
+
+import config from '@renderer/config';
+
+
+// ------
+// Dev Tools
 
 function openDevTools () {
 	window.electron.ipcRenderer.send('call-dev-tools');
@@ -22,6 +28,13 @@ const fontTestShownStyle = computed(() => { return {
 }})
 
 const testSwitcher = ref(false);
+
+// ------
+// UI
+
+const use_native_frame_isChanged = computed(() => {
+	return config.ui.use_native_frame != config.ui.use_native_frame_locked
+});
 
 </script>
 
@@ -62,9 +75,10 @@ const testSwitcher = ref(false);
 			</SettingItem>
 			<SettingItem
 				group="ui"
-				name="Use Native Title Bar">
+				name="Use Native Title Bar"
+				:restart-require="use_native_frame_isChanged">
 				<template v-slot:intro>使用系统原生的窗口标题栏而不是程序自定义的标题栏。<br>需要重启程序才能生效。</template>
-				<InputButton disabled>未实现</InputButton>
+				<InputSwitcher v-model="config.ui.use_native_frame"></InputSwitcher>
 			</SettingItem>
 			
 		</PageCard>

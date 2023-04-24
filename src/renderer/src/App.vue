@@ -4,13 +4,13 @@ import AppCover from './components/AppCover.vue';
 import AppBody from './components/AppBody.vue';
 import TitleBar from './components/title-bar/TitleBar.vue';
 
-import { AppWindow } from "./app-window";
+import config from './config';
 
 </script>
 
 <template>
 	
-	<TitleBar v-if="!AppWindow.use_native_frame.value" id="window-title"></TitleBar>
+	<TitleBar v-if="!config.ui.use_native_frame_locked" id="window-title"></TitleBar>
 	
 	<div id="app-body-box">
 		<AppBody id="app-body"></AppBody>

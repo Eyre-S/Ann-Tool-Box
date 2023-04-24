@@ -3,6 +3,21 @@ import path from "path";
 import icon from '../../resources/icon.png?asset'
 import { is } from "@electron-toolkit/utils";
 
+export interface CreateWindowOptions {
+	
+	windowOption?: {
+		width?: number,
+		height?: number,
+		nativeFrame?: boolean
+	}
+	
+	beforeCreateWindow?: (() => void);
+	afterCreateWindow?: ((window: BrowserWindow) => void);
+	onWindowReadyToShow?: ((window: BrowserWindow) => void);
+	afterWindowShow?: ((window: BrowserWindow) => void);
+	
+}
+
 export class MainWindow {
 	
 	private static window?: BrowserWindow = undefined;
@@ -12,17 +27,19 @@ export class MainWindow {
 		return this.window;
 	}
 	
-	public static createMainWindow() {
+	public static createMainWindow(option: CreateWindowOptions) {
 		
 		if (this.window != undefined) {
 			throw new Error("Main Window already been created!");
 		}
 		
+		if (option.beforeCreateWindow !== undefined) option.beforeCreateWindow();
+		
 		// Create the browser window.
 		const mainWindow = new BrowserWindow({
-			width: 950,
-			height: 560,
-			frame: false,
+			width: option.windowOption?.width,
+			height: option.windowOption?.height,
+			frame: option.windowOption?.nativeFrame,
 			show: false,
 			autoHideMenuBar: true,
 			icon: icon,
@@ -33,10 +50,11 @@ export class MainWindow {
 			}
 		})
 		
-		this.afterWindowCreated(mainWindow);
-		
 		mainWindow.on('ready-to-show', () => {
+			if (option.onWindowReadyToShow !== undefined) option.onWindowReadyToShow(mainWindow);
 			mainWindow.show();
+			console.log(">>> Main Window Shown now.")
+			if (option.afterWindowShow !== undefined) option.afterWindowShow(mainWindow);
 		})
 		
 		mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -51,6 +69,10 @@ export class MainWindow {
 		} else {
 			mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
 		}
+		
+		console.log(">>> Main Window Created.")
+		this.afterWindowCreated(mainWindow);
+		if (option.afterCreateWindow !== undefined) option.afterCreateWindow(mainWindow);
 		
 		this.window = mainWindow;
 		

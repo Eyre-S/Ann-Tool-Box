@@ -2,14 +2,14 @@
 
 import Sidebar from './sidebar/Sidebar.vue';
 
-import { AppWindow } from '@renderer/app-window';
 import { page_active } from './pages';
+import config from "@renderer/config";
 
 </script>
 
 <template>
 	
-	<div :class="['app-body', { 'use-native-frame': AppWindow.use_native_frame.value }]">
+	<div :class="['app-body', { 'use-native-frame': config.ui.use_native_frame_locked }]">
 		<Sidebar class="sidebar"></Sidebar>
 		<div class="main-box">
 			<main class="main-body">

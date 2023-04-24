@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import I from '@renderer/components/util/I.vue';
+
 
 defineProps<{
+	
 	group?: string,
-	name: string
+	name: string,
+	
+	restartRequire?: boolean
+	
 }>()
 
 </script>
@@ -12,7 +18,13 @@ defineProps<{
 	<div class="setting-item">
 		
 		<div class="info">
-			<span class="title"><span class="group" v-if="group">{{ group }}</span><span class="name">{{ name }}</span></span>
+			<div class="title">
+				<span class="group" v-if="group">{{ group }}</span>
+				<span class="name">{{ name }}</span>
+				<span class="warning-icons">
+					<I class="restart-require" v-if="restartRequire" i="nf-md-reload_alert" title="需要重启"></I>
+				</span>
+			</div>
 			<span class="description"><slot name="intro"></slot></span>
 		</div>
 		
@@ -44,9 +56,10 @@ defineProps<{
 		display: flex;
 		flex-direction: column;
 		flex-wrap: nowrap;
-			font-size: 13.4px;
+		font-size: 13.4px;
 		
 		> .title {
+			
 			font-weight: bold;
 			color: @setting-title-color;
 			> .group {
@@ -56,6 +69,18 @@ defineProps<{
 				margin-inline-end: 0.25em;
 			}
 			margin-block-end: 0.1em;
+			
+			> .warning-icons {
+				
+				color: @setting-warning-icon-color;
+				> * {
+					margin-inline-start: 0.7em;
+					// font-weight: bold;
+					transform: scale(1.2);
+				}
+				
+			}
+			
 		}
 		
 		> .description {

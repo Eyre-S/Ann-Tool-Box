@@ -1,13 +1,18 @@
 import { electronApp, optimizer } from "@electron-toolkit/utils";
 import { app } from "electron";
 import { AppInfo } from "./app-info";
-import { MainWindow } from "./main-window";
+
+export interface ElectronOnEvents {
+	
+	onAppReady: (() => void) | undefined;
+	
+}
 
 export class ElectronApp {
 	
-	public static init () {
+	public static init (callback: ElectronOnEvents) {
 		
-		app.whenReady().then(this.onAppReady);
+		app.whenReady().then(() => this.onAppReady(callback));
 		
 		// On macOS it's common to re-create a window in the app when the
 		// dock icon is clicked and there are no other windows open.
@@ -19,7 +24,7 @@ export class ElectronApp {
 		
 	}
 	
-	private static onAppReady () {
+	private static onAppReady (callback: ElectronOnEvents) {
 		
 		electronApp.setAppUserModelId(AppInfo.app_windows_id);
 		
@@ -34,7 +39,9 @@ export class ElectronApp {
 			}
 		});
 		
-		MainWindow.createMainWindow();
+		console.log(">>> Electron App now ready.")
+		
+		if (callback.onAppReady !== undefined) callback.onAppReady();
 		
 	}
 	
