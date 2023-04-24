@@ -10,7 +10,7 @@ import config from './config';
 
 <template>
 	
-	<TitleBar v-if="!config.ui.use_native_frame_locked" id="window-title"></TitleBar>
+	<TitleBar v-if="!config.ui.use_native_frame.v_locked.value" id="window-title"></TitleBar>
 	
 	<div id="app-body-box">
 		<AppBody id="app-body"></AppBody>

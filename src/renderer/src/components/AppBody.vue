@@ -9,7 +9,7 @@ import config from "@renderer/config";
 
 <template>
 	
-	<div :class="['app-body', { 'use-native-frame': config.ui.use_native_frame_locked }]">
+	<div :class="['app-body', { 'use-native-frame': config.ui.use_native_frame.v_locked.value }]">
 		<Sidebar class="sidebar"></Sidebar>
 		<div class="main-box">
 			<main class="main-body">

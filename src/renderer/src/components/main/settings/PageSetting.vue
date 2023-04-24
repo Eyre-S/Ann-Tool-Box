@@ -32,10 +32,6 @@ const testSwitcher = ref(false);
 // ------
 // UI
 
-const use_native_frame_isChanged = computed(() => {
-	return config.ui.use_native_frame != config.ui.use_native_frame_locked
-});
-
 </script>
 
 <template>
@@ -76,9 +72,9 @@ const use_native_frame_isChanged = computed(() => {
 			<SettingItem
 				group="ui"
 				name="Use Native Title Bar"
-				:restart-require="use_native_frame_isChanged">
+				:restart-require="config.ui.use_native_frame.is_modified_after_load.value">
 				<template v-slot:intro>使用系统原生的窗口标题栏而不是程序自定义的标题栏。<br>需要重启程序才能生效。</template>
-				<InputSwitcher v-model="config.ui.use_native_frame"></InputSwitcher>
+				<InputSwitcher v-model="config.ui.use_native_frame.v.value"></InputSwitcher>
 			</SettingItem>
 			
 		</PageCard>

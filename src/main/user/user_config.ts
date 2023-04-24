@@ -8,16 +8,7 @@ const user_config = new Store({
 	cwd: data.user_data_path,
 	
 	clearInvalidConfig: false,
-	accessPropertiesByDotNotation: false,
-	
-	schema: {
-		
-		'ui.use-native-frame': {
-			type: 'boolean',
-			default: true
-		}
-		
-	}
+	accessPropertiesByDotNotation: false
 	
 });
 
@@ -33,6 +24,9 @@ export default {
 		ipcMain.handle('store:config:get', (_event, arg1_key, arg2_defaults) => {
 			if (arg2_defaults === undefined) return user_config.get(arg1_key);
 			else return user_config.get(arg1_key, arg2_defaults);
+		})
+		ipcMain.on('store:config:restore', (_event, arg1_key) => {
+			user_config.delete(arg1_key);
 		})
 		
 	}
