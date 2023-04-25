@@ -7,10 +7,45 @@ import InputButton from '@renderer/components/util/controller/InputButton.vue';
 import I from '@renderer/components/util/I.vue';
 import InputText from '@renderer/components/util/controller/InputText.vue';
 
-import { computed, Ref, ref } from 'vue';
+import { computed, reactive, Ref, ref } from 'vue';
 
 import config from '@renderer/config';
 
+// ------
+// System
+
+function openUserDir () {
+	window.api.user_data.openDir();
+}
+
+interface appPathNode {
+	name: "home" | "appData" | "userData" | "sessionData" | "temp" | "exe" | "module" | "desktop" | "documents" | "downloads" | "music" | "pictures" | "videos" | "recent" | "logs" | "crashDumps"
+	value?: string
+}
+const appPaths: appPathNode[] = reactive([
+	{ name: 'home' },
+	{ name: 'appData' },
+	{ name: 'userData' },
+	{ name: 'sessionData' },
+	{ name: 'temp' },
+	{ name: 'exe' },
+	{ name: 'module' },
+	{ name: 'desktop' },
+	{ name: 'documents' },
+	{ name: 'downloads' },
+	{ name: 'music' },
+	{ name: 'pictures' },
+	{ name: 'videos' },
+	{ name: 'recent' },
+	{ name: 'logs' },
+	{ name: 'crashDumps' }
+]);
+for(const path of appPaths) {
+	window.api.app.getPath(path.name).then(v => path.value = v);
+}
+
+const app_path = ref<string|undefined>(undefined);
+window.api.app.getAppPath().then(v => app_path.value = v)
 
 // ------
 // Dev Tools
@@ -50,6 +85,18 @@ function dev_relaunch () {
 				name="Language">
 				<template v-slot:intro>应用所使用的语言。<br>它会影响不仅是显示语言，还有任何会用到语言的地方的语言设置。</template>
 				<InputButton disabled>未实现</InputButton>
+			</SettingItem>
+			<SettingItem
+				group="system"
+				name="Open User Data Directory">
+				<template v-slot:intro>打开程序的用户文件页面。<br>包含用户的配置选项等等。</template>
+				<template v-slot:debug-info>
+					<span>AppPath: <span class="value">{{ app_path }}</span></span><br>
+					<template v-for="path of appPaths">
+						<span>{{ path.name }}: <span class="value">{{ path.value }}</span></span><br>
+					</template>
+				</template>
+				<InputButton @click="openUserDir">Open user_data</InputButton>
 			</SettingItem>
 			
 		</PageCard>

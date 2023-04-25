@@ -2,7 +2,7 @@ import Store from 'electron-store';
 import data from "../data";
 import { ipcMain } from 'electron';
 
-const user_config = new Store({
+export const user_config = new Store({
 	
 	name: 'config',
 	cwd: data.user_data_path,
@@ -14,7 +14,7 @@ const user_config = new Store({
 
 export default {
 	
-	user_config,
+	store: user_config,
 	
 	registerUserConfigIPC: () => {
 		

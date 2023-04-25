@@ -1,13 +1,14 @@
 import { is } from "@electron-toolkit/utils";
 import { ElectronApp } from "./electron";
 import { MainWindow } from "./main-window";
-import user_config from "./user/user_config";
+import { user_config } from "./user/user_config";
+import renderer_ipcs from "./renderer_ipcs";
 
 ElectronApp.init({
 	
 	onAppReady: () => {
 		
-		var use_native_frame = user_config.user_config.get('ui.use-native-frame');
+		var use_native_frame = user_config.get('ui.use-native-frame');
 		MainWindow.createMainWindow({
 			
 			windowOption: {
@@ -17,7 +18,9 @@ ElectronApp.init({
 			},
 			
 			afterCreateWindow: () => {
-				user_config.registerUserConfigIPC();
+				
+				renderer_ipcs.init();
+				
 			},
 			
 			afterWindowShow(window) {

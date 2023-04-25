@@ -37,7 +37,8 @@ const is_restartRequire_notice_on = computed<boolean>(() => {
 				<span class="group" v-if="group">{{ group }}</span>
 				<span class="name">{{ name }}</span>
 			</div>
-			<span class="description"><slot name="intro"></slot></span>
+			<div class="description"><slot name="intro"></slot></div>
+			<div class="config-debug-description" v-if="config.dev.setting_show_debug_info.v.value"><slot name="debug-info"></slot></div>
 			<div class="config-debug-description" v-if="configNodeModule !== undefined && config.dev.setting_show_debug_info.v.value">
 				<span>key: <span class="value">{{ configNodeModule.key }}</span></span><br>
 				<span>defaults: <span class="value">{{ configNodeModule.defaults }}</span></span><br>
@@ -101,7 +102,9 @@ const is_restartRequire_notice_on = computed<boolean>(() => {
 			color: #a0b4cd;
 			font-family: @font-code;
 			font-size: 10px;
-			span > .value { color: #7aa1d6; }
+			> span > .value { color: #7aa1d6; }
+			:slotted(> span > .value) { color: #7aa1d6; }
+			
 		}
 		
 		position: relative;
