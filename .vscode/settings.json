@@ -1,9 +1,9 @@
 {
 	"[typescript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
+		"editor.defaultFormatter": "Vue.volar"
 	},
 	"[javascript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
+		"editor.defaultFormatter": "Vue.volar"
 	},
 	"svg.preview.background": "editor",
 	"typescript.tsdk": "node_modules/typescript/lib"
