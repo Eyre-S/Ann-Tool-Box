@@ -1,4 +1,4 @@
-import { reactive, Ref, ref } from "vue";
+import { markRaw, reactive, Ref, ref } from "vue";
 
 import PageHome from "./main/PageHome.vue"
 import PageSetting from "./main/settings/PageSetting.vue"
@@ -17,7 +17,7 @@ export class Page {
 	public readonly config: IPageConfigs;
 
 	public constructor(component: typeof PageHome, id: string, config: IPageConfigs) {
-		this.component = component;
+		this.component = markRaw(component);
 		this.id = id;
 		this.config = config;
 	}

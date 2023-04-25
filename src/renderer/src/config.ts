@@ -2,7 +2,7 @@ import { Ref, computed, ref } from "vue";
 
 const store = window.api.store.config;
 
-class ConfigNode<T> {
+export class ConfigNode<T> {
 	
 	public readonly key: string;
 	public readonly defaults: T;
@@ -23,11 +23,11 @@ class ConfigNode<T> {
 	})
 	
 	public readonly is_modified = computed<boolean>(() => {
-		return this.real_value !== undefined;
+		return this.real_value.value !== undefined;
 	})
 	
 	public readonly is_modified_after_load = computed<boolean>(() => {
-		return this.real_value_on_init.value !== this.real_value.value;
+		return this.v.value !== this.v_locked.value;
 	})
 	
 	public modify(newValue: T): void {
@@ -37,10 +37,11 @@ class ConfigNode<T> {
 	public restore(): T|undefined {
 		const before = this.real_value.value;
 		store.restore(this.key);
+		this.real_value.value = undefined;
 		return before;
 	}
 	
-	public constructor(key: string, defaults: T, init: boolean = false) {
+	public constructor(key: string, defaults: T, init: boolean = true) {
 		
 		this.key = key;
 		this.defaults = defaults;
@@ -63,7 +64,11 @@ class ConfigNode<T> {
 export const defaults = {
 	
 	ui: {
-		use_native_frame: new ConfigNode<boolean>('ui.use-native-frame', false, true),
+		use_native_frame: new ConfigNode<boolean>('ui.use-native-frame', false),
+	},
+	
+	dev: {
+		setting_show_debug_info: new ConfigNode<boolean>('dev.setting-show-debug-info', false)
 	}
 	
 }

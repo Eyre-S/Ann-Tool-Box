@@ -1,5 +1,5 @@
 import { electronApp, optimizer } from "@electron-toolkit/utils";
-import { app } from "electron";
+import { app, ipcMain } from "electron";
 import { AppInfo } from "./app-info";
 
 export interface ElectronOnEvents {
@@ -38,6 +38,11 @@ export class ElectronApp {
 				app.quit()
 			}
 		});
+		
+		ipcMain.on('relaunch', () => {
+			app.relaunch();
+			app.quit();
+		})
 		
 		console.log(">>> Electron App now ready.")
 		

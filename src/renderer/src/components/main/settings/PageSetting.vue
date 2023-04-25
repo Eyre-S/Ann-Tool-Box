@@ -29,6 +29,10 @@ const fontTestShownStyle = computed(() => { return {
 
 const testSwitcher = ref(false);
 
+function dev_relaunch () {
+	window.electron.ipcRenderer.send('relaunch');
+}
+
 // ------
 // UI
 
@@ -72,7 +76,8 @@ const testSwitcher = ref(false);
 			<SettingItem
 				group="ui"
 				name="Use Native Title Bar"
-				:restart-require="config.ui.use_native_frame.is_modified_after_load.value">
+				:config-node-module="config.ui.use_native_frame"
+				restart-require>
 				<template v-slot:intro>使用系统原生的窗口标题栏而不是程序自定义的标题栏。<br>需要重启程序才能生效。</template>
 				<InputSwitcher v-model="config.ui.use_native_frame.v.value"></InputSwitcher>
 			</SettingItem>
@@ -86,6 +91,13 @@ const testSwitcher = ref(false);
 				name="Open DevTools">
 				<template v-slot:intro>打开 Electron 的网页调试 DevTools。</template>
 				<InputButton @click="openDevTools">Open DevTools</InputButton>
+			</SettingItem>
+			<SettingItem
+				group="dev"
+				name="setting: Show Debug Info"
+				:config-node-module="config.dev.setting_show_debug_info">
+				<template v-slot:intro>显示设置页面的调试信息。<br>调试信息将会在一个设置的说明信息下方，显示这个设置的一系列内部状态变量值。</template>
+				<InputSwitcher v-model="config.dev.setting_show_debug_info.v.value"></InputSwitcher>
 			</SettingItem>
 			<SettingItem
 				group="dev"
@@ -111,6 +123,11 @@ const testSwitcher = ref(false);
 				name="Test Switcher">
 				<template v-slot:intro>用于测试开关按钮。<br>当前状态：{{ testSwitcher ? "ON" : "off" }}</template>
 				<InputSwitcher v-model="testSwitcher"></InputSwitcher>
+			</SettingItem>
+			<SettingItem
+				group="dev"
+				name="Relaunch App">
+				<InputButton @click="dev_relaunch">重启！</InputButton>
 			</SettingItem>
 		</PageCard>
 		
