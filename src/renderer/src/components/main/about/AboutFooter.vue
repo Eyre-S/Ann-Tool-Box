@@ -14,11 +14,13 @@ import PageCard from '@renderer/components/util/page/PageCard.vue';
 
 <style lang="less" scoped>
 
+@import "../../../assets/css/theme.less";
+
 .footer {
 	
 	text-align: center;
 	
-	color: #4a568b;
+	color: @about-app-title;
 	
 	> .copy{
 		font-size: 85%;

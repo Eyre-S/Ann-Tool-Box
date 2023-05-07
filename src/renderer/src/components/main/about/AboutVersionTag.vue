@@ -41,7 +41,7 @@ const iconIsNFIcon = computed<boolean>(() => {
 	
 	font-size: 13px;
 	border-radius: 6px;
-	background-color: #c8d2e0;
+	background-color: @about-version-tag-bg;
 	overflow: hidden;
 	
 	flex-direction: row;
@@ -55,8 +55,8 @@ const iconIsNFIcon = computed<boolean>(() => {
 		
 		&.titles {
 			
-			background-color: #a6b9d3;
-			color: aliceblue;
+			background-color: @about-version-tag-title-bg;
+			color: @about-version-tag-title-text;
 			
 			> .icon {
 				
@@ -75,6 +75,7 @@ const iconIsNFIcon = computed<boolean>(() => {
 			
 			font-family: @font-code;
 			font-size: 90%;
+			color: @about-version-tag-text;
 			
 			> .version.unknown {
 				font-style: italic;

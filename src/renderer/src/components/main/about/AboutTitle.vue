@@ -25,6 +25,8 @@ defineProps<{
 
 <style lang="less" scoped>
 
+@import "../../../assets/css/theme.less";
+
 .about-title {
 	
 	text-align: center;
@@ -33,7 +35,7 @@ defineProps<{
 		width: 220px;
 	}
 	
-	color: #4a568b;
+	color: @about-app-title;
 	
 	> .title {
 		font-size: 20px;

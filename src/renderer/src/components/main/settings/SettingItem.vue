@@ -99,11 +99,11 @@ const is_restartRequire_notice_on = computed<boolean>(() => {
 		}
 		
 		> .config-debug-description {
-			color: #a0b4cd;
+			color: @setting-item-debug-description-text;
 			font-family: @font-code;
 			font-size: 10px;
-			> span > .value { color: #7aa1d6; }
-			:slotted(> span > .value) { color: #7aa1d6; }
+			> span > .value { color: @setting-item-debug-description-value; }
+			:slotted(> span > .value) { color: @setting-item-debug-description-value; }
 			
 		}
 		
@@ -131,17 +131,17 @@ const is_restartRequire_notice_on = computed<boolean>(() => {
 				
 				width: @notice-width;
 				border-radius: @notice-width;
-				background-color: #c8dcf7;
+				background-color: @setting-item-notice-bar;
 				
 				&:hover {
-					background-color: darken(#c8dcf7, 10%);
+					background-color: @setting-item-notice-bar-onfocus;
 				}
 				
 			}
 			
 			> .restart-require {
-				background-color: #f7bfa7;
-				&:hover { background-color: darken(#f7bfa7, 10%); }
+				background-color: @setting-item-notice-warn;
+				&:hover { background-color: @setting-item-notice-warn-onfocus; }
 			}
 			
 		}
