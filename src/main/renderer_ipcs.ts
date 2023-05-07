@@ -1,4 +1,4 @@
-import { app, ipcMain } from "electron";
+import { app, ipcMain, shell } from "electron";
 import data from "./data";
 import user_config from "./user/user_config"
 
@@ -26,6 +26,10 @@ export default {
 		});
 		ipcMain.handle('app:get-version', (_events) => {
 			return app.getVersion();
+		})
+		
+		ipcMain.handle('shell:open-path', (_event, arg1_path) => {
+			return shell.openPath(arg1_path);
 		})
 		
 	}

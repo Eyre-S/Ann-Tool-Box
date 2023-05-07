@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import Sidebar from './sidebar/Sidebar.vue';
+import AppCoverToast from './app_cover/toast/AppCover.vue';
 
 import { page_active } from './pages';
 import config from "@renderer/config";
@@ -10,12 +11,16 @@ import config from "@renderer/config";
 <template>
 	
 	<div :class="['app-body', { 'use-native-frame': config.ui.use_native_frame.v_locked.value }]">
+		
 		<Sidebar class="sidebar"></Sidebar>
 		<div class="main-box">
 			<main class="main-body">
 				<component :is="page_active.component"></component>
 			</main>
 		</div>
+		
+		<AppCoverToast id="app-cover-toast"></AppCoverToast>
+		
 	</div>
 	
 </template>
@@ -52,6 +57,16 @@ import config from "@renderer/config";
 			border-radius: 10px;
 			
 		}
+	}
+	
+	position: relative;
+	
+	#app-cover-toast {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
 	}
 	
 }

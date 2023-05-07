@@ -28,6 +28,12 @@ export interface ApiInterface {
 		
 	}
 	
+	shell: {
+		
+		openPath (path: string): Promise<string>;
+		
+	}
+	
 }
 
 export const api: ApiInterface = {
@@ -44,6 +50,12 @@ export const api: ApiInterface = {
 		},
 		getVersion() {
 			return ipcRenderer.invoke("app:get-version");
+		},
+	},
+	
+	shell: {
+		openPath(path) {
+			return ipcRenderer.invoke("shell:open-path", path)
 		},
 	},
 	

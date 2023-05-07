@@ -11,9 +11,12 @@ import { computed, reactive, Ref, ref } from 'vue';
 
 import config, { __session_config } from '@renderer/config';
 import AboutBreadCardUI from '../about/AboutBreadCardUI.vue';
+import toast, { ToastButton } from '@renderer/components/app_cover/toast/toast';
+import randoms from '@renderer/utils/randoms';
 
 // ------
 // System
+
 
 function openUserDir () {
 	window.api.user_data.openDir();
@@ -45,6 +48,16 @@ for(const path of appPaths) {
 	window.api.app.getPath(path.name).then(v => path.value = v);
 }
 
+function appPathsOpen (path: string|undefined) {
+	if (path != undefined)
+		window.api.shell.openPath(path).then((value) => {
+			if (value.length > 0) {
+				toast.add({ type: toast.types.ERROR, text: `打开文件遇到问题：${value}`})
+			}
+		});
+	else toast.add({ type: toast.types.ERROR, text: "无法打开文件：路径为空。" });
+}
+
 const app_path = ref<string|undefined>(undefined);
 window.api.app.getAppPath().then(v => app_path.value = v)
 
@@ -53,6 +66,57 @@ window.api.app.getAppPath().then(v => app_path.value = v)
 
 function openDevTools () {
 	window.electron.ipcRenderer.send('call-dev-tools');
+}
+
+function dev_toast_used (_event, toast) {
+	toast.remove_this();
+}
+
+function dev_generateToast () {
+	
+	toast.add({
+		
+		type: randoms.one(
+			toast.types.ERROR,
+			undefined
+		),
+		
+		text: randoms.one(
+			"一个随机的吐司面包。",
+			"It seems some problems occurred...",
+			"我可以吞下玻璃而不伤身体。",
+			"买了一箱，已经在😭了",
+			"有个小朋友 Segmentation Fault 了也不知道哪里来的自信，一口咬定是机器的问题。给他换了机器，并且教育了他机器永远是对的。这个小插曲体现了编程的基础教育还有很大的缺憾，使得竞赛选手大多都缺少真正的 “编程” 训练，我看他们对着那长得要命的 if (...dp[a][b][c][d][e][f][n^1]...) 调的真叫一个累，让我不由得想起若干年前某 NOI 金牌选手在某题爆零后对着一行有 20 个括号的代码哭的场景。"
+		),
+		
+		buttons: randoms.some<ToastButton>(
+			{ icon: "nf-fa-refresh", onclick: dev_toast_used },
+			{ icon: "nf-md-message_alert", onclick: dev_toast_used },
+			{ icon: "nf-fa-bug", onclick: dev_toast_used },
+			{ icon: "nf-fa-cloud_upload", onclick: dev_toast_used },
+			{ icon: "nf-md-tools", onclick: dev_toast_used }
+		),
+		checkedButton: randoms.one(
+			undefined,
+			undefined,
+			undefined,
+			undefined,
+			undefined,
+			undefined,
+			undefined,
+			null,
+			null,
+			null,
+			null,
+			"nf-fa-close",
+			"nf-fa-close",
+			"nf-fa-close",
+			"nf-fa-close",
+			"nf-fa-close",
+			"nf-fa-close"
+		)
+		
+	})
 }
 
 const iconTestIcon: Ref<string> = ref("nf-fa-500px");
@@ -92,9 +156,9 @@ function dev_relaunch () {
 				name="Open User Data Directory">
 				<template v-slot:intro>打开程序的用户文件页面。<br>包含用户的配置选项等等。</template>
 				<template v-slot:debug-info>
-					<span>AppPath: <span class="value">{{ app_path }}</span></span><br>
+					<span>AppPath: <span class="value clickable-value" @click="appPathsOpen(app_path)">{{ app_path }}</span></span><br>
 					<template v-for="path of appPaths">
-						<span>{{ path.name }}: <span class="value">{{ path.value }}</span></span><br>
+						<span>{{ path.name }}: <span class="value clickable-value" @click="appPathsOpen(path.value)">{{ path.value }}</span></span><br>
 					</template>
 				</template>
 				<InputButton @click="openUserDir">Open user_data</InputButton>
@@ -138,6 +202,11 @@ function dev_relaunch () {
 				name="Open DevTools">
 				<template v-slot:intro>打开 Electron 的网页调试 DevTools。</template>
 				<InputButton @click="openDevTools">Open DevTools</InputButton>
+			</SettingItem>
+			<SettingItem
+				group="dev"
+				name="Generate Random Toast">
+				<InputButton @click="dev_generateToast">toast~</InputButton>
 			</SettingItem>
 			<SettingItem
 				group="dev"
@@ -222,6 +291,14 @@ function dev_relaunch () {
 			
 		}
 		
+	}
+	
+}
+
+.clickable-value {
+	
+	&:hover {
+		text-decoration: underline;
 	}
 	
 }
