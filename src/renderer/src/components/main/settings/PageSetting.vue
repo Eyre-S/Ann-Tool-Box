@@ -9,7 +9,8 @@ import InputText from '@renderer/components/util/controller/InputText.vue';
 
 import { computed, reactive, Ref, ref } from 'vue';
 
-import config from '@renderer/config';
+import config, { __session_config } from '@renderer/config';
+import AboutBreadCardUI from '../about/AboutBreadCardUI.vue';
 
 // ------
 // System
@@ -104,10 +105,9 @@ function dev_relaunch () {
 		<PageCard>
 			
 			<h2><I i="nf-md-dock_window"></I> 用户界面</h2>
-			<div style="text-align: center;">
-				<img src="./bread-card-ui.png" style="height: 240px; max-width: 100%;"><br>
+			<AboutBreadCardUI>
 				<span style="font-size: 13px; color: darkgray;">- Bread Card UI -</span>
-			</div>
+			</AboutBreadCardUI>
 			<SettingItem
 				group="ui"
 				name="Display Language">
@@ -176,6 +176,24 @@ function dev_relaunch () {
 				name="Relaunch App">
 				<InputButton @click="dev_relaunch">重启！</InputButton>
 			</SettingItem>
+		</PageCard>
+		
+		<PageCard v-if="config.dev.setting_show_debug_info.v.value">
+			<h2><I i="nf-md-bug"></I> 调试：__session</h2>
+			<SettingItem
+				group="dev"
+				name="Show __Session Information"
+				:config-node-module="config.dev.show_session_info">
+				<template v-slot:intro>显示配置文件中 __session 段的信息...</template>
+				<InputSwitcher v-model="config.dev.show_session_info.v.value"></InputSwitcher>
+			</SettingItem>
+			<template v-if="config.dev.show_session_info.v.value">
+				<SettingItem
+					v-for="session_config_item in __session_config"
+					group="__session"
+					:name="session_config_item.key"
+					:config-node-module="session_config_item"></SettingItem>
+			</template>
 		</PageCard>
 		
 	</div>

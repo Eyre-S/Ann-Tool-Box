@@ -1,10 +1,11 @@
 <script setup lang="ts">
 
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import SidebarItem from './SidebarItem.vue';
 import { pages, page_setActive, page_active } from '../pages';
+import config from '@renderer/config';
 
-const sidebarIsOpening = ref(true);
+const sidebarIsOpening = config.__session_status.sidebar.is_open.v;
 
 const sidebarClass = computed(()=>{
 	return {

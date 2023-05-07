@@ -61,6 +61,10 @@ export class ConfigNode<T> {
 	
 }
 
+export const __session_config = {
+	is_open: new ConfigNode<boolean>("__session_status.sidebar.is_open", false)
+}
+
 export const defaults = {
 	
 	ui: {
@@ -68,7 +72,14 @@ export const defaults = {
 	},
 	
 	dev: {
-		setting_show_debug_info: new ConfigNode<boolean>('dev.setting-show-debug-info', false)
+		setting_show_debug_info: new ConfigNode<boolean>('dev.setting-show-debug-info', false),
+		show_session_info: new ConfigNode<boolean>("dev.show-session-info", false)
+	},
+	
+	__session_status: {
+		sidebar: {
+			is_open: __session_config.is_open
+		}
 	}
 	
 }

@@ -24,6 +24,9 @@ export default {
 		ipcMain.handle('app:get-path', (_events, arg1_name) => {
 			return app.getPath(arg1_name);
 		});
+		ipcMain.handle('app:get-version', (_events) => {
+			return app.getVersion();
+		})
 		
 	}
 	

@@ -24,6 +24,7 @@ export interface ApiInterface {
 		getCwd (): Promise<string>;
 		getAppPath (): Promise<string>;
 		getPath: (name: "home" | "appData" | "userData" | "sessionData" | "temp" | "exe" | "module" | "desktop" | "documents" | "downloads" | "music" | "pictures" | "videos" | "recent" | "logs" | "crashDumps") => Promise<string>;
+		getVersion (): Promise<string>;
 		
 	}
 	
@@ -40,7 +41,10 @@ export const api: ApiInterface = {
 		},
 		getPath(name) {
 			return ipcRenderer.invoke('app:get-path', name);
-		}
+		},
+		getVersion() {
+			return ipcRenderer.invoke("app:get-version");
+		},
 	},
 	
 	store: {
