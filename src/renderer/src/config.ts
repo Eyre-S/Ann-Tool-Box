@@ -73,7 +73,8 @@ export const defaults = {
 	
 	dev: {
 		setting_show_debug_info: new ConfigNode<boolean>('dev.setting-show-debug-info', false),
-		show_session_info: new ConfigNode<boolean>("dev.show-session-info", false)
+		show_session_info: new ConfigNode<boolean>("dev.show-session-info", false),
+		show_test_toast: new ConfigNode<boolean>("dev.show-test-toast", false),
 	},
 	
 	__session_status: {

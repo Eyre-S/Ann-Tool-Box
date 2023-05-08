@@ -2,7 +2,7 @@
 
 import I from '@renderer/components/util/I.vue';
 import { Toast } from './toast';
-import { computed } from 'vue';
+import { StyleValue, computed } from 'vue';
 
 const props = defineProps<{
 	model: Toast
@@ -20,11 +20,26 @@ function on_checked () {
 	props.model.remove_this();
 }
 
+const progress_bar_animationStyle = computed<StyleValue>(() => { return {
+	animationDuration: `${props.model.clearTimeout}ms`
+}});
+
+function toast_onFocused () {
+	props.model.timeout_stop();
+	console.log("focused");
+}
+
+function toast_onLostFocus () {
+	props.model.timeout_set();
+	console.log("lost focus");
+}
+
 </script>
 
 <template>
 	
-	<div :class="['toast-item', model.type?.css_class]">
+	<div :class="['toast-item', model.type?.css_class]" @mouseenter="toast_onFocused" @mouseleave="toast_onLostFocus">
+		<div v-if="model.timeout_timer !== undefined" class="progress-bar" :style="progress_bar_animationStyle"></div>
 		<div class="buttons">
 			<button v-if="check_button_show" @click="on_checked"><I :i="model.checkedButton == undefined ? 'nf-fa-check' : model.checkedButton"></I></button>
 			<button v-for="btn in model.buttons" @click="event => btn.onclick(event, model)"><I :i="btn.icon"></I></button>
@@ -54,6 +69,13 @@ function on_checked () {
 	--color-button-bg-focus: #d55c60;
 }
 
+.toast-item.type-dev {
+	--color-bg-unfocus: #aecfff;
+	--color-bg-focus: #3091ff;
+	--color-button-text: #d9f1ff;
+	--color-button-bg-focus: #0048ff;
+}
+
 .toast-item {
 	
 	border-radius: 8px;
@@ -63,11 +85,14 @@ function on_checked () {
 	min-height: 60px;
 	max-width: 40vw;
 	
-	transition: background-color 110ms;
+	transition-property: background-color, opacity;
+	transition-duration: 110ms;
 	
 	background-color: var(--color-bg-unfocus);
 	color: aliceblue;
+	opacity: 0.8;
 	&:hover {
+		opacity: 1;
 		background-color: var(--color-bg-focus);
 	}
 	
@@ -123,6 +148,33 @@ function on_checked () {
 		padding-top: 12px;
 	}
 	
+	position: relative;
+	> .progress-bar {
+		
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 100%;
+		height: 5px;
+		
+		background-color: #00000014;
+		
+		@keyframes progress-bar-left-right {
+			from {
+				right: 100%;
+			}
+			to {
+				right: 0%;
+			}
+		}
+		
+		animation-name: progress-bar-left-right;
+		animation-timing-function: linear;
+		animation-fill-mode: forwards;
+		
+	}
+	
 }
+
 
 </style>

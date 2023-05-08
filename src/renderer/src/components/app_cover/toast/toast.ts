@@ -5,13 +5,18 @@ export interface ToastType {
 	default_icon?: string;
 }
 
-const type_ERROR: ToastType = {
-	css_class: "type-error",
-	default_icon: "nf-fa-warning",
-}
-
-export const ToastTypes = {
-	ERROR: type_ERROR
+export class ToastTypes {
+	
+	public static readonly ERROR: ToastType = {
+		css_class: "type-error",
+		default_icon: "nf-fa-warning",
+	}
+	
+	public static readonly DEV: ToastType = {
+		css_class: "type-dev",
+		default_icon: "nf-md-ladybug",
+	}
+	
 }
 
 export interface ToastButton {
@@ -29,6 +34,7 @@ export interface ToastDefination {
 	buttons?: ToastButton[];
 	checkedButton?: string|null|undefined;
 	
+	clearTimeout?: number;
 	
 }
 
@@ -42,6 +48,9 @@ export class Toast {
 	buttons?: ToastButton[];
 	checkedButton?: string|null|undefined;
 	
+	clearTimeout?: number;
+	timeout_timer?: NodeJS.Timeout;
+	
 	public constructor(defination: ToastDefination) {
 		
 		this.type = defination.type;
@@ -50,12 +59,31 @@ export class Toast {
 		this.buttons = defination.buttons;
 		this.checkedButton = defination.checkedButton;
 		
-		// setTimeout(() => { this.remove_this(); }, 8000);
+		this.clearTimeout = defination.clearTimeout;
+		this.timeout_set();
 		
 	}
 	
 	public remove_this () {
 		list.delete(this);
+	}
+	
+	public timeout_set (): number {
+		if (this.clearTimeout !== undefined) {
+			if (this.timeout_timer === undefined) {
+				this.timeout_timer = setTimeout(() => { this.remove_this() }, this.clearTimeout);
+				return this.clearTimeout;
+			} else {
+				this.timeout_timer.refresh();
+				return this.clearTimeout;
+			}
+		}
+		return 0;
+	}
+	
+	public timeout_stop () {
+		clearTimeout(this.timeout_timer);
+		this.timeout_timer = undefined;
 	}
 	
 }
@@ -75,6 +103,12 @@ export default {
 	
 	list,
 	add,
-	types: ToastTypes
+	types: ToastTypes,
+	clear_timeout: {
+		short: 1000,
+		standard: 3000,
+		long: 8000,
+		never: 0
+	}
 	
 }
