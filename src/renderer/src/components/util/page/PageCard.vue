@@ -1,14 +1,15 @@
 <script setup lang="ts">
 
 defineProps<{
-	noBg?: boolean
+	noBg?: boolean,
+	noPadding?: boolean
 }>()
 
 </script>
 
 <template>
 	
-	<div :class="['page-card', { 'no-bg': noBg }]">
+	<div :class="['page-card', { 'no-bg': noBg, 'no-padding': noPadding }]">
 		<slot></slot>
 	</div>
 	
@@ -26,6 +27,7 @@ defineProps<{
 	padding: 20px;
 	
 	&.no-bg { background: none }
+	&.no-padding { padding: 0px; }
 	
 }
 

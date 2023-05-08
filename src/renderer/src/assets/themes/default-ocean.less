@@ -15,11 +15,13 @@
 @window-button-maxize-onfocus: #d7bd14;
 @window-button-minimal-onfocus: #35d05c;
 
+
+
 // component: menu
 @menu-bg: #ffffff;
 @menu-shadow: -1px 1px 12px 1px #e3e3e3;
-@menu-separator: darken(@menu-bg, 8);
-@menu-item-text-color: #585555;
+@menu-separator: darken(@menu-bg, 8%);
+@menu-item-text-color: @pages-element-normal-text;
 @menu-item-onfocus: #f6f8fa;
 
 // style: scroll-bar
@@ -29,11 +31,15 @@
 // style: selection
 @text-selection-background: #bfc6cd70;
 
+
+
 // title-bar
 @window-title-bg: #b0c5e0;
 @window-title-bg-onfocus: #809ed4;
 @window-title-fg: aliceblue;
 @window-title-separator-color: #a0a3ae;
+
+
 
 // sidebar
 @sidebar-base-color: @card-background;
@@ -42,11 +48,16 @@
 @sidebar-text-color: #363636;
 @sidebar-active-marker: darken(@sidebar-base-color, 32%);
 
+
+
 // page global
 @card-background: #f0f4fa;
+@pages-title: lighten(#000000, 36%);
+@pages-element-normal-text: #5d5d5d;
+@pages-element-link-text: #558cd3;
 
 // page settings
-@setting-page-group-title: lighten(#000000, 36%);
+@setting-page-group-title: @pages-title;
 @setting-title-color: #333333;
 @setting-title-group-color: #aaaaaa;
 @setting-description-color: #686868;
@@ -64,8 +75,16 @@
 @about-version-tag-title-text: aliceblue;
 @about-version-tag-title-bg: #a6b9d3;
 
+
+// page Icon Sheet
+@page-icon-sheet-listing-text: #6f7cb5;
+@page-icon-sheet-listing-icon: #4a568b;
+@page-icon-sheet-listing-value-text: @pages-element-link-text;
+@page-icon-sheet-listing-toolbar-button: #a9b7d2;
+@page-icon-sheet-listing-toolbar-button-onfocus: #dae1ef;
+
 // component: input tools
-@input-button-fg: #558cd3;
+@input-button-fg: @pages-element-link-text;
 @input-button-bg: #c8dcf7;
 @input-button-bg-onfocus: darken(@input-button-bg, 2%);
 @input-button-disabled-fg: #a1a8b1;
@@ -74,6 +93,6 @@
 @input-switcher-onactive: #84b9fe;
 @input-switcher-onempty: lighten(@input-switcher-main, 5%);
 @input-text-bg: #ffffff;
-@input-text-text: lighten(#000000, 35%);
+@input-text-text: @pages-element-normal-text;
 @input-text-marker: #d8e0e9;
 @input-text-marker-onfocus: #3683db;

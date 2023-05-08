@@ -105,7 +105,7 @@ export default {
 	add,
 	types: ToastTypes,
 	clear_timeout: {
-		short: 1000,
+		short: 1800,
 		standard: 3000,
 		long: 8000,
 		never: 0

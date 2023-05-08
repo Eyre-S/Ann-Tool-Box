@@ -3,6 +3,8 @@ import { markRaw, reactive, Ref, ref } from "vue";
 import PageHome from "./main/PageHome.vue"
 import PageSetting from "./main/settings/PageSetting.vue"
 
+import Page_IconSheet from "./pages/page_icon_sheet"
+
 interface IPageConfigs {
 	title: string,
 	icon: string,
@@ -43,8 +45,13 @@ const page_home: Page = new Page(
 );
 
 export const pages: Array<Page> = reactive([
+	
 	page_home,
+	
+	new Page(Page_IconSheet.page, 'icon-sheet', Page_IconSheet.config),
+	
 	// empty
+	
 	page_settings
 ]);
 

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import P from "@renderer/components/util/page/P.vue";
+
 import AboutTitle from './AboutTitle.vue';
 import featured_icon from '@renderer/assets/icon.png'
 import AboutVersionTag from './AboutVersionTag.vue';
@@ -51,7 +53,7 @@ const versions = reactive({ ...window.electron.process.versions });
 		
 		<PageCard>
 			<AboutBreadCardUI style="font-size: 14px;">
-				UI Design powered by <AboutVersionTag name="Bread Card UI" version="-"></AboutVersionTag>
+				<P no-margin>UI Design powered by <AboutVersionTag name="Bread Card UI" version="-"></AboutVersionTag></P>
 			</AboutBreadCardUI>
 		</PageCard>
 		

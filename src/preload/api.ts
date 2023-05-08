@@ -34,6 +34,10 @@ export interface ApiInterface {
 		
 	}
 	
+	clipboard: {
+		writeText (text: string): void;
+	}
+	
 }
 
 export const api: ApiInterface = {
@@ -56,6 +60,12 @@ export const api: ApiInterface = {
 	shell: {
 		openPath(path) {
 			return ipcRenderer.invoke("shell:open-path", path)
+		},
+	},
+	
+	clipboard: {
+		writeText(text) {
+			ipcRenderer.send("clipboard:write:text", text);
 		},
 	},
 	

@@ -1,4 +1,4 @@
-import { app, ipcMain, shell } from "electron";
+import { app, clipboard, ipcMain, shell } from "electron";
 import data from "./data";
 import user_config from "./user/user_config"
 
@@ -30,6 +30,10 @@ export default {
 		
 		ipcMain.handle('shell:open-path', (_event, arg1_path) => {
 			return shell.openPath(arg1_path);
+		})
+		
+		ipcMain.on('clipboard:write:text', (_event, arg1_text) => {
+			clipboard.writeText(arg1_text);
 		})
 		
 	}

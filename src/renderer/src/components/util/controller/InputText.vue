@@ -3,7 +3,8 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-	modelValue
+	modelValue,
+	placeholder?: string
 }>()
 
 const emit = defineEmits(['update:modelValue'])
@@ -21,7 +22,7 @@ const value = computed({
 
 <template>
 	
-	<div class="input text"><input v-model="value"><div class="marker"></div></div>
+	<div class="input text"><input v-model="value" :placeholder="placeholder"><div class="marker"></div></div>
 	
 </template>
 
@@ -31,11 +32,11 @@ const value = computed({
 
 .input.text {
 	
-	padding: 6px 9px;
-	background-color: @input-text-bg;
-	border-radius: 5px;
-	font-family: @font-code;
 	font-size: 12px;
+	padding: 0.5em 0.75em;
+	background-color: @input-text-bg;
+	border-radius: 0.4em;
+	font-family: @font-code;
 	color: @input-text-text;
 	
 	display: flex;
@@ -57,7 +58,7 @@ const value = computed({
 	
 	> .marker {
 		flex: 0 0 0.3em;
-		height: 100%;
+		// height: 100%;
 		background-color: @input-text-marker;
 		border-radius: 0.3em;
 		transition: background-color 150ms;
