@@ -4,6 +4,8 @@ import I from '@renderer/components/util/I.vue';
 import { Toast } from './toast';
 import { StyleValue, computed } from 'vue';
 
+new I();
+
 const props = defineProps<{
 	model: Toast
 }>()

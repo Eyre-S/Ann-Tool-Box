@@ -4,6 +4,7 @@ import PageHome from "./main/PageHome.vue"
 import PageSetting from "./main/settings/PageSetting.vue"
 
 import Page_IconSheet from "./pages/page_icon_sheet"
+import Page_ArcaeaShutter from "./pages/page_arcaea_shutter";
 
 interface IPageConfigs {
 	title: string,
@@ -49,6 +50,7 @@ export const pages: Array<Page> = reactive([
 	page_home,
 	
 	new Page(Page_IconSheet.page, 'icon-sheet', Page_IconSheet.config),
+	new Page(Page_ArcaeaShutter.Page, 'arcaea-shutter', Page_ArcaeaShutter.config),
 	
 	// empty
 	
