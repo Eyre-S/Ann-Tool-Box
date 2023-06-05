@@ -4,7 +4,7 @@ import PageCard from '@renderer/components/util/page/PageCard.vue';
 import ArcaeaShutterBox from './ArcaeaShutterBox.vue';
 import H1 from '@renderer/components/util/page/H1.vue';
 import P from '@renderer/components/util/page/P.vue';
-import InputText from '@renderer/components/util/controller/InputText.vue';
+import InputNumber from '@renderer/components/util/controller/InputNumber.vue';
 import InputButton from '@renderer/components/util/controller/InputButton.vue';
 
 import { ref } from 'vue';
@@ -18,6 +18,8 @@ function change_theme (theme: null|'finale'|'fractureray'|'grievouslady'|'tempes
 	shutter_theme.value = theme;
 	shutter.value?.set_timeout();
 }
+
+const preview_height = ref(340);
 
 </script>
 
@@ -44,13 +46,13 @@ function change_theme (theme: null|'finale'|'fractureray'|'grievouslady'|'tempes
 		</div>
 		<P>Timeout Animations</P>
 		<div class="button-set">
-			<div><InputText v-model="shutter_timeout_ms"></InputText></div>
+			<div><InputNumber class="timeout-input" v-model="shutter_timeout_ms" placeholder="0" unit="ms" :step="200" :min="200"></InputNumber></div>
 			<InputButton @click="shutter?.set_timeout(shutter_timeout_ms)">Start Timeout</InputButton>
 		</div>
 		
 	</PageCard>
 	
-	<ArcaeaShutterBox ref="shutter" :theme="shutter_theme"></ArcaeaShutterBox>
+	<ArcaeaShutterBox :style="{height: `${preview_height}px`}" ref="shutter" :theme="shutter_theme"></ArcaeaShutterBox>
 	
 </template>
 
@@ -63,6 +65,10 @@ function change_theme (theme: null|'finale'|'fractureray'|'grievouslady'|'tempes
 	flex-wrap: wrap;
 	gap: 1em;
 	
+}
+
+.timeout-input {
+	width: 8em;
 }
 
 </style>

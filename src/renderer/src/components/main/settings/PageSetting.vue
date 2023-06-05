@@ -198,8 +198,15 @@ function dev_relaunch () {
 			
 		</PageCard>
 		
-		<PageCard>
+		<PageCard v-if="config.dev.enabled.v.value">
 			<h2><I i="nf-md-bug"></I> 调试</h2>
+			<SettingItem
+				group="dev"
+				name="enabled"
+				:config-node-module="config.dev.enabled">
+				<template v-slot:intro>开启这个部分。</template>
+				<InputSwitcher v-model="config.dev.enabled.v.value"></InputSwitcher>
+			</SettingItem>
 			<SettingItem
 				group="dev"
 				name="Open DevTools">
@@ -220,6 +227,14 @@ function dev_relaunch () {
 				<InputSwitcher v-model="config.dev.setting_show_debug_info.v.value"></InputSwitcher>
 			</SettingItem>
 			<SettingItem
+				v-if="config.dev.setting_show_debug_info.v.value"
+				group="dev"
+				name="Show __Session Information"
+				:config-node-module="config.dev.show_session_info">
+				<template v-slot:intro>显示配置文件中 __session 段的信息...<br>所有的记录session状态的配置信息将会在下面的 Debug: __session 一节列出</template>
+				<InputSwitcher v-model="config.dev.show_session_info.v.value"></InputSwitcher>
+			</SettingItem>
+			<SettingItem
 				group="dev"
 				name="Test Icon">
 				<template v-slot:intro>用于测试图标渲染。<br>在右边的输入框填入一个图标 id，或者是一个字符，看看下面会如何渲染出来。</template>
@@ -233,8 +248,8 @@ function dev_relaunch () {
 			<SettingItem
 				group="dev"
 				name="Test Font">
-				<template v-slot:intro>用于测试文字渲染。<br>在右边的第一行填入一些文字，第二行填入一个字体名称，看看下面会如何渲染出来。</template>
-				<InputText v-model="fontTestText"></InputText>
+				<template v-slot:intro>用于测试文字渲染。<br>在右边的第一行填入一些文字，第二行填入一个字体名称，看看下面会如何渲染出来。<br>文字框同时也是一个密码框，可以用来检查密码框的实现效果。</template>
+				<InputText password show-password v-model="fontTestText"></InputText>
 				<InputText v-model="fontTestFontFamily"></InputText>
 				<div class="shown-box" :style="[{ fontSize: '13px'}, fontTestShownStyle]">{{ fontTestText }}</div>
 			</SettingItem>
@@ -251,22 +266,13 @@ function dev_relaunch () {
 			</SettingItem>
 		</PageCard>
 		
-		<PageCard v-if="config.dev.setting_show_debug_info.v.value">
+		<PageCard v-if="config.dev.enabled.v.value && config.dev.setting_show_debug_info.v.value && config.dev.show_session_info.v.value">
 			<h2><I i="nf-md-bug"></I> 调试：__session</h2>
 			<SettingItem
-				group="dev"
-				name="Show __Session Information"
-				:config-node-module="config.dev.show_session_info">
-				<template v-slot:intro>显示配置文件中 __session 段的信息...</template>
-				<InputSwitcher v-model="config.dev.show_session_info.v.value"></InputSwitcher>
-			</SettingItem>
-			<template v-if="config.dev.show_session_info.v.value">
-				<SettingItem
-					v-for="session_config_item in __session_config"
-					group="__session"
-					:name="session_config_item.key"
-					:config-node-module="session_config_item"></SettingItem>
-			</template>
+				v-for="session_config_item in __session_config"
+				group="__session"
+				:name="session_config_item.key"
+				:config-node-module="session_config_item"></SettingItem>
 		</PageCard>
 		
 	</div>

@@ -1,20 +1,28 @@
 <script setup lang="ts">
 
 import P from "@renderer/components/util/page/P.vue";
+import H1 from "@renderer/components/util/page/H1.vue";
 
-import AboutTitle from './AboutTitle.vue';
-import featured_icon from '@renderer/assets/icon.png'
-import AboutVersionTag from './AboutVersionTag.vue';
+import InputText from "@renderer/components/util/controller/InputText.vue";
+import InputButton from "@renderer/components/util/controller/InputButton.vue";
 
-import app_icon from "@renderer/assets/icon.png";
-import { reactive, ref } from 'vue';
 import PageCard from '@renderer/components/util/page/PageCard.vue';
+import AboutTitle from './AboutTitle.vue';
+import AboutVersionTag from './AboutVersionTag.vue';
 import AboutBreadCardUI from './AboutBreadCardUI.vue';
 import AboutFooter from './AboutFooter.vue';
+
+import featured_icon from '@renderer/assets/icon.png'
+import app_icon from "@renderer/assets/icon.png";
+
+import { reactive, ref } from 'vue';
+import { tryReddem } from "@renderer/reddem";
 
 const app_version = ref<string>();
 window.api.app.getVersion().then(v => app_version.value = v);
 const versions = reactive({ ...window.electron.process.versions });
+
+const credit_reddem_key = ref("");
 
 </script>
 
@@ -57,8 +65,25 @@ const versions = reactive({ ...window.electron.process.versions });
 			</AboutBreadCardUI>
 		</PageCard>
 		
+		<PageCard>
+			<H1>Credit Reddem</H1>
+			<div class="input-box">
+				<InputText v-model="credit_reddem_key" placeholder="XXXX-XXXX-XXXX"></InputText>
+				<InputButton @click="tryReddem(credit_reddem_key)">Reddem!</InputButton>
+			</div>
+		</PageCard>
+		
 		<AboutFooter></AboutFooter>
 		
 	</div>
 	
 </template>
+
+<style scoped>
+
+.input-box {
+	display: flex;
+	gap: 1em;
+}
+
+</style>
