@@ -2,7 +2,9 @@
 
 import { ConfigNode } from '@renderer/config';
 import { computed } from 'vue';
-import config from '@renderer/config';
+import DbgOnly from '@renderer/components/util/page/dbg/DbgOnly.vue';
+import DbgInfo from '@renderer/components/util/page/dbg/DbgInfo.vue';
+import DbgValue from '@renderer/components/util/page/dbg/DbgValue.vue';
 
 const props = defineProps<{
 	
@@ -38,15 +40,15 @@ const is_restartRequire_notice_on = computed<boolean>(() => {
 				<span class="name">{{ name }}</span>
 			</div>
 			<div class="description"><slot name="intro"></slot></div>
-			<div class="config-debug-description" v-if="config.dev.setting_show_debug_info.v.value"><slot name="debug-info"></slot></div>
-			<div class="config-debug-description" v-if="configNodeModule !== undefined && config.dev.setting_show_debug_info.v.value">
-				<span>key: <span class="value">{{ configNodeModule.key }}</span></span><br>
-				<span>defaults: <span class="value">{{ configNodeModule.defaults }}</span></span><br>
-				<span>value: <span class="value">{{ configNodeModule.v.value }}</span></span><br>
-				<span>locked: <span class="value">{{ configNodeModule.v_locked.value }}</span></span><br>
-				<span>is_modified: <span class="value">{{ configNodeModule.is_modified.value }}</span></span><br>
-				<span>is_changed_in_session: <span class="value">{{ configNodeModule.is_modified_after_load.value }}</span></span><br>
-			</div>
+			<DbgOnly class="config-debug-description"><slot name="debug-info"></slot></DbgOnly>
+			<DbgOnly class="config-debug-description" v-if="configNodeModule !== undefined">
+				<DbgInfo>key: <DbgValue>{{ configNodeModule.key }}</DbgValue></DbgInfo>
+				<DbgInfo>defaults: <DbgValue>{{ configNodeModule.defaults }}</DbgValue></DbgInfo>
+				<DbgInfo>value: <DbgValue>{{ configNodeModule.v.value }}</DbgValue></DbgInfo>
+				<DbgInfo>locked: <DbgValue>{{ configNodeModule.v_locked.value }}</DbgValue></DbgInfo>
+				<DbgInfo>is_modified: <DbgValue>{{ configNodeModule.is_modified.value }}</DbgValue></DbgInfo>
+				<DbgInfo>is_changed_in_session: <DbgValue>{{ configNodeModule.is_modified_after_load.value }}</DbgValue></DbgInfo>
+			</DbgOnly>
 		</div>
 		
 		<div class="action-area">
@@ -96,15 +98,6 @@ const is_restartRequire_notice_on = computed<boolean>(() => {
 		> .description {
 			color: @setting-description-color;
 			font-size: 12.8px;
-		}
-		
-		> .config-debug-description {
-			color: @setting-item-debug-description-text;
-			font-family: @font-code;
-			font-size: 10px;
-			> span > .value { color: @setting-item-debug-description-value; }
-			:slotted(> span > .value) { color: @setting-item-debug-description-value; }
-			
 		}
 		
 		position: relative;

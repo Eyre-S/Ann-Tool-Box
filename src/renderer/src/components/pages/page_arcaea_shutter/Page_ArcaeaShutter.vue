@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
 import PageCard from '@renderer/components/util/page/PageCard.vue';
+import ArcaeaShutterBox from './ArcaeaShutterBox.vue';
 import H1 from '@renderer/components/util/page/H1.vue';
 import P from '@renderer/components/util/page/P.vue';
-import InputButton from '@renderer/components/util/controller/InputButton.vue';
-import ArcaeaShutterBox from './ArcaeaShutterBox.vue';
-import { ref } from 'vue';
 import InputText from '@renderer/components/util/controller/InputText.vue';
+import InputButton from '@renderer/components/util/controller/InputButton.vue';
+
+import { ref } from 'vue';
 
 const shutter = ref<InstanceType<typeof ArcaeaShutterBox>|null>(null);
 const shutter_theme = ref<null|'finale'|'fractureray'|'grievouslady'|'tempestissimo'>(null);

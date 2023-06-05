@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
 import I from '@renderer/components/util/I.vue';
+
 import { Toast } from './toast';
 import { StyleValue, computed } from 'vue';
-
-new I();
 
 const props = defineProps<{
 	model: Toast
@@ -28,12 +27,10 @@ const progress_bar_animationStyle = computed<StyleValue>(() => { return {
 
 function toast_onFocused () {
 	props.model.timeout_stop();
-	console.log("focused");
 }
 
 function toast_onLostFocus () {
 	props.model.timeout_set();
-	console.log("lost focus");
 }
 
 </script>

@@ -1,14 +1,20 @@
 <script setup lang="ts">
 
 defineProps<{
-	href: string
+	href: string,
+	openBy?: (href: string) => void,
+	noColor?: boolean
 }>()
 
 </script>
 
 <template>
 	
-	<a :href="href" target="_blank"><slot></slot></a>
+	<a :class="{noColor}"
+			target="_blank"
+			:href="openBy ? undefined : href"
+			@click="openBy ? openBy(href) : undefined"
+	><slot>{{ href }}</slot></a>
 	
 </template>
 
@@ -21,6 +27,9 @@ a {
 	text-decoration: none;
 	&:hover {
 		text-decoration: underline;
+	}
+	&.no-color {
+		color: inherit
 	}
 }
 

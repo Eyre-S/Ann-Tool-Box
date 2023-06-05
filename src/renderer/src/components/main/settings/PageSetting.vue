@@ -1,11 +1,14 @@
 <script setup lang="ts">
 
-import InputSwitcher from '@renderer/components/util/controller/InputSwitcher.vue';
 import PageCard from '@renderer/components/util/page/PageCard.vue';
 import SettingItem from './SettingItem.vue';
 import InputButton from '@renderer/components/util/controller/InputButton.vue';
-import I from '@renderer/components/util/I.vue';
 import InputText from '@renderer/components/util/controller/InputText.vue';
+import InputSwitcher from '@renderer/components/util/controller/InputSwitcher.vue';
+import I from '@renderer/components/util/I.vue';
+import A from '@renderer/components/util/page/A.vue';
+import DbgInfo from '@renderer/components/util/page/dbg/DbgInfo.vue';
+import DbgValue from '@renderer/components/util/page/dbg/DbgValue.vue';
 
 import { computed, reactive, Ref, ref } from 'vue';
 
@@ -13,6 +16,7 @@ import config, { __session_config } from '@renderer/config';
 import AboutBreadCardUI from '../about/AboutBreadCardUI.vue';
 import toast, { ToastButton } from '@renderer/components/app_cover/toast/toast';
 import randoms from '@renderer/utils/randoms';
+import { open_syspath } from '@renderer/utils/api';
 
 // ------
 // System
@@ -46,16 +50,6 @@ const appPaths: appPathNode[] = reactive([
 ]);
 for(const path of appPaths) {
 	window.api.app.getPath(path.name).then(v => path.value = v);
-}
-
-function appPathsOpen (path: string|undefined) {
-	if (path != undefined)
-		window.api.shell.openPath(path).then((value) => {
-			if (value.length > 0) {
-				toast.add({ type: toast.types.ERROR, text: `打开文件遇到问题：${value}`, clearTimeout: 8000 })
-			}
-		});
-	else toast.add({ type: toast.types.ERROR, text: "无法打开文件：路径为空。", clearTimeout: 8000 });
 }
 
 const app_path = ref<string|undefined>(undefined);
@@ -165,9 +159,9 @@ function dev_relaunch () {
 				name="Open User Data Directory">
 				<template v-slot:intro>打开程序的用户文件页面。<br>包含用户的配置选项等等。</template>
 				<template v-slot:debug-info>
-					<span>AppPath: <span class="value clickable-value" @click="appPathsOpen(app_path)">{{ app_path }}</span></span><br>
+					<DbgInfo>AppPath: <DbgValue><A no-color :href="app_path?app_path:'...'" :open-by="open_syspath"></A></DbgValue></DbgInfo>
 					<template v-for="path of appPaths">
-						<span>{{ path.name }}: <span class="value clickable-value" @click="appPathsOpen(path.value)">{{ path.value }}</span></span><br>
+						<DbgInfo>{{ path.name }}: <DbgValue><A no-color :href="path.value?path.value:'...'" :open-by="open_syspath"></A></DbgValue></DbgInfo>
 					</template>
 				</template>
 				<InputButton @click="openUserDir">Open user_data</InputButton>
@@ -301,14 +295,6 @@ function dev_relaunch () {
 			
 		}
 		
-	}
-	
-}
-
-.clickable-value {
-	
-	&:hover {
-		text-decoration: underline;
 	}
 	
 }
