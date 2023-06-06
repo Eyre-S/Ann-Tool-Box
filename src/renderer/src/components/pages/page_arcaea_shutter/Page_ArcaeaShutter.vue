@@ -6,15 +6,17 @@ import H1 from '@renderer/components/util/page/H1.vue';
 import P from '@renderer/components/util/page/P.vue';
 import InputNumber from '@renderer/components/util/controller/InputNumber.vue';
 import InputButton from '@renderer/components/util/controller/InputButton.vue';
+import InputSlider from '@renderer/components/util/controller/InputSlider.vue';
 
 import { ref } from 'vue';
+import { ShutterTheme } from './ArcaeaShutterBox.vue';
 
 const shutter = ref<InstanceType<typeof ArcaeaShutterBox>|null>(null);
-const shutter_theme = ref<null|'finale'|'fractureray'|'grievouslady'|'tempestissimo'>(null);
+const shutter_theme = ref<ShutterTheme>();
 
 const shutter_timeout_ms = ref(2000);
 
-function change_theme (theme: null|'finale'|'fractureray'|'grievouslady'|'tempestissimo') {
+function change_theme (theme: ShutterTheme) {
 	shutter_theme.value = theme;
 	shutter.value?.set_timeout();
 }
@@ -31,7 +33,7 @@ const preview_height = ref(340);
 		
 		<P>Set Theme <small>(current: {{ shutter_theme?shutter_theme:"default" }})</small></P>
 		<div class="button-set">
-			<InputButton @click="change_theme(null)">default</InputButton>
+			<InputButton @click="change_theme(undefined)">default</InputButton>
 			<InputButton @click="change_theme('fractureray')">Fracture Ray</InputButton>
 			<InputButton @click="change_theme('grievouslady')">Grievous Lady</InputButton>
 			<InputButton @click="change_theme('tempestissimo')">Tempestissimo</InputButton>
@@ -48,6 +50,11 @@ const preview_height = ref(340);
 		<div class="button-set">
 			<div><InputNumber class="timeout-input" v-model="shutter_timeout_ms" placeholder="0" unit="ms" :step="200" :min="200"></InputNumber></div>
 			<InputButton @click="shutter?.set_timeout(shutter_timeout_ms)">Start Timeout</InputButton>
+		</div>
+		
+		<P>Preview Size</P>
+		<div class="button-set">
+			<InputSlider v-model="preview_height" :min="100" :max="2000 "></InputSlider>
 		</div>
 		
 	</PageCard>

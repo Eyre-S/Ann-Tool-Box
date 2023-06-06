@@ -33,21 +33,31 @@ function toast_onLostFocus () {
 	props.model.timeout_set();
 }
 
+function component () {
+	return props.model.text;
+}
+
 </script>
 
 <template>
 	
 	<div :class="['toast-item', model.type?.css_class]" @mouseenter="toast_onFocused" @mouseleave="toast_onLostFocus">
+		
 		<div v-if="model.timeout_timer !== undefined" class="progress-bar" :style="progress_bar_animationStyle"></div>
+		
 		<div class="buttons">
 			<button v-if="check_button_show" @click="on_checked"><I :i="model.checkedButton == undefined ? 'nf-fa-check' : model.checkedButton"></I></button>
 			<button v-for="btn in model.buttons" @click="event => btn.onclick(event, model)"><I :i="btn.icon"></I></button>
 		</div>
-		<div class="content">{{ model.text }}</div>
+		
+		<div class="content"><component :is="component"></component></div>
+		
 		<div class="toast-icon" v-if="showingIcon">
 			<I :i="showingIcon"></I>
 		</div>
+		
 		<div class="side-end"></div>
+		
 	</div>
 	
 </template>

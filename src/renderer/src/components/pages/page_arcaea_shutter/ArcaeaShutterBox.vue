@@ -1,18 +1,22 @@
 <script setup lang="ts">
 
+export type ShutterTheme = undefined|'finale'|'fractureray'|'grievouslady'|'tempestissimo';
+
 import PageCard from '@renderer/components/util/page/PageCard.vue';
+
 import { computed, ref } from 'vue';
 
+
 const props = defineProps<{
-	theme?: null|'finale'|'fractureray'|'grievouslady'|'tempestissimo'
+	theme?: ShutterTheme
 }>()
 
 const shutter_name_suffix = computed(() => {
-	return props.theme==null ? "" : `_${props.theme}`;
+	return props.theme==undefined ? "" : `_${props.theme}`;
 });
 
 const shutter_theme_class = computed(() => {
-	return props.theme==null ? "theme-default" : `theme-${props.theme}`;
+	return props.theme==undefined ? "theme-default" : `theme-${props.theme}`;
 });
 
 const shutter_url = computed(() => { return {

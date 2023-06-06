@@ -29,7 +29,7 @@ export interface ToastDefination {
 	type?: ToastType;
 	
 	icon?: string;
-	text: string;
+	text: string|JSX.Element;
 	
 	buttons?: ToastButton[];
 	checkedButton?: string|null|undefined;
@@ -43,7 +43,7 @@ export class Toast {
 	type?: ToastType;
 	
 	icon?: string;
-	text: string;
+	text: string|JSX.Element;
 	
 	buttons?: ToastButton[];
 	checkedButton?: string|null|undefined;

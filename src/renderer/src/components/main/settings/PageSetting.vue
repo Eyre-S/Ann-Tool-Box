@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import PageCard from '@renderer/components/util/page/PageCard.vue';
+import AboutBreadCardUI from '../about/AboutBreadCardUI.vue';
 import SettingItem from './SettingItem.vue';
 import InputButton from '@renderer/components/util/controller/InputButton.vue';
 import InputText from '@renderer/components/util/controller/InputText.vue';
@@ -10,13 +11,14 @@ import A from '@renderer/components/util/page/A.vue';
 import DbgInfo from '@renderer/components/util/page/dbg/DbgInfo.vue';
 import DbgValue from '@renderer/components/util/page/dbg/DbgValue.vue';
 
+import { UseMouse, UseMouseInElement, UseMousePressed } from '@vueuse/components';
+
 import { computed, reactive, Ref, ref } from 'vue';
 
 import config, { __session_config } from '@renderer/config';
-import AboutBreadCardUI from '../about/AboutBreadCardUI.vue';
-import toast, { ToastButton } from '@renderer/components/app_cover/toast/toast';
-import randoms from '@renderer/utils/randoms';
+import toast from '@renderer/components/app_cover/toast/toast';
 import { open_syspath } from '@renderer/utils/api';
+import { gen_randomToast } from '@renderer/components/app_cover/toast/debug-random-toasts';
 
 // ------
 // System
@@ -62,64 +64,12 @@ function openDevTools () {
 	window.electron.ipcRenderer.send('call-dev-tools');
 }
 
-function dev_toast_used (_event, toast) {
-	toast.remove_this();
-}
+const test_ref = ref<HTMLInputElement|null>(null)
 
 function dev_generateToast () {
 	
-	toast.add({
-		
-		type: randoms.one(
-			undefined,
-			toast.types.ERROR,
-			toast.types.DEV,
-		),
-		icon: randoms.one(
-			undefined, undefined, undefined, undefined, undefined, undefined,
-			"nf-fa-500px", "nf-fa-500px", "nf-dev-github"
-		),
-		
-		text: randoms.one(
-			"一个随机的吐司面包。",
-			"这是一个测试用的吐司面包。它用于一直显示在界面上以便于调试时调整 Toast 样式等等。它无法通过普通的方式被关闭。",
-			"It seems some problems occurred...",
-			"我可以吞下玻璃而不伤身体。",
-			"买了一箱，已经在😭了",
-			"有个小朋友 Segmentation Fault 了也不知道哪里来的自信，一口咬定是机器的问题。给他换了机器，并且教育了他机器永远是对的。这个小插曲体现了编程的基础教育还有很大的缺憾，使得竞赛选手大多都缺少真正的 “编程” 训练，我看他们对着那长得要命的 if (...dp[a][b][c][d][e][f][n^1]...) 调的真叫一个累，让我不由得想起若干年前某 NOI 金牌选手在某题爆零后对着一行有 20 个括号的代码哭的场景。",
-			"显示一条随机样式和随机内容的吐司通知！"
-		),
-		
-		clearTimeout: randoms.one(7000, 7000, 7000, 7000, 7000, 7000, 0, undefined, undefined, 2000, 2000),
-		
-		buttons: randoms.some<ToastButton>(
-			{ icon: "nf-fa-refresh", onclick: dev_toast_used },
-			{ icon: "nf-md-message_alert", onclick: dev_toast_used },
-			{ icon: "nf-fa-bug", onclick: dev_toast_used },
-			{ icon: "nf-fa-cloud_upload", onclick: dev_toast_used },
-			{ icon: "nf-md-tools", onclick: dev_toast_used }
-		),
-		checkedButton: randoms.one(
-			undefined,
-			undefined,
-			undefined,
-			undefined,
-			undefined,
-			undefined,
-			undefined,
-			null,
-			null,
-			null,
-			null,
-			"nf-fa-close",
-			"nf-fa-close",
-			"nf-fa-close",
-			"nf-fa-close",
-			"nf-fa-close",
-			"nf-fa-close"
-		)
-		
-	})
+	toast.add(gen_randomToast());
+	
 }
 
 const iconTestIcon: Ref<string> = ref("nf-fa-500px");
@@ -147,7 +97,7 @@ function dev_relaunch () {
 		
 		<PageCard>
 			
-			<h2><I i="nf-fa-gears"></I> 系统</h2>
+			<h2 ref="test_ref"><I i="nf-fa-gears"></I> 系统</h2>
 			<SettingItem
 				group="system"
 				name="Language">
@@ -251,13 +201,25 @@ function dev_relaunch () {
 				<template v-slot:intro>用于测试文字渲染。<br>在右边的第一行填入一些文字，第二行填入一个字体名称，看看下面会如何渲染出来。<br>文字框同时也是一个密码框，可以用来检查密码框的实现效果。</template>
 				<InputText password show-password v-model="fontTestText"></InputText>
 				<InputText v-model="fontTestFontFamily"></InputText>
-				<div class="shown-box" :style="[{ fontSize: '13px'}, fontTestShownStyle]">{{ fontTestText }}</div>
+				<div class="shown-box" :style="fontTestShownStyle">{{ fontTestText }}</div>
 			</SettingItem>
 			<SettingItem
 				group="dev"
 				name="Test Switcher">
 				<template v-slot:intro>用于测试开关按钮。<br>当前状态：{{ testSwitcher ? "ON" : "off" }}</template>
 				<InputSwitcher v-model="testSwitcher"></InputSwitcher>
+			</SettingItem>
+			<SettingItem
+				group="dev"
+				name="Test <UseIt>">
+				<template v-slot:intro>用于测试 VueUse 的功能运作。</template>
+				<UseMouse v-slot="{x,y}"><UseMousePressed v-slot="{pressed}"><UseMouseInElement v-slot="{elementX,elementY,isOutside}">
+					<div class="shown-box">
+						<span>Mouse Position: {{x}}:{{y}}</span><br>
+						<span>Pressed: {{ pressed }}</span><br>
+						<span>Is in Element: <template v-if="isOutside">not in</template><template v-else>in @ {{elementX}}:{{elementY}}</template></span><br>
+					</div>
+				</UseMouseInElement></UseMousePressed></UseMouse>
 			</SettingItem>
 			<SettingItem
 				group="dev"
@@ -287,6 +249,7 @@ function dev_relaunch () {
 	border-radius: 5px;
 	background-color: @input-button-disabled-bg;
 	padding: 10px;
+	font-size: 13px;
 }
 
 .page-setting {
