@@ -1,37 +1,38 @@
 <script setup lang="ts">
 
 import I from '@renderer/components/util/I.vue';
-import { Icon } from './icon';
+
 import { computed, ref } from 'vue';
-import toast from '@renderer/components/app_cover/toast/toast';
+import { useMouseInElement } from '@vueuse/core';
+import { Icon } from './icon';
+import { logicNot, logicOr } from '@vueuse/math';
+import { clipboard_write } from '@renderer/utils/api';
 
 const props = defineProps<{
 	icon: Icon
 }>()
 
-const use_char = ref(false);
-const use_class = ref(false);
-const use_hex = ref(false);
+const el_useChar = ref<HTMLInputElement|null>(null);
+const el_useClass = ref<HTMLInputElement|null>(null)
+const el_useHex = ref<HTMLInputElement|null>(null);
+const el_useName = ref<HTMLInputElement|null>(null);
 
-const current_display = computed(() => {
+const use_char = logicNot(useMouseInElement(el_useChar).isOutside);
+const use_class = logicNot(useMouseInElement(el_useClass).isOutside);
+const use_hex = logicNot(useMouseInElement(el_useHex).isOutside);
+const use_name = logicNot(useMouseInElement(el_useName).isOutside);
+
+const current_display = computed<string>(() => {
 	if (use_char.value) return props.icon.char;
 	if (use_class.value) return `nf-${props.icon.name}`;
 	if (use_hex.value) return `\\u${props.icon.code}`;
 	return props.icon.name;
 })
 
-const current_is_value = computed(() => {
-	return use_char.value || use_hex.value || use_class.value
-})
+const current_is_value = logicOr(use_char, use_hex, use_class, use_name)
 
 function copyToClipboard () {
-	const using: string = current_display.value;
-	window.api.clipboard.writeText(using);
-	toast.add({
-		icon: 'nf-md-clipboard_edit',
-		text: `成功复制到剪贴板：${using}`,
-		clearTimeout: toast.clear_timeout.short
-	})
+	clipboard_write(current_display.value);
 }
 
 </script>
@@ -41,15 +42,15 @@ function copyToClipboard () {
 	<div class="icon-preview">
 		
 		<div class="toolbar">
-			<button @click="copyToClipboard" @mouseenter="use_char = true" @mouseleave="use_char = false"><I i="nf-fa-font"></I></button>
-			<button @click="copyToClipboard" @mouseenter="use_class = true" @mouseleave="use_class = false"><I i="nf-fa-hashtag"></I></button>
-			<button @click="copyToClipboard" @mouseenter="use_hex = true" @mouseleave="use_hex = false"><I i="nf-md-unicode"></I></button>
+			<button @click="copyToClipboard" class="char" ref="el_useChar"><I i="nf-fa-font"></I></button>
+			<button @click="copyToClipboard" class="class" ref="el_useClass"><I i="nf-fa-hashtag"></I></button>
+			<button @click="copyToClipboard" class="hex" ref="el_useHex"><I i="nf-md-unicode"></I></button>
 		</div>
 		
 		<div class="blank"></div>
 		<I class="show" :i="`nf-${icon.name}`"></I>
 		<div class="blank"></div>
-		<div :class="['info', 'icon-name', { 'current-active': current_is_value }]">{{ current_display }}</div>
+		<div :class="['info', 'icon-name', { 'current-active': current_is_value }]" ref="el_useName" @click="copyToClipboard">{{ current_display }}</div>
 		
 	</div>
 	

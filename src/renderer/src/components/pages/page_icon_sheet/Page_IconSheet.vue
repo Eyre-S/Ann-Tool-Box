@@ -1,14 +1,16 @@
 <script setup lang="ts">
 
-import IconPreview from "./IconPreview.vue";
-import InputText from '@renderer/components/util/controller/InputText.vue';
 import PageCard from '@renderer/components/util/page/PageCard.vue';
+import IconPreview from "./IconPreview.vue";
 import AboutVersionTag from "@renderer/components/main/about/AboutVersionTag.vue";
+import InputText from '@renderer/components/util/controller/InputText.vue';
 import H1 from "@renderer/components/util/page/H1.vue";
 import P from "@renderer/components/util/page/P.vue";
 import A from "@renderer/components/util/page/A.vue";
-import { computed, reactive, ref, watch } from 'vue';
+
+import { computed, reactive, ref } from 'vue';
 import { Icon } from "./icon";
+import { refDebounced } from '@vueuse/core';
 
 // available icons.
 // read from a json which is from NerdFont repositories.
@@ -34,19 +36,7 @@ new Promise(() => {
 // it can reduce too much caculated on each character inputed.
 
 const input_id = ref("");
-
-const delayed_input = ref("");
-var delayed_active_timer: NodeJS.Timer|undefined;
-const delayed_ms = 400;
-
-watch(input_id, (new_v) => {
-	
-	clearTimeout(delayed_active_timer);
-	delayed_active_timer = setTimeout(() => {
-		delayed_input.value = new_v;
-	}, delayed_ms);
-	
-})
+const delayed_input = refDebounced(input_id, 400);
 
 const icons_listing = computed<Icon[]>(() => {
 	return available_icons.filter(v => {

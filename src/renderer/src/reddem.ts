@@ -3,6 +3,8 @@ import config from "@renderer/config";
 
 const reddems: Array<(credit: string) => Promise<boolean>> = [
 	
+	//--- test
+	// "test"
 	async credit => {
 		if (credit == "test") {
 			toast.add({
@@ -15,6 +17,8 @@ const reddems: Array<(credit: string) => Promise<boolean>> = [
 		return false;
 	},
 	
+	//--- debug mode
+	// "--debug@version"
 	async credit => {
 		const version = await window.api.app.getVersion();
 		if (credit == `--debug@${version}`) {

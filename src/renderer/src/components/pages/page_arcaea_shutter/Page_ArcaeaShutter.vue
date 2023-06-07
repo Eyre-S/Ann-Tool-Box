@@ -31,7 +31,7 @@ const preview_height = ref(340);
 		
 		<H1>Arcaea Shutter - Splash Animation Demo</H1>
 		
-		<P>Set Theme <small>(current: {{ shutter_theme?shutter_theme:"default" }})</small></P>
+		<P>Set Theme <small>(current: {{ shutter_theme ?? "default" }})</small></P>
 		<div class="button-set">
 			<InputButton @click="change_theme(undefined)">default</InputButton>
 			<InputButton @click="change_theme('fractureray')">Fracture Ray</InputButton>

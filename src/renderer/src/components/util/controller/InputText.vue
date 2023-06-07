@@ -31,8 +31,7 @@ const value = computed({
 	}
 })
 
-const showPassword = ref<boolean>(props.showPassword?props.showPassword:false);
-
+const showPassword = ref<boolean>(props.showPassword??false);
 function toggleShowPassword () {
 	showPassword.value = !showPassword.value;
 }

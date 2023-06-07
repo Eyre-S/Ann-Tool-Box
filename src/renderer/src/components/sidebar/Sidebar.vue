@@ -7,11 +7,9 @@ import config from '@renderer/config';
 
 const sidebarIsOpening = config.__session_status.sidebar.is_open.v;
 
-const sidebarClass = computed(()=>{
-	return {
+const sidebarClass = computed(()=>{ return {
 		opening: sidebarIsOpening.value
-	}
-})
+}})
 
 function sidebarToggle () {
 	sidebarIsOpening.value = !sidebarIsOpening.value;

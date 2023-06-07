@@ -11,29 +11,20 @@ const props = defineProps<{
 	theme?: ShutterTheme
 }>()
 
-const shutter_name_suffix = computed(() => {
-	return props.theme==undefined ? "" : `_${props.theme}`;
-});
-
-const shutter_theme_class = computed(() => {
-	return props.theme==undefined ? "theme-default" : `theme-${props.theme}`;
-});
-
+const shutter_name_suffix = computed(() => props.theme ? `_${props.theme}`: "" );
+const shutter_theme_class = computed(() => props.theme ? `theme-${props.theme}` : "theme-default" );
 const shutter_url = computed(() => { return {
 	left: new URL("../../../assets/arcaea/shutter_l" + shutter_name_suffix.value + ".png", import.meta.url).href,
 	right: new URL("../../../assets/arcaea/shutter_r" + shutter_name_suffix.value + ".png", import.meta.url).href
 }})
 
 const on_transiton = ref(false);
-
 function set_on () {
 	on_transiton.value = true;
 }
-
 function set_off () {
 	on_transiton.value = false;
 }
-
 function set_timeout (ms: number = 1500) {
 	set_on();
 	return setTimeout(set_off, ms);

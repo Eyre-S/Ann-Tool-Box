@@ -9,15 +9,10 @@ const props = defineProps<{
 	model: Toast
 }>()
 
-const showingIcon = computed<string|undefined>(() => {
-	return props.model.icon != undefined ? props.model.icon : props.model.type?.default_icon
-})
+const showingIcon = computed(() => props.model.icon ?? props.model.type?.default_icon )
 
-const check_button_show = computed<boolean>(() => {
-	return props.model.checkedButton !== null;
-})
-
-function on_checked () {
+const isShow_checkButton = computed<boolean>(() => props.model.checkedButton !== null )
+function on_checkButton_click () {
 	props.model.remove_this();
 }
 
@@ -33,7 +28,7 @@ function toast_onLostFocus () {
 	props.model.timeout_set();
 }
 
-function component () {
+function get_contentComponent () {
 	return props.model.text;
 }
 
@@ -46,11 +41,11 @@ function component () {
 		<div v-if="model.timeout_timer !== undefined" class="progress-bar" :style="progress_bar_animationStyle"></div>
 		
 		<div class="buttons">
-			<button v-if="check_button_show" @click="on_checked"><I :i="model.checkedButton == undefined ? 'nf-fa-check' : model.checkedButton"></I></button>
+			<button v-if="isShow_checkButton" @click="on_checkButton_click"><I :i="model.checkedButton ?? 'nf-fa-check'"></I></button>
 			<button v-for="btn in model.buttons" @click="event => btn.onclick(event, model)"><I :i="btn.icon"></I></button>
 		</div>
 		
-		<div class="content"><component :is="component"></component></div>
+		<div class="content"><component :is="get_contentComponent"></component></div>
 		
 		<div class="toast-icon" v-if="showingIcon">
 			<I :i="showingIcon"></I>

@@ -3,6 +3,7 @@
 import { ref, computed } from 'vue'
 import { useMouse, useMousePressed, useElementBounding, whenever } from '@vueuse/core'
 import { usePrecision } from '@vueuse/math'
+import { clamp } from '@renderer/utils/math'
 
 
 const props = withDefaults(defineProps<{
@@ -29,7 +30,7 @@ const value = computed({
 
 const valuePercent = computed(() => {
 	const result: number = (value.value-props.min) / (props.max-props.min)
-	return ((result > 1) ? 1 : (result < 0 ? 0 : result))
+	return clamp(0, result, 1)
 })
 
 //---
@@ -61,9 +62,7 @@ function on_changeProgress () {
 	
 	const mouse_changed = mouseX.value - startingX.value;
 	const value_todo = startingValue.value + (mouse_changed * i);
-	if (value_todo > props.max) value.value = props.max;
-	else if (value_todo < props.min) value.value = props.min;
-	else value.value = usePrecision(value_todo, props.precision).value;
+	value.value = clamp(props.min, usePrecision(value_todo, props.precision).value, props.max);
 	
 }
 

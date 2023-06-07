@@ -13,11 +13,9 @@ import { page_active } from '../pages';
 
 const showAppIconMenu = ref(false);
 
-const showAppIconMenuStyle = computed(() => {
-	return {
+const showAppIconMenuStyle = computed(() => { return {
 		display: showAppIconMenu.value ? 'block' : 'none'
-	}
-})
+}})
 
 function setupOpenMenu (): void {
 	openMenu();
