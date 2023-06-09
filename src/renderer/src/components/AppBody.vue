@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import Scrollable from './util/Scrollable.vue';
 import Sidebar from './sidebar/Sidebar.vue';
 import AppCoverToast from './app_cover/toast/AppCover.vue';
 
@@ -14,9 +15,18 @@ import config from "@renderer/config";
 		
 		<Sidebar class="sidebar"></Sidebar>
 		<div class="main-box">
-			<main class="main-body">
-				<component :is="page_active.component"></component>
-			</main>
+			<template v-if="config.ui.use_custom_scrollbar.v.value">
+				<main class="main-body">
+					<Scrollable :overflow="{x: 'hidden', y: 'overlay'}">
+						<component :is="page_active.component"></component>
+					</Scrollable>
+				</main>
+			</template>
+			<template v-else>
+				<main class="main-body" style="overflow-y: overlay;">
+					<component :is="page_active.component"></component>
+				</main>
+			</template>
 		</div>
 		
 		<AppCoverToast id="app-cover-toast"></AppCoverToast>
@@ -51,10 +61,9 @@ import config from "@renderer/config";
 			bottom: 0;
 			left: 0;
 			right: 0;
-			overflow: hidden;
-			overflow-y: overlay;
 			
 			border-radius: 10px;
+			overflow: hidden;
 			
 		}
 	}

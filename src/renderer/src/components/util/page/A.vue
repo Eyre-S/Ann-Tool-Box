@@ -20,7 +20,7 @@ defineProps<{
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 a {
 	color: @pages-element-link-text;

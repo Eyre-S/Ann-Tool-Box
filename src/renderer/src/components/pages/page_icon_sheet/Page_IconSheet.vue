@@ -89,7 +89,7 @@ const icons_listing = computed<Icon[]>(() => {
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .blank {
 	height: 3em;

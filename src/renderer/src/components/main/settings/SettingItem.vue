@@ -58,7 +58,7 @@ const isShowTag_restartRequire = computed<boolean>(() => props.restartRequire &&
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .setting-item {
 	

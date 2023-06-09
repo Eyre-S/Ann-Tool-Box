@@ -8,7 +8,7 @@
 
 <style lang="less" scoped>
 
-@import "../../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .dbg-value {
 	color: @setting-item-debug-description-text;

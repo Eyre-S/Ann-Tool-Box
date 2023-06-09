@@ -14,7 +14,7 @@ defineProps<{
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 button.input.button {
 	

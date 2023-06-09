@@ -30,7 +30,7 @@ const value = computed({
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 @switcher-size: 30px;
 @switcher-border-radius: 5px;

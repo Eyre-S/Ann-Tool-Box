@@ -28,7 +28,7 @@ function window_close() {
 
 <style scoped lang="less">
 
-@import "../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .window-controller {
 	

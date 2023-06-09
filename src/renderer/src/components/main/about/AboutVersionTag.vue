@@ -33,7 +33,7 @@ const iconIsNFIcon = computed<boolean>(() => {
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .tag.version-tag {
 	

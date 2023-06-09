@@ -81,13 +81,12 @@ function on_changeProgress () {
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .input.slider {
 	
 	font-size: 12px;
 	font-family: @font-code;
-	color: @input-text-text;
 	line-height: 1;
 	
 	display: flex;
@@ -100,7 +99,7 @@ function on_changeProgress () {
 		height: 1.8em;
 		width: 100%;
 		border-radius: 0.3em;
-		background-color: #ffffff;
+		background-color: @input-slider-bg;
 		
 		display: flex;
 		flex-direction: row;
@@ -121,8 +120,8 @@ function on_changeProgress () {
 				display: flex;
 				align-items: center;
 				
-				background-color: #c8dcf7;
-				color: #558cd3;
+				background-color: @input-slider-tag;
+				color: @input-slider-text;
 				border-radius: 0.3em;
 				cursor: move;
 				

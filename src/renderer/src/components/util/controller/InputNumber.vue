@@ -43,7 +43,7 @@ const value = computed({
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .input.text {
 	

@@ -51,7 +51,7 @@ defineExpose({
 
 <style lang="less" scoped>
 
-@import "../../../assets/arcaea/values.less";
+@import "@renderer/assets/arcaea/values.less";
 
 .arcaea-shutter-box {
 	height: 340px;

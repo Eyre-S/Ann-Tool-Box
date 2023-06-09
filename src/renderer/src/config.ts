@@ -69,6 +69,7 @@ export const defaults = {
 	
 	ui: {
 		use_native_frame: new ConfigNode<boolean>('ui.use-native-frame', false),
+		use_custom_scrollbar: new ConfigNode<boolean>("ui.use-custom-scrollbar", true),
 	},
 	
 	dev: {

@@ -33,7 +33,7 @@ const iconStatus = computed(()=> { return {
 <style scoped lang="less">
 
 @import url("sidebar-vars.less");
-@import "../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .item-box {
 	

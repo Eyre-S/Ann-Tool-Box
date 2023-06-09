@@ -14,7 +14,7 @@ defineProps<{
 
 <style scoped lang="less">
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .menu-item {
 	

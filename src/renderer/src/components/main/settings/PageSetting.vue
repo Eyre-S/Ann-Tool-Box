@@ -138,6 +138,13 @@ function dev_relaunch () {
 			<SettingItem
 				group="ui"
 				name="Use Native Title Bar"
+				:config-node-module="config.ui.use_custom_scrollbar">
+				<template #intro>使用深度自定义的页面滚动条。<br>深度自定义的页面滚动条将有更好的滚动时外观，但无法拖动同时或许在更加原生的功能上有欠缺。<br/>如果你使用时遇到了一些问题，推荐关闭此功能回滚到原生滚动条。</template>
+				<InputSwitcher v-model="config.ui.use_custom_scrollbar.v.value"></InputSwitcher>
+			</SettingItem>
+			<SettingItem
+				group="ui"
+				name="Use Native Title Bar"
 				:config-node-module="config.ui.use_native_frame"
 				restart-require>
 				<template #intro>使用系统原生的窗口标题栏而不是程序自定义的标题栏。<br>需要重启程序才能生效。</template>
@@ -241,7 +248,7 @@ function dev_relaunch () {
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .shown-box {
 	border-radius: 5px;

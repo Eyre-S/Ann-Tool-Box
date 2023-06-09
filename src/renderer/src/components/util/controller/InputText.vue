@@ -54,7 +54,7 @@ const labelType = computed<'text'|'password'>(() => {
 
 <style lang="less" scoped>
 
-@import "../../../assets/css/theme.less";
+@import "@renderer/assets/css/theme.less";
 
 .input.text {
 	
