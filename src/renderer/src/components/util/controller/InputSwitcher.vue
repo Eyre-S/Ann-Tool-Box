@@ -6,7 +6,9 @@ const props = defineProps<{
 	modelValue: boolean
 }>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+	'update:modelValue': [value: boolean]
+}>()
 
 const value = computed({
 	get() {
