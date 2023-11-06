@@ -1,14 +1,18 @@
 import { markRaw, reactive, Ref, ref } from "vue";
+import config from '../config';
 
 import PageHome from "./main/PageHome.vue"
 import PageSetting from "./main/settings/PageSetting.vue"
 
 import Page_IconSheet from "./pages/page_icon_sheet"
 import Page_ArcaeaShutter from "./pages/page_arcaea_shutter";
+import page_color_chooser from "./pages/page_color_chooser";
+import page_test from "./pages/page_test";
 
 interface IPageConfigs {
 	title: string,
 	icon: string,
+	debugOnly?: boolean,
 	isAfter?: boolean,
 	isHome?: boolean
 }
@@ -23,6 +27,13 @@ export class Page {
 		this.component = markRaw(component);
 		this.id = id;
 		this.config = config;
+	}
+	
+	public isShow (isInAfter: boolean): boolean {
+		if (this.config.debugOnly && !config.dev.enabled.v.value) return false;
+		if (this.config.isAfter) return isInAfter;
+		else return !isInAfter;
+		return false;
 	}
 
 }
@@ -51,6 +62,8 @@ export const pages: Array<Page> = reactive([
 	
 	new Page(Page_IconSheet.page, 'icon-sheet', Page_IconSheet.config),
 	new Page(Page_ArcaeaShutter.Page, 'arcaea-shutter', Page_ArcaeaShutter.config),
+	new Page(page_color_chooser.Page, 'color-chooser', page_color_chooser.config),
+	new Page(page_test.page, 'tests', page_test.config),
 	
 	// empty
 	

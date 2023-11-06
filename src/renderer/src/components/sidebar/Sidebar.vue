@@ -31,7 +31,7 @@ function sidebarToggle () {
 				
 				<template v-for="page of pages">
 					<SidebarItem
-							v-if="page.config.isAfter !== true"
+							v-if="page.isShow(false)"
 							:uname="page.config.title"
 							:icon="page.config.icon"
 							:active="page.id === page_active.id"
@@ -43,7 +43,7 @@ function sidebarToggle () {
 				
 				<template v-for="page of pages">
 					<SidebarItem
-							v-if="page.config.isAfter === true"
+							v-if="page.isShow(true)"
 							:uname="page.config.title"
 							:icon="page.config.icon"
 							:active="page.id === page_active.id"
