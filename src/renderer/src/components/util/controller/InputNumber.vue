@@ -1,10 +1,6 @@
 <script setup lang="ts">
 
-import { computed } from 'vue';
-
-const props = defineProps<{
-	
-	modelValue: number,
+defineProps<{
 	
 	disabled?: boolean,
 	placeholder?: string,
@@ -16,18 +12,9 @@ const props = defineProps<{
 	
 }>()
 
-const emit = defineEmits<{
-	'update:modelValue': [value: number]
+const { modelValue: value } = defineModels<{
+	modelValue: string
 }>()
-
-const value = computed({
-	get() {
-		return props.modelValue
-	},
-	set(value) {
-		emit('update:modelValue', value)
-	}
-})
 
 </script>
 

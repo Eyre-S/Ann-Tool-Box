@@ -4,8 +4,6 @@ import { computed, ref } from 'vue';
 
 const props = defineProps<{
 	
-	modelValue: string,
-	
 	disabled?: boolean,
 	placeholder?: string,
 	
@@ -18,18 +16,9 @@ const props = defineProps<{
 	
 }>()
 
-const emit = defineEmits<{
-	'update:modelValue': [value: string]
+const { modelValue: value } = defineModels<{
+	modelValue: string
 }>()
-
-const value = computed({
-	get() {
-		return props.modelValue
-	},
-	set(value) {
-		emit('update:modelValue', value)
-	}
-})
 
 const showPassword = ref<boolean>(props.showPassword??false);
 function toggleShowPassword () {

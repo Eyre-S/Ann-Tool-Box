@@ -4,11 +4,11 @@ import PageCard from '@renderer/components/util/page/PageCard.vue';
 import H1 from '@renderer/components/util/page/H1.vue';
 import P from '@renderer/components/util/page/P.vue';
 import InputButton from '@renderer/components/util/controller/InputButton.vue';
-import { computed, reactive, ref } from 'vue';
+import { reactive } from 'vue';
 
-const count = ref(0)
-const react = reactive(count);
-const obj = computed(() => { return react.value > 0 })
+const count = $ref(0)
+const react = reactive($$(count))
+const obj = $computed(() => { return count > 0 })
 
 </script>
 

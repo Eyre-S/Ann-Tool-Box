@@ -7,7 +7,6 @@ import { clamp } from '@renderer/utils/math'
 
 
 const props = withDefaults(defineProps<{
-	modelValue: number
 	min: number
 	max: number
 	precision?: number
@@ -15,18 +14,9 @@ const props = withDefaults(defineProps<{
 	precision: 0
 })
 
-const emit = defineEmits<{
-	'update:modelValue': [value: number]
+const { modelValue: value } = defineModels<{
+	modelValue: number
 }>()
-
-const value = computed({
-	get() {
-		return props.modelValue
-	},
-	set(value) {
-		emit('update:modelValue', value)
-	}
-})
 
 const valuePercent = computed(() => {
 	const result: number = (value.value-props.min) / (props.max-props.min)
