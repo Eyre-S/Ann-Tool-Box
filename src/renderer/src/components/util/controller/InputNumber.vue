@@ -13,7 +13,7 @@ defineProps<{
 }>()
 
 const { modelValue: value } = defineModels<{
-	modelValue: string
+	modelValue: number
 }>()
 
 </script>

@@ -10,8 +10,10 @@ import InputSlider from '@renderer/components/util/controller/InputSlider.vue';
 
 import { ref } from 'vue';
 import { ShutterTheme } from './ArcaeaShutterBox.vue';
+import { useElementSize } from '@vueuse/core';
 
 const shutter = ref<InstanceType<typeof ArcaeaShutterBox>|null>(null);
+const shutter_size = useElementSize(shutter)
 const shutter_theme = ref<ShutterTheme>();
 
 const shutter_timeout_ms = ref(2000);
@@ -52,7 +54,7 @@ const preview_height = ref(340);
 			<InputButton @click="shutter?.set_timeout(shutter_timeout_ms)">Start Timeout</InputButton>
 		</div>
 		
-		<P>Preview Size</P>
+		<P>Preview Size <small>(width:height = {{ (shutter_size.width.value / shutter_size.height.value).toFixed(1) }}:1)</small></P>
 		<div class="button-set">
 			<InputSlider v-model="preview_height" :min="100" :max="2000 "></InputSlider>
 		</div>
