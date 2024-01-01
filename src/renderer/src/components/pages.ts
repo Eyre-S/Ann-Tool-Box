@@ -8,6 +8,8 @@ import Page_IconSheet from "./pages/page_icon_sheet"
 import Page_ArcaeaShutter from "./pages/page_arcaea_shutter";
 import page_color_chooser from "./pages/page_color_chooser";
 import page_test from "./pages/page_test";
+import page_randomize from "./pages/page_randomize";
+import page_list_comp from "./pages/page_list_comp";
 
 interface IPageConfigs {
 	title: string,
@@ -64,6 +66,8 @@ export const pages: Array<Page> = reactive([
 	new Page(Page_ArcaeaShutter.Page, 'arcaea-shutter', Page_ArcaeaShutter.config),
 	new Page(page_color_chooser.Page, 'color-chooser', page_color_chooser.config),
 	new Page(page_test.page, 'tests', page_test.config),
+	new Page(page_list_comp.page, 'list-comp', page_list_comp.config),
+	new Page(page_randomize.page, 'randomize', page_randomize.config),
 	
 	// empty
 	
