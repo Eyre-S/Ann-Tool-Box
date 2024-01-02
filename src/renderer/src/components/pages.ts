@@ -16,7 +16,8 @@ interface IPageConfigs {
 	icon: string,
 	debugOnly?: boolean,
 	isAfter?: boolean,
-	isHome?: boolean
+	isHome?: boolean,
+	isPreview?: boolean,
 }
 
 export class Page {
@@ -33,9 +34,9 @@ export class Page {
 	
 	public isShow (isInAfter: boolean): boolean {
 		if (this.config.debugOnly && !config.dev.enabled.v.value) return false;
+		if (this.config.isPreview && !config.features.use_preview_features.v.value) return false;
 		if (this.config.isAfter) return isInAfter;
 		else return !isInAfter;
-		return false;
 	}
 
 }
@@ -64,14 +65,15 @@ export const pages: Array<Page> = reactive([
 	
 	new Page(Page_IconSheet.page, 'icon-sheet', Page_IconSheet.config),
 	new Page(Page_ArcaeaShutter.Page, 'arcaea-shutter', Page_ArcaeaShutter.config),
-	new Page(page_color_chooser.Page, 'color-chooser', page_color_chooser.config),
-	new Page(page_test.page, 'tests', page_test.config),
 	new Page(page_list_comp.page, 'list-comp', page_list_comp.config),
+	new Page(page_color_chooser.Page, 'color-chooser', page_color_chooser.config),
 	new Page(page_randomize.page, 'randomize', page_randomize.config),
+	new Page(page_test.page, 'tests', page_test.config),
 	
 	// empty
 	
 	page_settings
+	
 ]);
 
 export const page_active: Ref<Page> = ref(page_home);

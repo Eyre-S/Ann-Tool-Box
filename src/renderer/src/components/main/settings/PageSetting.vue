@@ -153,6 +153,20 @@ function dev_relaunch () {
 			
 		</PageCard>
 		
+		
+		<PageCard>
+			
+			<h2><I i="nf-md-dock_window"></I> 功能</h2>
+			<SettingItem
+				group="features"
+				name="Use Preview Features"
+				:config-node-module="config.features.use_preview_features">
+				<template #intro>开启预览功能。</template>
+				<InputSwitcher v-model="config.features.use_preview_features.v.value"></InputSwitcher>
+			</SettingItem>
+			
+		</PageCard>
+		
 		<PageCard v-if="config.dev.enabled.v.value">
 			<h2><I i="nf-md-bug"></I> 调试</h2>
 			<SettingItem

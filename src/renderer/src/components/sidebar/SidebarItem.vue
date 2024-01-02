@@ -8,6 +8,8 @@ const props = defineProps<{
 	icon: string
 	isSpecial?: boolean
 	active?: boolean
+	flagTestOnly?: boolean
+	flagPreviewOnly?: boolean
 }>()
 
 const iconStatus = computed(()=> { return {
@@ -19,7 +21,7 @@ const iconStatus = computed(()=> { return {
 
 <template>
 	
-	<div :class="['item-box', { 'sp': isSpecial, 'active': active }]">
+	<div :class="['item-box', { 'sp': isSpecial, 'active': active, 'flag-test': flagTestOnly, 'flag-preview': flagPreviewOnly }]">
 		<div class="content">
 			<div class="icon-container">
 				<I :class="['icon', iconStatus]" :i="icon"></I>
@@ -100,6 +102,7 @@ const iconStatus = computed(()=> { return {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			position: relative;
 			
 			> .icon {
 				
@@ -120,6 +123,22 @@ const iconStatus = computed(()=> { return {
 			
 		}
 		
+	}
+	
+	&.flag-test > .content > .icon-container ::after {
+		content: '•';
+		position: absolute;
+		right: 8%;
+		top: 8%;
+		color: #2385f569;
+	}
+	
+	&.flag-preview > .content > .icon-container ::after {
+		content: '•';
+		position: absolute;
+		right: 8%;
+		top: 8%;
+		color: #41c24569;
 	}
 	
 }

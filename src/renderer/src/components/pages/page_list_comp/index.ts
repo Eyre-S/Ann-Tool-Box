@@ -7,7 +7,6 @@ export default {
 	config: {
 		title: "List Compare",
 		icon: 'nf-cod-list_selection',
-		debugOnly: true
 	}
 	
 }

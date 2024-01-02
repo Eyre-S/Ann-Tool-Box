@@ -72,6 +72,10 @@ export const defaults = {
 		use_custom_scrollbar: new ConfigNode<boolean>("ui.use-custom-scrollbar", true),
 	},
 	
+	features: {
+		use_preview_features: new ConfigNode<boolean>('features.use-preview-features', false),
+	},
+	
 	dev: {
 		enabled: new ConfigNode<boolean>('dev.enabled', false),
 		setting_show_debug_info: new ConfigNode<boolean>('dev.setting-show-debug-info', false),

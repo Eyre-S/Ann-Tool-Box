@@ -35,6 +35,8 @@ function sidebarToggle () {
 							:uname="page.config.title"
 							:icon="page.config.icon"
 							:active="page.id === page_active.id"
+							:flagTestOnly="page.config.debugOnly"
+							:flagPreviewOnly="page.config.isPreview"
 							@click="page_setActive(page)">
 					</SidebarItem>
 				</template>
@@ -47,6 +49,8 @@ function sidebarToggle () {
 							:uname="page.config.title"
 							:icon="page.config.icon"
 							:active="page.id === page_active.id"
+							:flagTestOnly="page.config.debugOnly"
+							:flagPreviewOnly="page.config.isPreview"
 							@click="page_setActive(page)">
 					</SidebarItem>
 				</template>

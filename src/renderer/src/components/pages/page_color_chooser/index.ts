@@ -6,7 +6,8 @@ export default {
 	
 	config: {
 		title: "Color Chooser",
-		icon: 'nf-cod-symbol_color'
+		icon: 'nf-cod-symbol_color',
+		isPreview: true,
 	}
 	
 }

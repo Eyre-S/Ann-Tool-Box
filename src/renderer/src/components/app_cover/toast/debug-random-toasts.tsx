@@ -16,6 +16,7 @@ export function gen_randomToast (): ToastDefination {
 			undefined,
 			toast.types.ERROR,
 			toast.types.DEV,
+			toast.types.WARN
 		),
 		icon: randoms.one(
 			undefined, undefined, undefined, undefined, undefined, undefined,

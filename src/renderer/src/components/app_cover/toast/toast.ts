@@ -17,6 +17,11 @@ export class ToastTypes {
 		default_icon: "nf-md-ladybug",
 	}
 	
+	public static readonly WARN: ToastType = {
+		css_class: "type-warn",
+		default_icon: "nf-fa-warning",
+	}
+	
 }
 
 export interface ToastButton {

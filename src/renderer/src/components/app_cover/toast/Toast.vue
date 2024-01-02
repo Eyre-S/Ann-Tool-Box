@@ -80,6 +80,13 @@ function get_contentComponent () {
 	--color-button-bg-focus: #0048ff;
 }
 
+.toast-item.type-warn {
+	--color-bg-unfocus: #f7bfa7;
+	--color-bg-focus: #fd9a70;
+	--color-button-text: #ffddce;
+	--color-button-bg-focus: #f88b42;
+}
+
 .toast-item {
 	
 	border-radius: 8px;

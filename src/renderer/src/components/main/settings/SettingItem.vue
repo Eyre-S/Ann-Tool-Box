@@ -1,11 +1,12 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 
 import { ConfigNode } from '@renderer/config';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 
 import DbgOnly from '@renderer/components/util/page/dbg/DbgOnly.vue';
 import DbgInfo from '@renderer/components/util/page/dbg/DbgInfo.vue';
 import DbgValue from '@renderer/components/util/page/dbg/DbgValue.vue';
+import toast from '@renderer/components/app_cover/toast/toast';
 
 
 const props = defineProps<{
@@ -20,6 +21,18 @@ const props = defineProps<{
 
 const isShowTag_modified = computed<boolean>(() => props.configNodeModule?.is_modified.value == true )
 const isShowTag_restartRequire = computed<boolean>(() => props.restartRequire && props.configNodeModule?.is_modified_after_load.value==true )
+watch(
+	isShowTag_restartRequire,
+	() => {
+		if (isShowTag_restartRequire.value == true) {
+			toast.add({
+				type: toast.types.WARN,
+				text: <><b>已更改 <u>{ props.name }</u></b><br/>这是一个特殊的设置，需要重启 App 以后才能应用变更。</>,
+				clearTimeout: toast.clear_timeout.short
+			})
+		}
+	}
+)
 
 </script>
 
