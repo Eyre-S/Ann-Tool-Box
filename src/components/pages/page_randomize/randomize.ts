@@ -1,4 +1,4 @@
-export class RandomizeItem {
+export interface RandomizeItem {
 	typeName: string
 	parameters: any[]
 }

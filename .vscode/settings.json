@@ -7,5 +7,10 @@
 	},
 	"svg.preview.background": "editor",
 	"typescript.tsdk": "node_modules/typescript/lib",
-	"iis.configDir": ""
+	"iis.configDir": "",
+	"cSpell.words": [
+		"tauri",
+		"unplugin",
+		"vueuse"
+	]
 }

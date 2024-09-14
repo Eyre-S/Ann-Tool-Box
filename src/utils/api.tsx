@@ -11,12 +11,3 @@ export function open_syspath (path: string) {
 		// });
 	else toast.add({ type: toast.types.ERROR, text: "无法打开文件：路径为空。", clearTimeout: 8000 });
 }
-
-export function clipboard_write (text: string) {
-	// window.api.clipboard.writeText(text); // TODO: Native call
-	toast.add({
-		icon: 'nf-md-clipboard_edit',
-		text: <>已复制到剪贴板: <br/><small>{text}</small></>,
-		clearTimeout: toast.clear_timeout.short
-	})
-}

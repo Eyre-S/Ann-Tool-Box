@@ -6,7 +6,7 @@ import { computed, ref } from 'vue';
 import { useMouseInElement } from '@vueuse/core';
 import { Icon } from './icon';
 import { logicNot, logicOr } from '@vueuse/math';
-import { clipboard_write } from '@/utils/api';
+import clipboard from '@/app/clipboard';
 
 const props = defineProps<{
 	icon: Icon
@@ -32,7 +32,7 @@ const current_display = computed<string>(() => {
 const current_is_value = logicOr(use_char, use_hex, use_class, use_name)
 
 function copyToClipboard () {
-	clipboard_write(current_display.value);
+	clipboard.write(current_display.value);
 }
 
 </script>

@@ -17,15 +17,11 @@ import app_icon from "@/assets/icon.png";
 
 import { reactive, ref } from 'vue';
 import { tryReddem } from "@/reddem";
+import app from "@/app/app";
 
-const app_version = ref<string>();
-// window.api.app.getVersion().then(v => app_version.value = v);
-// const versions = reactive({ ...window.electron.process.versions });
+const app_version = ref<string>(app.app_version);
 const versions = reactive({
-	electron: "not found",
-	chrome: "not found",
-	node: "not found",
-	v8: "not found",
+	tauri: app.app_tauri_version,
 })
 
 const credit_reddem_key = ref("");
@@ -47,21 +43,9 @@ const credit_reddem_key = ref("");
 			</template>
 			<template v-slot:versions-framework>
 				<AboutVersionTag
-					icon="nf-md-electron_framework"
-					name="Electron"
-					:version="versions.electron"></AboutVersionTag>
-				<AboutVersionTag
-					icon="nf-md-google_chrome"
-					name="Chromium"
-					:version="versions.chrome"></AboutVersionTag>
-				<AboutVersionTag
-					icon="nf-md-nodejs"
-					name="NodeJS"
-					:version="versions.node"></AboutVersionTag>
-				<AboutVersionTag
-					icon="nf-md-nodejs"
-					name="NodeJS v8"
-					:version="versions.v8"></AboutVersionTag>
+					icon="nf-fa-chain"
+					name="Tauri"
+					:version="versions.tauri"></AboutVersionTag>
 			</template>
 		</AboutTitle>
 		

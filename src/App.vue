@@ -52,13 +52,16 @@ import config from './config';
 		
 	}
 	
+	// width: calc(100vw - @window-outer-size * 2);
+	// height: calc(100vh - @window-outer-size * 2);
 	width: 100vw;
 	height: 100vh;
 	padding: 0;
 	margin: 0;
 	
-	border-radius: 20px;
+	// border-radius: 20px;
 	background: @window-bg;
+	// box-shadow: 0 0 20px -10px #888888aa;
 	
 	display: flex;
 	flex-direction: column;

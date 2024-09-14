@@ -1,16 +1,20 @@
 <script setup lang="ts">
 
-import { window as tauriWindow } from '@tauri-apps/api';
+import { webviewWindow } from '@tauri-apps/api';
 import I from '../util/I.vue';
 
-const appWindow = tauriWindow.appWindow;
+const appWindow = webviewWindow.getCurrentWebviewWindow();
 
 function window_minimal() {
 	appWindow.minimize();
 }
 
-function window_maxize() {
-	appWindow.maximize();
+async function window_maxize() {
+	if (await appWindow.isMaximized()) {
+		appWindow.unmaximize()
+	} else {
+		appWindow.maximize();
+	}
 }
 
 function window_close() {

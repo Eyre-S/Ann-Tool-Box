@@ -87,6 +87,7 @@ function closeMenu (): void {
 	height: 100%;
 	flex: 1;
 	-webkit-app-region: drag;
+	cursor: move;
 }
 
 #window-controller {

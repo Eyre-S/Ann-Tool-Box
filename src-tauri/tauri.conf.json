@@ -1,36 +1,31 @@
 {
 	
 	"build": {
-		"beforeDevCommand": "yarn dev",
-		"beforeBuildCommand": "yarn build",
-		"devPath": "http://localhost:1420",
-		"distDir": "../dist"
+		"beforeDevCommand": "yarn js-dev",
+		"beforeBuildCommand": "yarn js-build",
+		"frontendDist": "../dist",
+		"devUrl": "http://localhost:1420"
 	},
 	
-	"package": {
-		"productName": "ann-tool-box",
-		"version": "0.4.0"
+	"bundle": {
+		"active": true,
+		"targets": "all",
+		"icon": [
+			"icons/icon.png",
+			"icons/icon.ico"
+		]
 	},
 	
-	"tauri": {
+	"productName": "ann-tool-box",
+	"version": "0.4.0",
+	"identifier": "cc.sukazyo.ann-tool-box.app",
+	
+	"plugins": {},
+	
+	"app": {
 		
-		"allowlist": {
-			"all": false,
-			"shell": {
-				"all": false,
-				"open": true
-			},
-			"window": {
-				"all": false,
-				"close": true,
-				"hide": true,
-				"show": true,
-				"maximize": true,
-				"minimize": true,
-				"unmaximize": true,
-				"unminimize": true,
-				"startDragging": true
-			}
+		"security": {
+			"csp": null
 		},
 		
 		"windows": [
@@ -43,23 +38,7 @@
 				"transparent": true
 			}
 		],
-		
-		"macOSPrivateApi": true,
-		
-		"security": {
-			"csp": null
-		},
-		
-		"bundle": {
-			"active": true,
-			"targets": "all",
-			"identifier": "cc.sukazyo.ann-tool-box.app",
-			"icon": [
-				"icons/icon.png",
-				"icons/icon.ico"
-			]
-		}
+		"macOSPrivateApi": true
 		
 	}
-	
 }

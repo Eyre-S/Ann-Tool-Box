@@ -2,6 +2,7 @@ import randoms from "@/utils/randoms";
 import toast, { ToastDefination, ToastButton, Toast } from "./toast";
 
 import I from "@/components/util/I.vue";
+import { JSX } from "vue/jsx-runtime";
 
 
 function dev_toast_used (_event: MouseEvent, toast: Toast) {

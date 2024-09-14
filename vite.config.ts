@@ -9,6 +9,11 @@ import VueReactivityTransform from '@vue-macros/reactivity-transform/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
+	
+	build: {
+		target: "ES2022"
+	},
+	
 	plugins: [
 		
 		VueMacros({
@@ -16,6 +21,7 @@ export default defineConfig(async () => ({
 			plugins: {
 				
 				vue: vue({
+					
 					template: {
 						compilerOptions: {
 							isCustomElement: (tag) => {
@@ -23,6 +29,7 @@ export default defineConfig(async () => ({
 							}
 						}
 					}
+					
 				}),
 				
 				vueJsx: VueJsx()

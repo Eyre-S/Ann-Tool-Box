@@ -1,0 +1,16 @@
+{
+	"identifier": "main-window",
+	"description": "Main window's permission allowed.",
+	"local": true,
+	"windows": [
+		"main"
+	],
+	"permissions": [
+		"clipboard-manager:allow-read-text",
+		"clipboard-manager:allow-write-text",
+		"clipboard-manager:allow-write-html",
+		"clipboard-manager:allow-read-image",
+		"clipboard-manager:allow-write-image",
+		"clipboard-manager:allow-clear"
+	]
+}

@@ -24,8 +24,8 @@ new Promise(() => {
 		if (key === 'METADATA') continue;
 		available_icons.push({
 			name: key,
-			char: icons_metadata[key].char,
-			code: icons_metadata[key].code
+			char: (icons_metadata as any)[key].char,
+			code: (icons_metadata as any)[key].code
 		})
 	}
 })
