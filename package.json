@@ -3,65 +3,45 @@
 	"name": "ann-tool-box",
 	"description": "Some kind of a tool box by ANNIe.",
 	"author": "ANNIe Eyre",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"license": "MIT",
 	"homepage": "https://github.com/Eyre-S/Ann-Tool-Box",
 	
 	"main": "./out/main/index.js",
 	
 	"scripts": {
-		"format": "prettier --write .",
-		"lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix",
-		"typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
-		"typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
-		"typecheck": "npm run typecheck:node && npm run typecheck:web",
-		"start": "electron-vite preview",
-		"dev": "electron-vite dev",
-		"build": "npm run typecheck && electron-vite build",
-		"postinstall": "electron-builder install-app-deps",
-		"build:win": "npm run build && electron-builder --win --config",
-		"build:mac": "npm run build && electron-builder --mac --config",
-		"build:linux": "npm run build && electron-builder --linux --config"
+		"dev": "vite",
+		"build": "vue-tsc --noEmit && vite build",
+		"preview": "vite preview",
+		"tauri": "tauri"
 	},
 	
 	"dependencies": {
 		
-		"@electron-toolkit/preload": "^1.0.3",
-		"@electron-toolkit/utils": "^1.0.2",
-		"electron-store": "^8.1.0",
-		"electron-updater": "^5.3.0"
+		"vue": "3.5.5",
+		"@tauri-apps/api": "1.6.0"
 		
 	},
 	
 	"devDependencies": {
 		
-		"@electron-toolkit/tsconfig": "^1.0.1",
-		"@electron/notarize": "^1.2.4",
-		"@rushstack/eslint-patch": "^1.5.0",
-		"@types/node": "18.16.0",
-		"@vitejs/plugin-vue": "^4.3.4",
-		"@vitejs/plugin-vue-jsx": "^3.0.2",
-		"@vue/eslint-config-prettier": "^7.1.0",
-		"@vue/eslint-config-typescript": "^11.0.3",
+		"@tauri-apps/cli": "^1",
+		"@types/node": "22.5.5",
+		"@vitejs/plugin-vue": "^5.0.5",
+		"@vitejs/plugin-vue-jsx": "4.0.1",
 		"unplugin-vue-macros": "^2.6.2",
-		"@vue-macros/reactivity-transform": "^0.3.23",
-		"@vue-macros/volar": "^0.17.2",
-		"electron": "^24.8.5",
-		"electron-builder": "^23.6.0",
-		"electron-vite": "^1.0.28",
-		"eslint": "^8.50.0",
-		"eslint-plugin-vue": "^9.17.0",
-		"prettier": "^2.8.8",
+		"@vue-macros/reactivity-transform": "1.1.1",
+		"@vue-macros/volar": "0.30.2",
 		"typescript": "^5.2.2",
-		"vite": "^4.4.9",
-		"vue": "^3.3.4",
-		"vue-tsc": "^1.8.15",
+		"vite": "^5.3.1",
+		"vue": "3.5.5",
+		"vue-tsc": "2.0.22",
 		
 		"less": "^4.2.0",
 		
-		"@vueuse/core": "^10.4.1",
-		"@vueuse/components": "^10.4.1",
-		"@vueuse/math": "^10.4.1"
+		"@vueuse/core": "^11.0.3",
+		"@vueuse/components": "11.0.3",
+		"@vueuse/math": "11.0.3"
 		
 	}
 	

@@ -1,0 +1,65 @@
+{
+	
+	"build": {
+		"beforeDevCommand": "yarn dev",
+		"beforeBuildCommand": "yarn build",
+		"devPath": "http://localhost:1420",
+		"distDir": "../dist"
+	},
+	
+	"package": {
+		"productName": "ann-tool-box",
+		"version": "0.4.0"
+	},
+	
+	"tauri": {
+		
+		"allowlist": {
+			"all": false,
+			"shell": {
+				"all": false,
+				"open": true
+			},
+			"window": {
+				"all": false,
+				"close": true,
+				"hide": true,
+				"show": true,
+				"maximize": true,
+				"minimize": true,
+				"unmaximize": true,
+				"unminimize": true,
+				"startDragging": true
+			}
+		},
+		
+		"windows": [
+			{
+				"title": "Ann Tool Box",
+				"width": 950,
+				"height": 560,
+				"resizable": true,
+				"decorations": false,
+				"transparent": true
+			}
+		],
+		
+		"macOSPrivateApi": true,
+		
+		"security": {
+			"csp": null
+		},
+		
+		"bundle": {
+			"active": true,
+			"targets": "all",
+			"identifier": "cc.sukazyo.ann-tool-box.app",
+			"icon": [
+				"icons/icon.png",
+				"icons/icon.ico"
+			]
+		}
+		
+	}
+	
+}
