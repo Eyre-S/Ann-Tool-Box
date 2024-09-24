@@ -9,7 +9,8 @@
 			// (to debug release builds, change `target/debug` to `release/debug`)
 			"program": "${workspaceRoot}/src-tauri/target/debug/ann-tool-box.exe",
 			"cwd": "${workspaceRoot}/user_data",
-			"preLaunchTask": "ui:dev"
-		}
+			"preLaunchTask": "ui:dev",
+			"postDebugTask": "postdebugKill"
+		},
 	]
 }

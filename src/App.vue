@@ -5,6 +5,11 @@ import AppBody from './components/AppBody.vue';
 import TitleBar from './components/title-bar/TitleBar.vue';
 
 import config from './config';
+import { open_devtools } from './app/app';
+
+if (config.dev.enabled.v.value == true && config.dev.open_devtools_on_launch.v.value) {
+	open_devtools();
+}
 
 </script>
 

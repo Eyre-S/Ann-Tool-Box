@@ -3,7 +3,7 @@ import { Ref, computed, ref } from "vue";
 
 class Store {
 	
-	private store: object = {}
+	private store: {[index: string]:any} = {}
 	
 	private storeFilePath = "./config.json"
 	
@@ -128,6 +128,7 @@ export const defaults = {
 		setting_show_debug_info: new ConfigNode<boolean>('dev.setting-show-debug-info', false),
 		show_session_info: new ConfigNode<boolean>("dev.show-session-info", false),
 		show_test_toast: new ConfigNode<boolean>("dev.show-test-toast", false),
+		open_devtools_on_launch: new ConfigNode<boolean>("dev.open_devtools_on_launch", false)
 	},
 	
 	__session_status: {

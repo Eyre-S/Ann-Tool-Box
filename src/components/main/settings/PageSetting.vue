@@ -182,8 +182,15 @@ function dev_relaunch () {
 			<SettingItem
 				group="dev"
 				name="Open DevTools">
-				<template #intro>打开 Electron 的网页调试 DevTools。</template>
+				<template #intro>打开 WebView2 的网页调试 DevTools。</template>
 				<InputButton disabled @click="openDevTools">Open DevTools</InputButton>
+			</SettingItem>
+			<SettingItem
+				group="dev"
+				name="Open DevTools on App Launches"
+				:config-node-module="config.dev.open_devtools_on_launch">
+				<template #intro>在启动时就打开网页 DevTools。<br>仅在调试功能开启时有效。</template>
+				<InputSwitcher v-model="config.dev.open_devtools_on_launch.v.value"></InputSwitcher>
 			</SettingItem>
 			<SettingItem
 				group="dev"
