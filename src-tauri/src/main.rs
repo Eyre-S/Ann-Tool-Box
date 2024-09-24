@@ -28,6 +28,6 @@ fn main() {
 }
 
 #[tauri::command]
-async fn open_devtools<R: Runtime>(app: tauri::AppHandle<R>, window: tauri::Window<R>) {
+async fn open_devtools<R: Runtime>(_app: tauri::AppHandle<R>, window: tauri::Window<R>) {
 	window.get_webview_window("main").unwrap().open_devtools();
 }

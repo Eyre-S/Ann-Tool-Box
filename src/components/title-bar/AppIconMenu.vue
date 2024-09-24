@@ -6,11 +6,7 @@ import MenuBody from '../util/menu/MenuBody.vue';
 import MenuItem from '../util/menu/MenuItem.vue';
 import MenuSeparator from "../util/menu/MenuSeparator.vue";
 import PageAbout from '../main/about/PageAbout.vue';
-import toast from '../app_cover/toast/toast';
 import app from '@/app/app';
-
-// TODO: Native call
-// const { ipcRenderer } = window.electron;
 
 const page_about = new Page(
 	PageAbout, 'about',

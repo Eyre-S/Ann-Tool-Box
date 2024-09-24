@@ -10,7 +10,7 @@
 			"program": "${workspaceRoot}/src-tauri/target/debug/ann-tool-box.exe",
 			"cwd": "${workspaceRoot}/user_data",
 			"preLaunchTask": "ui:dev",
-			"postDebugTask": "postdebugKill"
+			"postDebugTask": "task:kill:(ui:dev)"
 		},
 	]
 }

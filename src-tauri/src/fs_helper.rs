@@ -1,4 +1,4 @@
-use std::{fs::{self, File}, io::Write, path::Path, string};
+use std::{fs::{self, File}, io::Write, path::Path};
 
 use showfile::show_path_in_file_manager;
 

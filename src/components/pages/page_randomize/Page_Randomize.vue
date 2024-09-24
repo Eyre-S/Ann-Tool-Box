@@ -28,9 +28,7 @@ async function generateSingle (_input: string): Promise<String> {
 async function doGenerate() {
 	generatingState = 'running'
 	const _input = $$(input).value
-	// console.log("input: " + _input)
 	const _separator = $$(separator).value
-	// console.log("separator: " + _separator)
 	var inputCache = ""
 	for (var i = 1; i < input_times; i++) {
 		inputCache += await generateSingle(_input)
@@ -38,7 +36,6 @@ async function doGenerate() {
 	} inputCache += await generateSingle(_input)
 	processedInput = inputCache
 	generatingState = 'ok'
-	// console.log("processedInput: " + processedInput)
 }
 
 </script>

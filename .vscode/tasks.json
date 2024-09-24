@@ -32,12 +32,18 @@
 			}
 		},
 		{
-			"label": "postdebugKill",
-			"type": "process",
-			"command":[
-				"${command:workbench.action.tasks.terminate}",
-				"${command:workbench.action.acceptSelectedQuickOpenItem}",
-			],
+			"label": "task:kill:(ui:dev)",
+			"type": "shell",
+			"command": "echo ${input:task_kill_ui_dev}",
+			"problemMatcher": []
+		},
+	],
+	"inputs": [
+		{
+			"id": "task_kill_ui_dev",
+			"type": "command",
+			"command": "workbench.action.tasks.terminate",
+			"args": "ui:dev"
 		},
 	]
 }
