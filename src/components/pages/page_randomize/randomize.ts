@@ -1,16 +1,22 @@
-export interface RandomizeItem {
-	typeName: string
-	parameters: any[]
+import template from "./randomize/template"
+
+export default {
+	
+	generate,
+	
 }
 
-export function generateRandom (template: string): string {
-	let token: string = ''
-	let result: string = ''
+export async function generate (articleTemplate: string, inputSeparator: string, times: number): Promise<string> {
 	
-	for (let char of template) {
-		console.log("read " + char)
-		result += char
-	}
+	console.log(articleTemplate)
+	const separatorProcessed = inputSeparator.replace(/\\n/g, "\n")
+	const generatingTemplate: string[] = new Array(times).fill(articleTemplate)
+	const generatedArticles = await Promise.all(generatingTemplate.map(async (current, _index, _arr) => {
+		const currArticle: string = await template.generateRandomOne(current)
+		return currArticle
+	}))
+	const mergedArticles = generatedArticles.join(separatorProcessed)
+	return mergedArticles
 	
-	return result;
 }
+

@@ -8,6 +8,7 @@ import I from '@/components/util/I.vue';
 import P from '@/components/util/page/P.vue';
 import InputNumber from '@/components/util/controller/InputNumber.vue';
 import InputText from '@/components/util/controller/InputText.vue';
+import randomize from './randomize';
 
 var input = $ref('Hello, World!');
 var input_times = $ref(5);
@@ -18,23 +19,9 @@ var processedInput = $ref('')
 type generatingStateType = 'idle' | 'running' | 'ok' | 'failed'
 var generatingState = $ref<generatingStateType>('idle')
 
-var generateTask: number|undefined = undefined
-
-async function generateSingle (_input: string): Promise<String> {
-	await new Promise(resolve => setTimeout(resolve, 30))
-	return _input;
-}
-
 async function doGenerate() {
 	generatingState = 'running'
-	const _input = $$(input).value
-	const _separator = $$(separator).value
-	var inputCache = ""
-	for (var i = 1; i < input_times; i++) {
-		inputCache += await generateSingle(_input)
-		inputCache += _separator.replace("\\n", "\n")
-	} inputCache += await generateSingle(_input)
-	processedInput = inputCache
+	processedInput = await randomize.generate(input, separator, input_times)
 	generatingState = 'ok'
 }
 

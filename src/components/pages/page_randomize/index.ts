@@ -6,8 +6,7 @@ export default {
 	
 	config: {
 		title: "Randomize",
-		icon: 'nf-md-dice_multiple_outline',
-		isPreview: true
+		icon: 'nf-md-dice_multiple_outline'
 	}
 	
 }
