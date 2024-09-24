@@ -1,6 +1,54 @@
+import { core } from "@tauri-apps/api";
 import { Ref, computed, ref } from "vue";
 
-// const store = window.api.store.config; // TODO: Native call
+class Store {
+	
+	private store: object = {}
+	
+	private storeFilePath = "./config.json"
+	
+	private constructor () {}
+	
+	public static async init (): Promise<Store> {
+		const store = new Store()
+		await store.syncRead();
+		return store;
+	}
+	
+	public set <T> (key: string, newValue: T): void {
+		this.store[key] = newValue
+		this.syncWrite()
+	}
+	
+	public async get <T> (key: string): Promise<T> {
+		return this.store[key] as T
+	}
+	
+	public restore (key: string): void {
+		this.store[key] = undefined
+		this.syncWrite()
+	}
+	
+	private async syncRead (): Promise<void> {
+		await core.invoke("file_read_string", { path: this.storeFilePath }).then((result) => {
+			console.log("read config file content:", result)
+			const fileJsonString: string = result as string;
+			this.store = JSON.parse(fileJsonString)
+		}).catch((e) => {
+			console.log("not read config file, using default config")
+			this.store = {}
+		})
+	}
+	
+	private async syncWrite (): Promise<void> {
+		const memoryJsonString: string = JSON.stringify(this.store);
+		console.log("writing config: ", memoryJsonString)
+		await core.invoke("file_write_string", { path: this.storeFilePath, fileContent: memoryJsonString })
+	}
+	
+}
+
+const store: Store = await Store.init();
 
 export class ConfigNode<T> {
 	
@@ -31,12 +79,12 @@ export class ConfigNode<T> {
 	})
 	
 	public modify(newValue: T): void {
-		// store.set(this.key, newValue); // TODO: Native call
+		store.set(this.key, newValue);
 	}
 	
 	public restore(): T|undefined {
 		const before = this.real_value.value;
-		// store.restore(this.key); // TODO: Native call
+		store.restore(this.key);
 		this.real_value.value = undefined;
 		return before;
 	}
@@ -52,11 +100,10 @@ export class ConfigNode<T> {
 		
 	}
 	
-	public init(): void { // TODO: Native call
-		// store.get(this.key).then((v) => {
-		// 	this.real_value.value = v;
-		// 	this.real_value_on_init.value = v;
-		// });
+	public async init(): Promise<void> {
+		const value = await store.get<T>(this.key);
+		this.real_value.value = value;
+		this.real_value_on_init.value = value;
 	}
 	
 }

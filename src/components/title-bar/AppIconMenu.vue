@@ -7,6 +7,7 @@ import MenuItem from '../util/menu/MenuItem.vue';
 import MenuSeparator from "../util/menu/MenuSeparator.vue";
 import PageAbout from '../main/about/PageAbout.vue';
 import toast from '../app_cover/toast/toast';
+import app from '@/app/app';
 
 // TODO: Native call
 // const { ipcRenderer } = window.electron;
@@ -21,23 +22,11 @@ const page_about = new Page(
 )
 
 function openDevTools() {
-	// TODO: Native call
-	// ipcRenderer.send('call-dev-tools');
-	toast.add({
-		type: toast.types.WARN,
-		text: "Open Web DevTools is not implemented yet in Tauri version's app.",
-		clearTimeout: toast.clear_timeout.standard
-	})
+	app.open_devtools();
 }
 
 function relaunch() {
-	// TODO: Native call
-	// ipcRenderer.send('relaunch');
-	toast.add({
-		type: toast.types.WARN,
-		text: "Relaunch is not implemented yet in Tauri version's app.",
-		clearTimeout: toast.clear_timeout.standard
-	})
+	app.relaunch();
 }
 
 </script>

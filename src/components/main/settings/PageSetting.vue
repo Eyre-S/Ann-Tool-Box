@@ -19,14 +19,14 @@ import config, { __session_config } from '@/config';
 import toast from '@/components/app_cover/toast/toast';
 import { open_syspath } from '@/utils/api';
 import { gen_randomToast } from '@/components/app_cover/toast/debug-random-toasts';
+import app from '@/app/app';
 
 // ------
 // System
 
 
 function openUserDir () {
-	// TODO: Native call
-	// window.api.user_data.openDir();
+	open_syspath("./")
 }
 
 interface appPathNode {
@@ -64,8 +64,7 @@ const app_path = ref<string|undefined>(undefined);
 // Dev Tools
 
 function openDevTools () {
-	// TODO: Native call
-	// window.electron.ipcRenderer.send('call-dev-tools');
+	app.open_devtools();
 }
 
 function dev_generateToast () {
@@ -85,8 +84,7 @@ const fontTestShownStyle = computed(() => { return {
 const testSwitcher = ref(false);
 
 function dev_relaunch () {
-	// TODO: Native call
-	// window.electron.ipcRenderer.send('relaunch');
+	app.relaunch();
 }
 
 // ------
@@ -185,7 +183,7 @@ function dev_relaunch () {
 				group="dev"
 				name="Open DevTools">
 				<template #intro>打开 Electron 的网页调试 DevTools。</template>
-				<InputButton @click="openDevTools">Open DevTools</InputButton>
+				<InputButton disabled @click="openDevTools">Open DevTools</InputButton>
 			</SettingItem>
 			<SettingItem
 				group="dev"
@@ -248,7 +246,7 @@ function dev_relaunch () {
 			<SettingItem
 				group="dev"
 				name="Relaunch App">
-				<InputButton @click="dev_relaunch">重启！</InputButton>
+				<InputButton @click="dev_relaunch" disabled>重启！</InputButton>
 			</SettingItem>
 		</PageCard>
 		

@@ -1,3 +1,4 @@
+import app from "./app/app";
 import toast from "./components/app_cover/toast/toast";
 import config from "@/config";
 
@@ -20,9 +21,7 @@ const reddems: Array<(credit: string) => Promise<boolean>> = [
 	//--- debug mode
 	// "--debug@version"
 	async credit => {
-		// const version = await window.api.app.getVersion(); // TODO: Fix native call
-		const version = "1.0.0";
-		if (credit == `--debug@${version}`) {
+		if (credit == `--debug@${app.app_version}`) {
 			config.dev.enabled.v.value = true;
 			toast.add({
 				type: toast.types.DEV,
