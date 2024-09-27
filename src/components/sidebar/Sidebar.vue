@@ -1,18 +1,27 @@
 <script setup lang="ts">
 
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import SidebarItem from './SidebarItem.vue';
 import { pages, page_setActive, page_active } from '../pages';
 import config from '@/config';
+import { refDebounced, refThrottled, useMouseInElement } from '@vueuse/core';
 
-const sidebarIsOpening = config.__session_status.sidebar.is_open.v;
+const sidebar_body = ref<HTMLElement|null>(null);
+const { isOutside: sidebar_body_notHovered } = useMouseInElement(sidebar_body);
+
+const sidebarOpensInDefaults = config.__session_status.sidebar.is_open.v;
+const sidebarInHovered = computed(() => (!sidebar_body_notHovered.value));
+const sidebarInHovered_Delayed = refDebounced(sidebarInHovered, 150);
+const sidebarShouldOpen = computed (() => (
+	sidebarOpensInDefaults.value || ( config.ui.sidebar_auto_expand.v.value && sidebarInHovered_Delayed.value)
+));
 
 const sidebarClass = computed(()=>{ return {
-		opening: sidebarIsOpening.value
+		opening: sidebarShouldOpen.value
 }})
 
 function sidebarToggle () {
-	sidebarIsOpening.value = !sidebarIsOpening.value;
+	sidebarOpensInDefaults.value = !sidebarOpensInDefaults.value;
 }
 
 </script>
@@ -21,12 +30,12 @@ function sidebarToggle () {
 	
 	<div id="sidebar-container">
 		<nav id="sidebar-box" :class="sidebarClass">
-			<div id="sidebar-body">
+			<div id="sidebar-body" ref="sidebar_body">
 				
 				<SidebarItem
 						uname=""
 						icon="nf-md-menu"
-						isSpecial :active="sidebarIsOpening"
+						isSpecial :active="sidebarOpensInDefaults"
 						@click="sidebarToggle"></SidebarItem>
 				
 				<template v-for="page of pages">

@@ -2,7 +2,7 @@
 	"name": "ann-tool-box",
 	"description": "Some kind of a tool box by ANNIe.",
 	"author": "ANNIe Eyre",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"license": "MIT",
 	"homepage": "https://github.com/Eyre-S/Ann-Tool-Box",
 	"main": "./out/main/index.js",
@@ -19,7 +19,7 @@
 		"@tauri-apps/plugin-clipboard-manager": "^2.0.0-rc.1",
 		"@tauri-apps/plugin-fs": "^2.0.0-rc.2",
 		"@tauri-apps/plugin-shell": "^2.0.0-rc.1",
-		"vue": "3.5.5"
+		"vue": "3.5.9"
 	},
 	"devDependencies": {
 		"@tauri-apps/cli": "2.0.0-rc.13",
@@ -35,7 +35,7 @@
 		"typescript": "^5.2.2",
 		"unplugin-vue-macros": "^2.6.2",
 		"vite": "^5.3.1",
-		"vue": "3.5.5",
+		"vue": "3.5.9",
 		"vue-tsc": "2.0.22"
 	}
 }

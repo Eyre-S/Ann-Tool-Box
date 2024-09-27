@@ -115,6 +115,7 @@ export const __session_config = {
 export const defaults = {
 	
 	ui: {
+		sidebar_auto_expand: new ConfigNode<boolean>('ui.sidebar-auto-expand', true),
 		use_native_frame: new ConfigNode<boolean>('ui.use-native-frame', false),
 		use_custom_scrollbar: new ConfigNode<boolean>("ui.use-custom-scrollbar", true),
 	},

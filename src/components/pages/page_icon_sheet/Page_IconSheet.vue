@@ -193,6 +193,10 @@ function loadMore () {
 	flex-wrap: wrap;
 	gap: 10px;
 	
+	.icon-preview {
+		flex-grow: 1;
+	}
+	
 }
 
 .icon-more {

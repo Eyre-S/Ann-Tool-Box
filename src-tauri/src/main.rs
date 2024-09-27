@@ -29,5 +29,8 @@ fn main() {
 
 #[tauri::command]
 async fn open_devtools<R: Runtime>(_app: tauri::AppHandle<R>, window: tauri::Window<R>) {
+	#[cfg(debug_assertions)]
 	window.get_webview_window("main").unwrap().open_devtools();
+	#[cfg(not(debug_assertions))]
+	println!("DevTools only available in debug mode");
 }

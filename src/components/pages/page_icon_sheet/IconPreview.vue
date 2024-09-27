@@ -63,6 +63,7 @@ function copyToClipboard () {
 .icon-preview {
 	
 	width: 140px;
+	max-width: 280px;
 	height: 140px;
 	border-radius: 10px;
 	

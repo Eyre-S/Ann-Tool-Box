@@ -17,7 +17,7 @@
 	},
 	
 	"productName": "ann-tool-box",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"identifier": "cc.sukazyo.ann-tool-box.app",
 	
 	"plugins": {

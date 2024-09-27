@@ -140,6 +140,19 @@ function dev_relaunch () {
 			</SettingItem>
 			<SettingItem
 				group="ui"
+				name="Auto Expand Sidebar"
+				:config-node-module="config.ui.sidebar_auto_expand">
+				<template #intro>在鼠标悬浮在侧边栏上的时候自动打开侧边栏。<br>自动打开时不影响手动按下侧边栏按钮让侧边栏常驻打开。<br>如果你遇到了自动打开的侧边栏经常扰乱页面排版的情况，可以选择关闭此选项。</template>
+				<InputSwitcher v-model="config.ui.sidebar_auto_expand.v.value"></InputSwitcher>
+			</SettingItem>
+			<SettingItem
+				group="ui"
+				name="Auto Expand Sidebar Delay">
+				<template #intro>设置当鼠标悬浮侧边栏的时候自动打开侧边栏的延迟时间。<br>如果鼠标在侧边栏上悬浮不超过这个时间，侧边栏不会自动打开。同时，在鼠标从侧边栏移开一段时间之后，侧边栏才会关闭。<br>默认为 150ms。</template>
+				<InputButton disabled>暂未实现自定义</InputButton>
+			</SettingItem>
+			<SettingItem
+				group="ui"
 				name="Use Native Title Bar"
 				:config-node-module="config.ui.use_custom_scrollbar">
 				<template #intro>使用深度自定义的页面滚动条。<br>深度自定义的页面滚动条将有更好的滚动时外观，但无法拖动同时或许在更加原生的功能上有欠缺。<br/>如果你使用时遇到了一些问题，推荐关闭此功能回滚到原生滚动条。</template>
