@@ -1,16 +1,29 @@
 {
 	"version": "0.2.0",
 	"configurations": [
+		
 		{
 			"name": "Launch App Debug",
+			"type": "lldb",
+			"request": "launch",
+			"cwd": "${workspaceFolder}/user_data",
+			"cargo": {
+				"args": [
+					"build",
+					"--manifest-path=${workspaceFolder}/src-tauri/Cargo.toml",
+					"--no-default-features"
+				]
+			},
+			"preLaunchTask": "ui:dev",
+			"postDebugTask": "task:kill:(ui:dev)",
+		},
+		{
+			"name": "Launch App Release (Maybe Windows Only)",
 			"type": "cppvsdbg",
 			"request": "launch",
-			// change the exe name to your actual exe name
-			// (to debug release builds, change `target/debug` to `release/debug`)
-			"program": "${workspaceRoot}/src-tauri/target/debug/ann-tool-box.exe",
+			"program": "${workspaceRoot}/src-tauri/target/release/ann-tool-box.exe",
 			"cwd": "${workspaceRoot}/user_data",
-			"preLaunchTask": "ui:dev",
-			"postDebugTask": "task:kill:(ui:dev)"
-		},
+			"preLaunchTask": "build:release",
+		}
 	]
 }

@@ -35,13 +35,14 @@ class Store {
 			const fileJsonString: string = result as string;
 			this.store = JSON.parse(fileJsonString)
 		}).catch((e) => {
+			console.log("error reading config file", e)
 			console.log("not read config file, using default config")
 			this.store = {}
 		})
 	}
 	
 	private async syncWrite (): Promise<void> {
-		const memoryJsonString: string = JSON.stringify(this.store);
+		const memoryJsonString: string = JSON.stringify(this.store, undefined, "	");
 		console.log("writing config: ", memoryJsonString)
 		await core.invoke("file_write_string", { path: this.storeFilePath, fileContent: memoryJsonString })
 	}
