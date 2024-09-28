@@ -15,50 +15,56 @@ import { UseMouse, UseMouseInElement, UseMousePressed } from '@vueuse/components
 
 import { computed, reactive, Ref, ref } from 'vue';
 
-import config, { __session_config } from '@/config';
+import config, { __session_config, ConfigStore } from '@/config';
 import toast from '@/components/app_cover/toast/toast';
-import { open_syspath } from '@/utils/api';
 import { gen_randomToast } from '@/components/app_cover/toast/debug-random-toasts';
-import app from '@/app/app';
+import app, { relaunch } from '@/app/app';
+import files, { open_in_file_manager } from '@/app/files';
 
 // ------
 // System
 
-
-function openUserDir () {
-	open_syspath("./")
-}
-
 interface appPathNode {
-	name: "home" | "appData" | "userData" | "sessionData" | "temp" | "exe" | "module" | "desktop" | "documents" | "downloads" | "music" | "pictures" | "videos" | "recent" | "logs" | "crashDumps"
-	value?: string
+	// name: "home" | "appData" | "userData" | "sessionData" | "temp" | "exe" | "module" | "desktop" | "documents" | "downloads" | "music" | "pictures" | "videos" | "recent" | "logs" | "crashDumps"
+	name: string,
+	value?: string,
+	relative_value: string,
+	err?: string
 }
 const appPaths: appPathNode[] = reactive([
-	{ name: 'home' },
-	{ name: 'appData' },
-	{ name: 'userData' },
-	{ name: 'sessionData' },
-	{ name: 'temp' },
-	{ name: 'exe' },
-	{ name: 'module' },
-	{ name: 'desktop' },
-	{ name: 'documents' },
-	{ name: 'downloads' },
-	{ name: 'music' },
-	{ name: 'pictures' },
-	{ name: 'videos' },
-	{ name: 'recent' },
-	{ name: 'logs' },
-	{ name: 'crashDumps' }
+	{ name: 'workingDir', relative_value: "./" },
+	{ name: 'configDir', relative_value: ConfigStore.defaultFilePath },
+	{ name: 'home', relative_value: "~/" },
+	// { name: 'appData' },
+	// { name: 'userData' },
+	// { name: 'sessionData' },
+	// { name: 'temp' },
+	// { name: 'exe' },
+	// { name: 'module' },
+	// { name: 'desktop' },
+	// { name: 'documents' },
+	// { name: 'downloads' },
+	// { name: 'music' },
+	// { name: 'pictures' },
+	// { name: 'videos' },
+	// { name: 'recent' },
+	// { name: 'logs' },
+	// { name: 'crashDumps' }
 ]);
 for (const path of appPaths) {
-	// TODO: Native call
-	// window.api.app.getPath(path.name).then(v => path.value = v);
+	files.to_abs(path.relative_value)
+		.then(v => path.value = v)
+		.catch(v => path.err = v)
 }
 
-const app_path = ref<string|undefined>(undefined);
-// TODO: Native call
-// window.api.app.getAppPath().then(v => app_path.value = v)
+interface AppPathNode {
+	name: string,
+	value?: string,
+	relative_value: string,
+}
+
+const pwd = ref<string|undefined>(undefined);
+files.to_abs("./").then(v => pwd.value = v)
 
 // ------
 // Dev Tools
@@ -88,6 +94,18 @@ function dev_relaunch () {
 }
 
 // ------
+// Tests
+
+const testAbsolutizePath_input = ref("");
+const testAbsolutizePath_output = ref("...");
+function testAbsolutizePath_trigger () {
+	files.to_abs(testAbsolutizePath_input.value)
+		.then(v => testAbsolutizePath_output.value = v)
+		.catch(e => testAbsolutizePath_output.value = `Error: ${e}`);
+}
+
+
+// ------
 // UI
 
 </script>
@@ -110,12 +128,11 @@ function dev_relaunch () {
 				name="Open User Data Directory">
 				<template #intro>打开程序的用户文件页面。<br>包含用户的配置选项等等。</template>
 				<template #debug-info>
-					<DbgInfo>AppPath: <DbgValue><A no-color :href="app_path??'...'" :open-by="open_syspath"></A></DbgValue></DbgInfo>
 					<template v-for="path of appPaths">
-						<DbgInfo>{{ path.name }}: <DbgValue><A no-color :href="path.value??'...'" :open-by="open_syspath"></A></DbgValue></DbgInfo>
+						<DbgInfo>{{ path.name }}: <DbgValue><A no-color :href="path.value??'...'" :open-by="open_in_file_manager"></A></DbgValue></DbgInfo>
 					</template>
 				</template>
-				<InputButton @click="openUserDir">Open user_data</InputButton>
+				<InputButton @click="() => open_in_file_manager(pwd??'...')">Open user_data</InputButton>
 			</SettingItem>
 			
 		</PageCard>
@@ -262,6 +279,14 @@ function dev_relaunch () {
 						<span>Is in Element: <template v-if="isOutside">not in</template><template v-else>in @ {{elementX}}:{{elementY}}</template></span><br>
 					</div>
 				</UseMouseInElement></UseMousePressed></UseMouse>
+			</SettingItem>
+			<SettingItem
+				group="dev"
+				name="Test backend - absolutize path">
+				<template #intro>测试后端的将路径转换为绝对路径能力。</template>
+				<InputText v-model="testAbsolutizePath_input" />
+				<InputButton @click="testAbsolutizePath_trigger">执行转换</InputButton>
+				<DbgInfo>绝对路径: <DbgValue>{{ testAbsolutizePath_output }}</DbgValue></DbgInfo>
 			</SettingItem>
 			<SettingItem
 				group="dev"

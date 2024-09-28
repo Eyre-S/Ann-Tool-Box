@@ -1,11 +1,17 @@
 import { core } from "@tauri-apps/api";
 import { Ref, computed, ref } from "vue";
 
+export class ConfigStore {
+	
+	public static readonly defaultFilePath: string = "config.json";
+	
+}
+
 class Store {
 	
 	private store: {[index: string]:any} = {}
 	
-	private storeFilePath = "./config.json"
+	private storeFilePath = ConfigStore.defaultFilePath;
 	
 	private constructor () {}
 	
