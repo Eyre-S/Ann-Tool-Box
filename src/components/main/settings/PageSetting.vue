@@ -4,7 +4,6 @@ import PageCard from '@/components/util/page/PageCard.vue';
 import AboutBreadCardUI from '../about/AboutBreadCardUI.vue';
 import SettingItem from './SettingItem.vue';
 import InputButton from '@/components/util/controller/InputButton.vue';
-import InputText from '@/components/util/controller/InputText.vue';
 import InputSwitcher from '@/components/util/controller/InputSwitcher.vue';
 import I from '@/components/util/I.vue';
 import A from '@/components/util/page/A.vue';
@@ -13,16 +12,12 @@ import DbgValue from '@/components/util/page/dbg/DbgValue.vue';
 
 import { UseMouse, UseMouseInElement, UseMousePressed } from '@vueuse/components';
 
-import { computed, reactive, Ref, ref } from 'vue';
-
+import { reactive, ref } from 'vue';
 import config, { __session_config, ConfigStore } from '@/config';
-import toast from '@/components/app_cover/toast/toast';
-import { gen_randomToast } from '@/components/app_cover/toast/debug-random-toasts';
 import app from '@/app/app';
 import files, { open_in_file_manager } from '@/app/files';
-import { webviewWindow } from '@tauri-apps/api';
 
-import { lists } from "./SettingItems"
+import { Dev_ComponentTest, Dev_FunctionTest } from "./SettingItems"
 
 // ------
 // System
@@ -60,12 +55,6 @@ for (const path of appPaths) {
 		.catch(v => path.err = v)
 }
 
-interface AppPathNode {
-	name: string,
-	value?: string,
-	relative_value: string,
-}
-
 const pwd = ref<string|undefined>(undefined);
 files.to_abs("./").then(v => pwd.value = v)
 
@@ -76,42 +65,10 @@ function openDevTools () {
 	app.open_devtools();
 }
 
-function dev_generateToast () {
-	
-	toast.add(gen_randomToast());
-	
-}
-
-const iconTestIcon: Ref<string> = ref("nf-fa-500px");
-
-const fontTestText = ref("我可以吞下玻璃而不伤身体。");
-const fontTestFontFamily = ref("Consolas");
-const fontTestShownStyle = computed(() => { return {
-	fontFamily: '"' + fontTestFontFamily.value + '", tofu'
-}})
-
-const testSwitcher = ref(false);
-
-const testText = ref("")
-
-function dev_relaunch () {
-	app.relaunch();
-}
-
-function dev_end () {
-	webviewWindow.getCurrentWebviewWindow().close()
-}
-
 // ------
 // Tests
 
-const testAbsolutizePath_input = ref("");
-const testAbsolutizePath_output = ref("...");
-function testAbsolutizePath_trigger () {
-	files.to_abs(testAbsolutizePath_input.value)
-		.then(v => testAbsolutizePath_output.value = v)
-		.catch(e => testAbsolutizePath_output.value = `Error: ${e}`);
-}
+
 
 
 // ------
@@ -252,32 +209,7 @@ function testAbsolutizePath_trigger () {
 			
 			<h2><I i="nf-md-bug"></I><I i="nf-ple-lego_block_sideways"></I> 调试：元件测试</h2>
 			
-			<SettingItem
-				group="dev"
-				name="Test Icon">
-				<template #intro>用于测试图标渲染。<br>在右边的输入框填入一个图标 id，或者是一个字符，看看下面会如何渲染出来。</template>
-				<InputText v-model="iconTestIcon"></InputText>
-				<div class="shown-box" style="font-size: 15px;"><I :i="iconTestIcon"></I></div>
-				<!-- <div style="display: flex; flex-direction: row-reverse; gap: inherit; flex-wrap: warp;"> -->
-					<!-- <div class="shown-box" style="font-size: 15px; flex: 0 0; width: fit-content; height: fit-content;"><span>{{ iconTestIcon }}</span></div> -->
-					<!-- <div class="shown-box" style="font-size: 15px; flex: 0 0; width: fit-content; height: fit-content;"><I :i="iconTestIcon"></I></div> -->
-				<!-- </div> -->
-			</SettingItem>
-			<SettingItem
-				group="dev"
-				name="Test Font">
-				<template #intro>用于测试文字渲染。<br>在右边的第一行填入一些文字，第二行填入一个字体名称，看看下面会如何渲染出来。<br>文字框同时也是一个密码框，可以用来检查密码框的实现效果。</template>
-				<InputText password show-password v-model="fontTestText"></InputText>
-				<InputText v-model="fontTestFontFamily"></InputText>
-				<div class="shown-box allow-select" :style="fontTestShownStyle">{{ fontTestText }}</div>
-			</SettingItem>
-			<SettingItem
-				group="dev"
-				name="Test Switcher">
-				<template #intro>用于测试开关按钮。<br>当前状态：{{ testSwitcher ? "ON" : "off" }}</template>
-				<InputSwitcher v-model="testSwitcher"></InputSwitcher>
-			</SettingItem>
-			<template v-for="item in lists">
+			<template v-for="item in Dev_ComponentTest">
 				<component :is="item"></component>
 			</template>
 			<SettingItem
@@ -298,31 +230,9 @@ function testAbsolutizePath_trigger () {
 		<PageCard v-if="config.dev.enabled.v.value">
 			
 			<h2><I i="nf-md-bug"></I><I i="nf-md-ship_wheel" /> 调试：功能测试</h2>
-			
-			<SettingItem
-				group="dev"
-				name="Generate Random Toast">
-				<template #intro>显示一条随机样式和随机内容的吐司通知！<I i="nf-md-arrow_top_right"></I></template>
-				<InputButton @click="dev_generateToast">toast~</InputButton>
-			</SettingItem>
-			<SettingItem
-				group="dev"
-				name="Test backend - absolutize path">
-				<template #intro>测试后端的将路径转换为绝对路径能力。</template>
-				<InputText v-model="testAbsolutizePath_input" />
-				<InputButton @click="testAbsolutizePath_trigger">执行转换</InputButton>
-				<DbgInfo>绝对路径: <DbgValue>{{ testAbsolutizePath_output }}</DbgValue></DbgInfo>
-			</SettingItem>
-			<SettingItem
-				group="dev"
-				name="End App">
-				<InputButton @click="dev_end">结束程序！</InputButton>
-			</SettingItem>
-			<SettingItem
-				group="dev"
-				name="Relaunch App">
-				<InputButton @click="dev_relaunch" disabled>重启！</InputButton>
-			</SettingItem>
+			<template v-for="item in Dev_FunctionTest">
+				<component :is="item"></component>
+			</template>
 			
 		</PageCard>
 		

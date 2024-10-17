@@ -4,8 +4,8 @@ import Scrollable from './util/Scrollable.vue';
 import Sidebar from './sidebar/Sidebar.vue';
 import AppCoverToast from './app_cover/toast/AppCover.vue';
 
-import { page_active } from './pages';
 import config from "@/config";
+import { page_active } from './app-pages';
 
 </script>
 

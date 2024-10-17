@@ -2,7 +2,7 @@
 
 import { computed, ref } from 'vue';
 import SidebarItem from './SidebarItem.vue';
-import { pages, page_setActive, page_active } from '../pages';
+import { pages, page_setActive, page_active } from '../app-pages';
 import config from '@/config';
 import { refDebounced, refThrottled, useMouseInElement } from '@vueuse/core';
 

@@ -9,7 +9,7 @@ import { computed, ref } from 'vue';
 
 import icon from '../../assets/icon.png';
 import { AppCoverController } from '../AppCoverController';
-import { page_active } from '../pages';
+import { page_active } from '../app-pages';
 
 const showAppIconMenu = ref(false);
 

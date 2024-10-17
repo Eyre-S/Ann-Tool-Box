@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-import { Page, page_setActive } from '../pages';
+import { Page } from '../pages';
 import config from '@/config';
 import MenuBody from '../util/menu/MenuBody.vue';
 import MenuItem from '../util/menu/MenuItem.vue';
 import MenuSeparator from "../util/menu/MenuSeparator.vue";
 import PageAbout from '../main/about/PageAbout.vue';
 import app from '@/app/app';
+import { page_setActive } from '../app-pages';
 
 const page_about = new Page(
 	PageAbout, 'about',
