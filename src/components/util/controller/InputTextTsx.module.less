@@ -1,0 +1,65 @@
+@import "@/assets/css/theme.less";
+
+.input.text {
+	
+	font-size: 12px;
+	padding: 0.5em 0.75em;
+	padding-right: 0.35em;
+	background-color: @input-text-bg;
+	border-radius: 0.4em;
+	font-family: @font-code;
+	color: @input-text-text;
+	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	column-gap: 0.3em;
+	
+	> input {
+		flex: 1 1 0;
+		border: none;
+		width: 100%;
+		&:focus-visible { outline: none; }
+		background: #00000000;
+		font-family: inherit;
+		font-size: inherit;
+		color: inherit;
+		padding: 0;
+		margin: 0;
+	}
+	
+	> .marker {
+		flex: 0 0 0.35em;
+		// height: 100%;
+		background-color: @input-text-marker;
+		border-radius: 0.35em;
+		transition: background-color 150ms;
+		
+		&.password {
+			
+			flex-basis: 0.85em;
+			border-radius: 0.25em;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			
+			> .show-password {
+				width: 0.25em;
+				height: 0.55em;
+				border-radius: 0.55em;
+				background-color: fadeout(@input-text-bg, 20%);
+				transition: width 100ms;
+				&.on {
+					width: 0.55em;
+				}
+			}
+			
+		}
+		
+	}
+	
+	> input:focus-visible + .marker {
+		background-color: @input-text-marker-onfocus;
+	}
+	
+}

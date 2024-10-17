@@ -13,29 +13,31 @@
 		"tauri": "tauri",
 		"dev": "tauri dev",
 		"build": "tauri build --no-bundle",
-		"bundle": "tauri bundle"
+		"bundle": "tauri bundle",
+		"clean": "rimraf ./src-tauri/target"
 	},
 	"dependencies": {
-		"@tauri-apps/api": "2.0.0-rc.0",
-		"@tauri-apps/plugin-clipboard-manager": "^2.0.0-rc.1",
-		"@tauri-apps/plugin-fs": "^2.0.0-rc.2",
-		"@tauri-apps/plugin-shell": "^2.0.0-rc.1"
+		"@tauri-apps/api": "2.0.2",
+		"@tauri-apps/plugin-clipboard-manager": "2.0.0",
+		"@tauri-apps/plugin-fs": "2.0.0",
+		"@tauri-apps/plugin-shell": "2.0.0"
 	},
 	"devDependencies": {
-		"@tauri-apps/cli": "2.0.0-rc.13",
-		"@types/node": "22.5.5",
-		"@vitejs/plugin-vue": "^5.0.5",
+		"@tauri-apps/cli": "2.0.2",
+		"@types/node": "22.7.5",
+		"@vitejs/plugin-vue": "5.1.4",
 		"@vitejs/plugin-vue-jsx": "4.0.1",
 		"@vue-macros/reactivity-transform": "1.1.1",
-		"@vue-macros/volar": "0.30.2",
-		"@vueuse/components": "11.0.3",
-		"@vueuse/core": "^11.0.3",
-		"@vueuse/math": "11.0.3",
+		"@vue-macros/volar": "0.30.3",
+		"@vueuse/components": "11.1.0",
+		"@vueuse/core": "11.1.0",
+		"@vueuse/math": "11.1.0",
 		"less": "^4.2.0",
-		"typescript": "^5.2.2",
-		"unplugin-vue-macros": "^2.6.2",
-		"vite": "^5.3.1",
-		"vue": "3.5.9",
-		"vue-tsc": "2.0.22"
+		"typescript": "5.6.2",
+		"unplugin-vue-macros": "2.12.3",
+		"vite": "5.4.8",
+		"vue": "3.5.11",
+		"vue-tsc": "2.1.6",
+		"rimraf": "6.0.1"
 	}
 }

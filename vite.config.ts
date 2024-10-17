@@ -8,7 +8,7 @@ import VueMacros from "unplugin-vue-macros/vite";
 import VueReactivityTransform from '@vue-macros/reactivity-transform/vite'
 
 // https://vitejs.dev/config/
-export default defineConfig(async () => ({
+export default defineConfig({
 	
 	build: {
 		target: "ES2022"
@@ -42,6 +42,14 @@ export default defineConfig(async () => ({
 		
 	],
 	
+	css: {
+		
+		modules: {
+			localsConvention: 'camelCase'
+		}
+		
+	},
+	
 	resolve: {
 		alias: [
 			{ find: "@", replacement: path.resolve(__dirname, "src") },
@@ -62,4 +70,4 @@ export default defineConfig(async () => ({
 		},
 	},
 	
-}));
+});

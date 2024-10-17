@@ -8,6 +8,11 @@
 	src: url(../font/sarasa-mono-cl-regular.ttf);
 }
 
+@font-face {
+	font-family: 'tofu';
+	src: url(../font/tofu.ttf);
+}
+
 @import "./theme.less";
 
 @window-outer-size: 30px;
@@ -42,6 +47,12 @@ body {
 * {
 	user-select: none;
 	-webkit-user-drag: none;
+	
+	&.allow-select {
+		user-select: text;
+		-webkit-user-drag: auto;
+	}
+	
 }
 
 *::-webkit-scrollbar {

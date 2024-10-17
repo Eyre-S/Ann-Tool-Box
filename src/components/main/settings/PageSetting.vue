@@ -18,8 +18,11 @@ import { computed, reactive, Ref, ref } from 'vue';
 import config, { __session_config, ConfigStore } from '@/config';
 import toast from '@/components/app_cover/toast/toast';
 import { gen_randomToast } from '@/components/app_cover/toast/debug-random-toasts';
-import app, { relaunch } from '@/app/app';
+import app from '@/app/app';
 import files, { open_in_file_manager } from '@/app/files';
+import { webviewWindow } from '@tauri-apps/api';
+
+import { lists } from "./SettingItems"
 
 // ------
 // System
@@ -84,13 +87,19 @@ const iconTestIcon: Ref<string> = ref("nf-fa-500px");
 const fontTestText = ref("我可以吞下玻璃而不伤身体。");
 const fontTestFontFamily = ref("Consolas");
 const fontTestShownStyle = computed(() => { return {
-	fontFamily: '"' + fontTestFontFamily.value + '"'
+	fontFamily: '"' + fontTestFontFamily.value + '", tofu'
 }})
 
 const testSwitcher = ref(false);
 
+const testText = ref("")
+
 function dev_relaunch () {
 	app.relaunch();
+}
+
+function dev_end () {
+	webviewWindow.getCurrentWebviewWindow().close()
 }
 
 // ------
@@ -189,7 +198,7 @@ function testAbsolutizePath_trigger () {
 		
 		<PageCard>
 			
-			<h2><I i="nf-md-dock_window"></I> 功能</h2>
+			<h2><I i="nf-cod-extensions"></I> 功能</h2>
 			<SettingItem
 				group="features"
 				name="Use Preview Features"
@@ -224,12 +233,6 @@ function testAbsolutizePath_trigger () {
 			</SettingItem>
 			<SettingItem
 				group="dev"
-				name="Generate Random Toast">
-				<template #intro>显示一条随机样式和随机内容的吐司通知<I i="nf-md-arrow_top_right"></I>！</template>
-				<InputButton @click="dev_generateToast">toast~</InputButton>
-			</SettingItem>
-			<SettingItem
-				group="dev"
 				name="setting: Show Debug Info"
 				:config-node-module="config.dev.setting_show_debug_info">
 				<template #intro>显示设置页面的调试信息。<br>调试信息将会在一个设置的说明信息下方，显示这个设置的一系列内部状态变量值。</template>
@@ -243,6 +246,12 @@ function testAbsolutizePath_trigger () {
 				<template #intro>显示配置文件中 __session 段的信息...<br>所有的记录session状态的配置信息将会在下面的 Debug: __session 一节列出</template>
 				<InputSwitcher v-model="config.dev.show_session_info.v.value"></InputSwitcher>
 			</SettingItem>
+		</PageCard>
+		
+		<PageCard v-if="config.dev.enabled.v.value">
+			
+			<h2><I i="nf-md-bug"></I><I i="nf-ple-lego_block_sideways"></I> 调试：元件测试</h2>
+			
 			<SettingItem
 				group="dev"
 				name="Test Icon">
@@ -260,7 +269,7 @@ function testAbsolutizePath_trigger () {
 				<template #intro>用于测试文字渲染。<br>在右边的第一行填入一些文字，第二行填入一个字体名称，看看下面会如何渲染出来。<br>文字框同时也是一个密码框，可以用来检查密码框的实现效果。</template>
 				<InputText password show-password v-model="fontTestText"></InputText>
 				<InputText v-model="fontTestFontFamily"></InputText>
-				<div class="shown-box" :style="fontTestShownStyle">{{ fontTestText }}</div>
+				<div class="shown-box allow-select" :style="fontTestShownStyle">{{ fontTestText }}</div>
 			</SettingItem>
 			<SettingItem
 				group="dev"
@@ -268,6 +277,9 @@ function testAbsolutizePath_trigger () {
 				<template #intro>用于测试开关按钮。<br>当前状态：{{ testSwitcher ? "ON" : "off" }}</template>
 				<InputSwitcher v-model="testSwitcher"></InputSwitcher>
 			</SettingItem>
+			<template v-for="item in lists">
+				<component :is="item"></component>
+			</template>
 			<SettingItem
 				group="dev"
 				name="Test <UseIt>">
@@ -280,6 +292,19 @@ function testAbsolutizePath_trigger () {
 					</div>
 				</UseMouseInElement></UseMousePressed></UseMouse>
 			</SettingItem>
+			
+		</PageCard>
+		
+		<PageCard v-if="config.dev.enabled.v.value">
+			
+			<h2><I i="nf-md-bug"></I><I i="nf-md-ship_wheel" /> 调试：功能测试</h2>
+			
+			<SettingItem
+				group="dev"
+				name="Generate Random Toast">
+				<template #intro>显示一条随机样式和随机内容的吐司通知！<I i="nf-md-arrow_top_right"></I></template>
+				<InputButton @click="dev_generateToast">toast~</InputButton>
+			</SettingItem>
 			<SettingItem
 				group="dev"
 				name="Test backend - absolutize path">
@@ -290,9 +315,15 @@ function testAbsolutizePath_trigger () {
 			</SettingItem>
 			<SettingItem
 				group="dev"
+				name="End App">
+				<InputButton @click="dev_end">结束程序！</InputButton>
+			</SettingItem>
+			<SettingItem
+				group="dev"
 				name="Relaunch App">
 				<InputButton @click="dev_relaunch" disabled>重启！</InputButton>
 			</SettingItem>
+			
 		</PageCard>
 		
 		<PageCard v-if="config.dev.enabled.v.value && config.dev.setting_show_debug_info.v.value && config.dev.show_session_info.v.value">
