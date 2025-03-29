@@ -3,6 +3,7 @@
 import Scrollable from './util/Scrollable.vue';
 import Sidebar from './sidebar/Sidebar.vue';
 import AppCoverToast from './app_cover/toast/AppCover.vue';
+import F5Overlay from './app_cover/F5Overlay.vue';
 
 import config from "@/config";
 import { page_active } from './app-pages';
@@ -30,6 +31,8 @@ import { page_active } from './app-pages';
 		</div>
 		
 		<AppCoverToast id="app-cover-toast"></AppCoverToast>
+		
+		<F5Overlay v-if="config.dev.show_f5_overlay.v.value" />
 		
 	</div>
 	

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import { useElementHover, useElementSize, useScroll } from '@vueuse/core';
+import { refDebounced, refThrottled, useElementHover, useElementSize, useMouse, usePointerLock, useScroll } from '@vueuse/core';
 import { logicOr } from '@vueuse/math';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 
 const el_window = ref(null);
@@ -23,6 +23,18 @@ const scrollbar_onfocus = useElementHover(el_scrollbar);
 const thumb_sizeAbsolute = useElementSize(el_thumb).height;
 
 const show_thumb = logicOr(scrollbar_onfocus, status.isScrolling);
+const show_thumb_throttled = refThrottled(show_thumb, 500);
+const show_thumb_delayed = refDebounced(show_thumb, 500);
+const show_thumb_final = computed(() => {
+	return logicOr(show_thumb.value, show_thumb_delayed.value, show_thumb_throttled.value);
+});
+
+const { lock, unlock, element } = usePointerLock()
+const { x, y } = useMouse({ type: 'movement' })
+watch([x, y], ([_, y]) => {
+	if (!element.value) return;
+	status.y.value += y;
+})
 
 </script>
 
@@ -30,8 +42,8 @@ const show_thumb = logicOr(scrollbar_onfocus, status.isScrolling);
 	
 	<div :class="['scrollable', {'scrolling': status.isScrolling.value }]">
 		<div class="scrollable-scrollbar" v-if="scrollable" ref="el_scrollbar">
-			<div class="scrollable-track">
-				<div class="scrollable-thumb" :class="{show: show_thumb}" ref="el_thumb" :style="{top: `calc(${scrolling_percent*100}% - ${thumb_sizeAbsolute*scrolling_percent}px)`, height: `${window_sizePercent*100}%`}"></div>
+			<div class="scrollable-track" @mousedown.capture="lock" @mouseup="unlock">
+				<div class="scrollable-thumb" :class="{show: show_thumb_final.value}" ref="el_thumb" :style="{top: `calc(${scrolling_percent*100}% - ${thumb_sizeAbsolute*scrolling_percent}px)`, height: `${window_sizePercent*100}%`}"></div>
 			</div>
 		</div>
 		<div style="position: absolute;" v-if="false">
@@ -44,11 +56,24 @@ const show_thumb = logicOr(scrollbar_onfocus, status.isScrolling);
 		</div>
 	</div>
 	
+	<div class="test">
+		<span>show thumb raw: {{ show_thumb }}</span><br/>
+		<span>show thumb delayed: {{ show_thumb_delayed }}</span><br/>
+		<span>show thumb throttled: {{ show_thumb_throttled }}</span><br/>
+		<span>show thumb: {{ show_thumb_final }}</span><br/>
+	</div>
+	
 </template>
 
 <style lang="less" scoped>
 
 @import "@/assets/css/theme.less";
+
+.test {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
 
 * {
 	box-sizing: border-box;

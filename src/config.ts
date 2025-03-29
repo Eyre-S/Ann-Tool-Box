@@ -133,6 +133,7 @@ export const defaults = {
 	
 	dev: {
 		enabled: new ConfigNode<boolean>('dev.enabled', false),
+		show_f5_overlay: new ConfigNode<boolean>('dev.show-f5-overlay', false),
 		setting_show_debug_info: new ConfigNode<boolean>('dev.setting-show-debug-info', false),
 		show_session_info: new ConfigNode<boolean>("dev.show-session-info", false),
 		show_test_toast: new ConfigNode<boolean>("dev.show-test-toast", false),

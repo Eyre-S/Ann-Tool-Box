@@ -177,6 +177,13 @@ function openDevTools () {
 			</SettingItem>
 			<SettingItem
 				group="dev"
+				name="Show F5 Menu"
+				:config-node-module="config.dev.show_f5_overlay">
+				<template #intro>显示 F5 调试菜单。这将会在 UI 上叠加一个显示层用于显示当前的一些调试用状态信息。<br/>尽管目前并无法通过按下 F5 来打开或关闭。</template>
+				<InputSwitcher v-model="config.dev.show_f5_overlay.v.value"></InputSwitcher>
+			</SettingItem>
+			<SettingItem
+				group="dev"
 				name="Open DevTools">
 				<template #intro>打开 WebView2 的网页调试 DevTools。</template>
 				<InputButton disabled @click="openDevTools">Open DevTools</InputButton>
