@@ -3,6 +3,7 @@
 import { refDebounced, refThrottled, useElementHover, useElementSize, useMouse, usePointerLock, useScroll } from '@vueuse/core';
 import { logicOr } from '@vueuse/math';
 import { computed, ref, watch } from 'vue';
+import F5OverlayRecord from '../app_cover/F5Overlay.Record.vue';
 
 
 const el_window = ref(null);
@@ -22,23 +23,51 @@ const el_thumb = ref(null);
 const scrollbar_onfocus = useElementHover(el_scrollbar);
 const thumb_sizeAbsolute = useElementSize(el_thumb).height;
 
-const show_thumb = logicOr(scrollbar_onfocus, status.isScrolling);
-const show_thumb_throttled = refThrottled(show_thumb, 500);
-const show_thumb_delayed = refDebounced(show_thumb, 500);
-const show_thumb_final = computed(() => {
-	return logicOr(show_thumb.value, show_thumb_delayed.value, show_thumb_throttled.value);
-});
-
 const { lock, unlock, element } = usePointerLock()
+const isMouseScrolling = computed(() => element.value != null);
 const { x, y } = useMouse({ type: 'movement' })
 watch([x, y], ([_, y]) => {
 	if (!element.value) return;
 	status.y.value += y;
 })
 
+const show_thumb = logicOr(scrollbar_onfocus, status.isScrolling, isMouseScrolling);
+const show_thumb_throttled = refThrottled(show_thumb, 500);
+const show_thumb_delayed = refDebounced(show_thumb, 500);
+const show_thumb_final = computed(() => {
+	return logicOr(show_thumb.value, show_thumb_delayed.value, show_thumb_throttled.value);
+});
+
 </script>
 
 <template>
+	
+	<Teleport defer to="#f5-menu">
+		<F5OverlayRecord>
+			<template #name>Scroll Bar Show</template>
+			<template #value>{{ show_thumb }} + {{ show_thumb_delayed }} + {{ show_thumb_throttled }} = {{ show_thumb_final }}</template>
+		</F5OverlayRecord>
+		<F5OverlayRecord>
+			<template #name>Scroll Bar Mouse Scrolling</template>
+			<template #value>{{ element != null }}</template>
+		</F5OverlayRecord>
+		<F5OverlayRecord>
+			<template #name>Scroll Bar Scrolling</template>
+			<template #value>{{ status.isScrolling }}</template>
+		</F5OverlayRecord>
+		<F5OverlayRecord>
+			<template #name>Scroll Bar Hovering</template>
+			<template #value>{{ scrollbar_onfocus }}</template>
+		</F5OverlayRecord>
+		<F5OverlayRecord>
+			<template #name>Scroll Bar Size</template>
+			<template #value>{{ window_height }} / {{ content_height }} = {{ window_sizePercent * 100 }}%</template>
+		</F5OverlayRecord>
+		<F5OverlayRecord>
+			<template #name>Scroll Position</template>
+			<template #value>X&lt;{{status.x}}&gt; Y&lt;{{status.y}}&gt;</template>
+		</F5OverlayRecord>
+	</Teleport>
 	
 	<div :class="['scrollable', {'scrolling': status.isScrolling.value }]">
 		<div class="scrollable-scrollbar" v-if="scrollable" ref="el_scrollbar">
@@ -54,13 +83,6 @@ watch([x, y], ([_, y]) => {
 				<slot></slot>
 			</div>
 		</div>
-	</div>
-	
-	<div class="test">
-		<span>show thumb raw: {{ show_thumb }}</span><br/>
-		<span>show thumb delayed: {{ show_thumb_delayed }}</span><br/>
-		<span>show thumb throttled: {{ show_thumb_throttled }}</span><br/>
-		<span>show thumb: {{ show_thumb_final }}</span><br/>
 	</div>
 	
 </template>

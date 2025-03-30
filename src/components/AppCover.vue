@@ -2,6 +2,7 @@
 
 import { computed } from 'vue';
 import { AppCoverController } from './AppCoverController'
+import F5OverlayRecord from './app_cover/F5Overlay.Record.vue';
 
 const style = computed(()=>{
 	return {
@@ -17,6 +18,13 @@ function appCoverClicked () {
 
 <template>
 	
+	<Teleport to="#f5-menu">
+		<F5OverlayRecord>
+			<template #name>App Cover</template>
+			<template #value>{{ AppCoverController.show.value ? "show" : "hidden" }}</template>
+		</F5OverlayRecord>
+	</Teleport>
+	
 	<div id="app-cover" :style="style" @click="appCoverClicked"></div>
 	
 </template>
@@ -31,7 +39,7 @@ function appCoverClicked () {
 	left: 0;
 	right: 0;
 	
-	z-index: 999;
+	z-index: 800;
 	
 	background-color: rgba(125, 125, 125, 0);
 	

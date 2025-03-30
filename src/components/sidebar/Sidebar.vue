@@ -5,6 +5,7 @@ import SidebarItem from './SidebarItem.vue';
 import { pages, page_setActive, page_active } from '../app-pages';
 import config from '@/config';
 import { refDebounced, refThrottled, useMouseInElement } from '@vueuse/core';
+import F5OverlayRecord from '../app_cover/F5Overlay.Record.vue';
 
 const sidebar_body = ref<HTMLElement|null>(null);
 const { isOutside: sidebar_body_notHovered } = useMouseInElement(sidebar_body);
@@ -27,6 +28,13 @@ function sidebarToggle () {
 </script>
 
 <template>
+	
+	<Teleport to="#f5-menu">
+		<F5OverlayRecord>
+			<template #name>Sidebar Span</template>
+			<template #value>{{ sidebarOpensInDefaults ? "always" : "auto" }} + {{ sidebarInHovered_Delayed ? "hovering" : "off-focus" }} = {{ sidebarShouldOpen }}</template>
+		</F5OverlayRecord>
+	</Teleport>
 	
 	<div id="sidebar-container">
 		<nav id="sidebar-box" :class="sidebarClass">
