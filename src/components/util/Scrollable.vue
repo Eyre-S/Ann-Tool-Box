@@ -69,7 +69,7 @@ const show_thumb_final = computed(() => {
 		</F5OverlayRecord>
 	</Teleport>
 	
-	<div :class="['scrollable', {'scrolling': status.isScrolling.value }]">
+	<div :class="['scrollable', {'scrolling': status.isScrolling.value }]" v-bind="$attrs">
 		<div class="scrollable-scrollbar" v-if="scrollable" ref="el_scrollbar">
 			<div class="scrollable-track" @mousedown.capture="lock" @mouseup="unlock">
 				<div class="scrollable-thumb" :class="{show: show_thumb_final.value}" ref="el_thumb" :style="{top: `calc(${scrolling_percent*100}% - ${thumb_sizeAbsolute*scrolling_percent}px)`, height: `${window_sizePercent*100}%`}"></div>

@@ -14,8 +14,11 @@ import ColorPalette from "./ColorPalette.vue";
 		
 	</PageCard>
 	
-	<PageCard>
-		<ColorPalette></ColorPalette>
+	<PageCard class="color-chooser">
+		<ColorPalette />
 	</PageCard>
 	
 </template>
+
+<style lang="less" scoped>
+</style>
