@@ -7,7 +7,7 @@ import PageCard from '@/components/util/page/PageCard.vue';
 <template>
 	
 	<PageCard no-bg class="footer">
-		<p class="copy">MIT License &copy; 2023 Ann. ToolBox</p>
+		<p class="copy">MIT License &copy; 2023-2025 Ann. ToolBox</p>
 	</PageCard>
 	
 </template>
