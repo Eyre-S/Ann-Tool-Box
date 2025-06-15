@@ -14,8 +14,8 @@ const useClass = computed(() => {
 
 <template>
 	
-	<ii v-if="useClass" :class="[i]"></ii>
-	<ii v-else>{{ i }}</ii>
+	<ii class="icon nf-icon" v-if="useClass" :class="[i]"></ii>
+	<ii class="icon nf-icon" v-else>{{ i }}</ii>
 	
 </template>
 

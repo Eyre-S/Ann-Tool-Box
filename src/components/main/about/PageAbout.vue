@@ -48,10 +48,14 @@ const credit_reddem_key = ref("");
 				/>
 			</template>
 			<template v-slot:versions-framework>
-				<AboutVersionTag
+				<!-- <AboutVersionTag
 					icon="nf-fa-chain"
 					name="Tauri"
-					:version="versions.tauri"></AboutVersionTag>
+					:version="versions.tauri"></AboutVersionTag> -->
+				<Badge
+					icon="nf-fa-chain"
+					name="Tauri"
+					:value="versions.tauri"></Badge>
 			</template>
 		</AboutTitle>
 		
