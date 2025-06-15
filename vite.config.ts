@@ -25,7 +25,7 @@ export default defineConfig({
 					template: {
 						compilerOptions: {
 							isCustomElement: (tag) => {
-								return ["ii"].includes(tag);
+								return ["ii", 'idiv'].includes(tag);
 							}
 						}
 					}

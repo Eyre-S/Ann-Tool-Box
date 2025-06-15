@@ -18,6 +18,7 @@ import app_icon from "@/assets/icon.png";
 import { reactive, ref } from 'vue';
 import { tryReddem } from "@/reddem";
 import app from "@/app/app";
+import Badge from "@/components/util/wdiget/Badge.vue";
 
 const app_version = ref<string>(app.app_version);
 const versions = reactive({
@@ -36,10 +37,15 @@ const credit_reddem_key = ref("");
 			<template v-slot:title>Ann. ToolBox</template>
 			<template v-slot:description>some kind of a toolbox by ANNie.</template>
 			<template v-slot:versions>
-				<AboutVersionTag
+				<!-- <AboutVersionTag
 					:icon="app_icon"
 					name="Ann. ToolBox"
-					:version="app_version"></AboutVersionTag>
+					:version="app_version"></AboutVersionTag> -->
+				<Badge
+					:icon="{ img: true, src: app_icon}"
+					name="Ann. ToolBox"
+					:value="app_version"
+				/>
 			</template>
 			<template v-slot:versions-framework>
 				<AboutVersionTag

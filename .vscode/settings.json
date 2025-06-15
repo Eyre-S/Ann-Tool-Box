@@ -10,6 +10,7 @@
 	"iis.configDir": "",
 	"cSpell.words": [
 		"canonicalize",
+		"idiv",
 		"showfile",
 		"tauri",
 		"unplugin",

@@ -4,7 +4,6 @@ import DbgValue from "@/components/util/page/dbg/DbgValue.vue";
 import SettingItem from "./SettingItem.vue"
 import InputButton from "@/components/util/controller/InputButton.vue"
 import InputText from "@/components/util/controller/InputText.vue"
-import InputTextTsx from "@/components/util/controller/InputTextTsx";
 import InputSwitcher from "@/components/util/controller/InputSwitcher.vue";
 import I from "@/components/util/I.vue"
 import { bindModelResultTo } from "@/utils/jsx-helper";
@@ -26,7 +25,7 @@ export const Dev_ComponentTest: Component[] = [
 				name="Test Icon">{{
 				intro: () => (<>用于测试图标渲染。<br/>在右边的输入框填入一个图标 id，或者是一个字符，看看下面会如何渲染出来。</>),
 				default: () => (<>
-					<InputTextTsx modelValue={iconName.value} onUpdate:modelValue={bindModelResultTo(iconName)} />
+					<InputText modelValue={iconName.value} onUpdate:modelValue={bindModelResultTo(iconName)} />
 					<div class={[css.shownBox]} style={{fontSize: '15px'}}><I i={iconName.value} /></div>
 				</>)
 			}}</SettingItem>
@@ -82,7 +81,7 @@ export const Dev_ComponentTest: Component[] = [
 				name="Test Text Input (tsx version)">{{
 				intro: () => <>用于测试 TSX 版本的文本输入框。<br/>当前状态： { testValue.value }</>,
 				default: () =>
-					<InputTextTsx modelValue={testValue.value} onUpdate:modelValue={bindModelResultTo(testValue)}
+					<InputText modelValue={testValue.value} onUpdate:modelValue={bindModelResultTo(testValue)}
 						password showPassword
 						placeholder="Hello, world!" />
 			}}</SettingItem>
@@ -121,7 +120,7 @@ export const Dev_FunctionTest: Component[] = [
 				name="Test backend - absolutize path">{{
 				intro: () => <>测试后端的将路径转换为绝对路径能力。</>,
 				default: () => <>
-					<InputTextTsx placeholder="/path/to/some" modelValue={input.value} onUpdate:modelValue={bindModelResultTo(input)} />
+					<InputText placeholder="/path/to/some" modelValue={input.value} onUpdate:modelValue={bindModelResultTo(input)} />
 					<InputButton onClick={doConvert}>执行转换</InputButton>
 					<DbgInfo>绝对路径：<DbgValue>{output.value}</DbgValue></DbgInfo>
 				</>

@@ -65,15 +65,6 @@ function openDevTools () {
 	app.open_devtools();
 }
 
-// ------
-// Tests
-
-
-
-
-// ------
-// UI
-
 </script>
 
 <template>
