@@ -2,13 +2,8 @@
 
 import PageCard from '@/components/util/page/PageCard.vue';
 import H1 from '@/components/util/page/H1.vue';
-import P from '@/components/util/page/P.vue';
-import InputButton from '@/components/util/controller/InputButton.vue';
-import { reactive } from 'vue';
-
-const count = $ref(0)
-const react = reactive($$(count))
-const obj = $computed(() => { return count > 0 })
+import SlideSelect from '@/components/util/ui/SlideSelect.vue';
+import SlideSelectItem from '@/components/util/ui/SlideSelectItem.vue';
 
 </script>
 
@@ -18,15 +13,11 @@ const obj = $computed(() => { return count > 0 })
 		
 		<H1 icon="nf-md-test_tube">Tests</H1>
 		
-		<InputButton @click="count++"><code>++</code></InputButton>
-		&nbsp;
-		<InputButton @click="count--"><code>--</code></InputButton><br>
-		
-		<P>
-			count is: {{ count }}<br>
-			react count is: {{ react }}<br>
-			obj is: {{ obj }}
-		</P>
+		<SlideSelect v-slot="{ model }">
+			<SlideSelectItem :model="model" id="lesbian">Lesbian</SlideSelectItem>
+			<SlideSelectItem :model="model" id="transgender" default>(default) Transgender</SlideSelectItem>
+			<SlideSelectItem :model="model" id="nb">Non-Binary</SlideSelectItem>
+		</SlideSelect>
 		
 	</PageCard>
 	
