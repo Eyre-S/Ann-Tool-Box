@@ -93,7 +93,7 @@ function sidebarToggle () {
 	&.static {
 		width: @full-width;
 	}
-	transition-duration: @open-transition;
+	transition-duration: @set-static-transition;
 	z-index: 80;
 	
 }
