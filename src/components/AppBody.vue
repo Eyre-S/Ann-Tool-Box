@@ -16,7 +16,7 @@ import F5Overlay from './app_cover/F5Overlay.vue';
 		<F5Overlay />
 	</Teleport>
 	
-	<div :class="['app-body', { 'use-native-frame': config.ui.use_native_frame.v_locked.value }]">
+	<div id="app-body" :class="['app-body', { 'use-native-frame': config.ui.use_native_frame.v_locked.value }]">
 		
 		<Sidebar class="sidebar"></Sidebar>
 		<div class="main-box">
