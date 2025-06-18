@@ -4,7 +4,7 @@ import { computed, ref } from 'vue';
 import SidebarItem from './SidebarItem.vue';
 import { pages, page_setActive, page_active } from '../app-pages';
 import config from '@/config';
-import { refDebounced, refThrottled, useMouseInElement } from '@vueuse/core';
+import { refDebounced, useMouseInElement } from '@vueuse/core';
 import F5OverlayRecord from '../app_cover/F5Overlay.Record.vue';
 
 const sidebar_body = ref<HTMLElement|null>(null);
@@ -36,7 +36,7 @@ function sidebarToggle () {
 		</F5OverlayRecord>
 	</Teleport>
 	
-	<div id="sidebar-container">
+	<div id="sidebar-container" :class="{ static: sidebarOpensInDefaults }">
 		<nav id="sidebar-box" :class="sidebarClass">
 			<div id="sidebar-body" ref="sidebar_body">
 				
@@ -89,6 +89,13 @@ function sidebarToggle () {
 	margin-right: @container-margin;
 	height: 100%;
 	
+	width: @item-size + @content-border-width * 2;
+	&.static {
+		width: @full-width;
+	}
+	transition-duration: @open-transition;
+	z-index: 80;
+	
 }
 
 #sidebar-box {
@@ -118,7 +125,8 @@ function sidebarToggle () {
 	background-color: @sidebar-base;
 	border-radius: @border-radiu-level-0;
 	overflow-x: hidden;
-	
+	outline: @window-bg 5px solid;
+		
 	> .empty {
 		width: 100%;
 		margin-top: auto;
