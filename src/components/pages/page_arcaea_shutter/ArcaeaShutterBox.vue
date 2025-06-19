@@ -2,8 +2,6 @@
 
 export type ShutterTheme = undefined|'default'|'finale'|'fractureray'|'grievouslady'|'tempestissimo';
 
-import PageCard from '@/components/util/page/PageCard.vue';
-
 import { computed, ref } from 'vue';
 
 
