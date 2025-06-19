@@ -1,0 +1,15 @@
+{
+	"identifier": "base",
+	"description": "Base capabilities for all the windows.",
+	"local": true,
+	"windows": [
+		"main",
+		"arcaea-shutter-screen"
+	],
+	"permissions": [
+		
+		"core:default",
+		"core:window:allow-start-dragging"
+		
+	]
+}

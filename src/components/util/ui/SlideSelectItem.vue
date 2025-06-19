@@ -29,7 +29,7 @@ const isSelected = computed(() => (props.model.current === props.id))
 
 <template>
 	<div class="slide-select-item" :class="{selected: isSelected}" @click="updatePosition">
-		<slot></slot>
+		<slot>{{ id }}</slot>
 	</div>
 </template>
 

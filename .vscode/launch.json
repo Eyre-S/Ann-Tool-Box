@@ -7,6 +7,9 @@
 			"type": "lldb",
 			"request": "launch",
 			"cwd": "${workspaceFolder}/user_data",
+			"env": {
+				"RUST_BACKTRACE": "1",
+			},
 			"cargo": {
 				"args": [
 					"build",

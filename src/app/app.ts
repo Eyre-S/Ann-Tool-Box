@@ -8,6 +8,10 @@ export async function open_devtools (): Promise<void> {
 	core.invoke("open_devtools");
 }
 
+export function set_devtools (enabled: boolean, window?: string): Promise<void> {
+	return core.invoke("set_devtools", { label: window, enable: enabled });
+}
+
 export async function relaunch (): Promise<void> {
 	toast.add({
 		type: toast.types.WARN,

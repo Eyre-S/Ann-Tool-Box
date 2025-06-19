@@ -9,6 +9,7 @@
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"iis.configDir": "",
 	"cSpell.words": [
+		"arcaea",
 		"canonicalize",
 		"idiv",
 		"showfile",

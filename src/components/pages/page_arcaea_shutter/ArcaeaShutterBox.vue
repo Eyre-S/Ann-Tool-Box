@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-export type ShutterTheme = undefined|'finale'|'fractureray'|'grievouslady'|'tempestissimo';
+export type ShutterTheme = undefined|'default'|'finale'|'fractureray'|'grievouslady'|'tempestissimo';
 
 import PageCard from '@/components/util/page/PageCard.vue';
 
@@ -11,7 +11,11 @@ const props = defineProps<{
 	theme?: ShutterTheme
 }>()
 
-const shutter_name_suffix = computed(() => props.theme ? `_${props.theme}`: "" );
+const shutter_name_suffix = computed(() => {
+	if (props.theme === 'default' || !props.theme)
+		return "";
+	else return `_${props.theme}`;
+});
 const shutter_theme_class = computed(() => props.theme ? `theme-${props.theme}` : "theme-default" );
 const shutter_url = computed(() => { return {
 	left: "/assets/arcaea/shutter_l" + shutter_name_suffix.value + ".png",
@@ -40,12 +44,11 @@ defineExpose({
 
 <template>
 	
-	<PageCard no-padding
-			:class="['arcaea-shutter-box', on_transiton?'on':'off', shutter_theme_class]"
+	<div :class="['arcaea-shutter-box', on_transiton?'on':'off', shutter_theme_class]"
 			ref="shutter_container">
 		<img class="left" :src="shutter_url.left">
 		<img class="right" :src="shutter_url.right">
-	</PageCard>
+	</div>
 	
 </template>
 
@@ -54,13 +57,14 @@ defineExpose({
 @import "@/assets/arcaea/values.less";
 
 .arcaea-shutter-box {
-	height: 340px;
-	background-image: url("@/assets/arcaea/testify.jpg");
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
 	
-	position: relative;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+	
 	overflow: hidden;
 	
 	--shutter-all: @shutter-default-all;

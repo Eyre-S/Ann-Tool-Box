@@ -20,9 +20,7 @@
 	"version": "0.5.0",
 	"identifier": "cc.sukazyo.ann-tool-box.app",
 	
-	"plugins": {
-		
-	},
+	"plugins": {},
 	
 	"app": {
 		
@@ -32,12 +30,22 @@
 		
 		"windows": [
 			{
+				"label": "main",
 				"title": "Ann Tool Box",
 				"width": 950,
 				"height": 560,
 				"resizable": true,
-				"decorations": false,
-				"transparent": true
+				"decorations": false
+			},
+			{
+				"create": false,
+				"label": "arcaea-shutter-screen",
+				"parent": "main",
+				"title": "Arcaea Shutter Screen",
+				"width": 650,
+				"height": 350,
+				"resizable": true,
+				"decorations": false
 			}
 		],
 		"macOSPrivateApi": true

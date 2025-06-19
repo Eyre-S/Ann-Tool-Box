@@ -69,8 +69,8 @@ onMounted(() => {
 	
 	// width: calc(100vw - @window-outer-size * 2);
 	// height: calc(100vh - @window-outer-size * 2);
-	width: 100vw;
-	height: 100vh;
+	block-size: 100dvb;
+	inline-size: 100dvi;
 	padding: 0;
 	margin: 0;
 	position: relative;
@@ -82,7 +82,7 @@ onMounted(() => {
 	
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+	contain: strict;
 	
 }
 

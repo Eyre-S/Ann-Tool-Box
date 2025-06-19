@@ -1,0 +1,10 @@
+{
+	"identifier": "arcaea-shutter-screen",
+	"description": "Arcaea Shutter Screen's permission allowed.",
+	"local": true,
+	"windows": [
+		"arcaea-shutter-screen"
+	],
+	"permissions": [
+	]
+}
