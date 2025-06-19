@@ -170,7 +170,7 @@ function openDevTools () {
 				group="dev"
 				name="Show F5 Menu"
 				:config-node-module="config.dev.show_f5_overlay">
-				<template #intro>显示 F3 调试菜单。这将会在 UI 上叠加一个显示层用于显示当前的一些调试用状态信息。<br/>尽管目前并无法通过按下 F3 来打开或关闭。</template>
+				<template #intro>显示 F3 调试菜单。这将会在 UI 上叠加一个显示层用于显示当前的一些调试用状态信息。<br/>你也可以通过在任何位置按下 F3 来打开或关闭。</template>
 				<InputSwitcher v-model="config.dev.show_f5_overlay.v.value"></InputSwitcher>
 			</SettingItem>
 			<SettingItem
