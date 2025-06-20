@@ -2,7 +2,7 @@
   "name": "ann-tool-box",
   "description": "Some kind of a tool box by ANNIe.",
   "author": "ANNIe Eyre",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "license": "MIT",
   "homepage": "https://github.com/Eyre-S/Ann-Tool-Box",
   "main": "./out/main/index.js",

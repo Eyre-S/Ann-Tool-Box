@@ -8,9 +8,9 @@ import H1 from "@/components/util/page/H1.vue";
 import P from "@/components/util/page/P.vue";
 import A from "@/components/util/page/A.vue";
 
-import { computed, reactive, ref, watchEffect } from 'vue';
+import { computed, reactive, Ref, ref, shallowRef, ShallowRef, watch, watchEffect } from 'vue';
 import { Icon } from "./icon";
-import { refDebounced } from '@vueuse/core';
+import { refDebounced, templateRef, useElementSize, useElementVisibility, useVirtualList } from '@vueuse/core';
 
 // available icons.
 // read from a json which is from NerdFont repositories.
@@ -19,6 +19,8 @@ import { refDebounced } from '@vueuse/core';
 import icons_metadata from "./glyphnames.json";
 import InputButton from '@/components/util/controller/InputButton.vue';
 import toast from '@/components/app_cover/toast/toast';
+import { nearestMultiplied, times } from '@/utils/math';
+import { UseElementVisibility } from '@vueuse/components';
 
 const available_icons: Icon[] = reactive([]);
 new Promise(() => {
@@ -39,25 +41,21 @@ new Promise(() => {
 
 const input_apply_delay_ms = 300
 
-// There's a page size that will limit how much the icons will
-// be shows at first or after click 'Show more', to reduce the
-// renderer lag caused by amount of icons.
 
-const page_size_on_init = 200
-const page_size_on_more = page_size_on_init
+// Compute how much icons to show per line.
+// This is useful for grid layout, but also for virtual scrolling!
+const el_listing = templateRef('el_listing');
+const el_listing_size = useElementSize(el_listing);
+const itemPerLine = computed(() => Math.floor(el_listing_size.width.value / 140));
+const MAX_PAGE_SIZE = 100;
+const pageSize = computed(() => nearestMultiplied(itemPerLine.value, MAX_PAGE_SIZE));
+
+// Filter the icons by user input, get the icon list to shows.
 
 const input_id = ref("");
 const delayed_input = refDebounced(input_id, input_apply_delay_ms);
 
-const icons_listing_all = ref<Icon[]>([])
-const icons_listing_count = ref<number>(page_size_on_init)
-const icons_listing = computed<Icon[]>(() => {
-	return icons_listing_all.value.slice(0, icons_listing_count.value)
-})
-const there_are_more = computed<boolean>(() => {
-	return icons_listing.value.length < icons_listing_all.value.length
-	// return true
-})
+const icons_listing = ref<Icon[]>([]);
 
 const defaultsShowingIcons: string[] = [
 	"fa-fonticons",
@@ -102,14 +100,35 @@ watchEffect(() => {
 		
 	}
 	
-	icons_listing_all.value = icon_listing_temp
-	icons_listing_count.value = page_size_on_init
+	icons_listing.value = icon_listing_temp
 	
 })
 
-function loadMore () {
-	icons_listing_count.value += page_size_on_more
+// V-List
+
+const el_vPage = templateRef('el_vPage');
+const { height: pageHeight } = useElementSize(el_vPage);
+
+const virtualIcon: Icon = {
+	name: 'fa-500px',
+	char: '',
+	code: 'f26e'
 }
+
+const pagedRenderingItems = computed<[Icon[][], Icon[]]>(() => {
+	
+	let pager: Icon[][] = [];
+	const currIcons = icons_listing.value;
+	
+	for (let i = 0; i < currIcons.length; i += pageSize.value) {
+		pager.push(currIcons.slice(i, i + pageSize.value));
+	}
+	
+	const lastPage: Icon[] = pager[pager.length - 1] || [];
+	const nonLastPages = pager.slice(0, -1);
+	return [nonLastPages, lastPage];
+	
+});
 
 </script>
 
@@ -160,14 +179,29 @@ function loadMore () {
 		
 	</PageCard>
 	
-	<PageCard no-bg no-padding class="icons-listing">
+	<PageCard no-bg no-padding class="icons-listing" ref="el_listing">
 		
-		<IconPreview v-for="i of icons_listing" :icon="i"></IconPreview>
+		<div class="virtual-page-box">
+			<div class="virtual-page icons-listing-page" ref="el_vPage">
+				<IconPreview v-for="i of times(pageSize, () => virtualIcon)" :icon="i" />
+			</div>
+		</div>
 		
-	</PageCard>
-	
-	<PageCard no-bg v-if="there_are_more" class="icon-more">
-		<InputButton @click="loadMore()">Load More</InputButton>
+		<UseElementVisibility
+			class="icons-listing-page"
+			v-for="[index, page] in pagedRenderingItems[0].entries()" :key="index"
+			v-slot="{ isVisible }"
+		>
+			<!-- <span :vis="isVisible" style="position: absolute; z-index: 100;">{{ index }}</span> -->
+			<template v-if="isVisible">
+				<IconPreview v-for="i of page" :icon="i"></IconPreview>
+			</template>
+		</UseElementVisibility>
+		
+		<div class="icons-listing-page last-page">
+			<IconPreview v-for="i of pagedRenderingItems[1]" :icon="i"></IconPreview>
+		</div>
+		
 	</PageCard>
 	
 </template>
@@ -188,13 +222,34 @@ function loadMore () {
 
 .icons-listing {
 	
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	gap: 10px;
+	position: relative;
+	
+	> .virtual-page-box {
+		
+		position: absolute;
+		overflow: hidden;
+		width: 100%;
+		height: 1px;
+		opacity: 0;
+		z-index: -1;
+		
+	}
+	
+	.icons-listing-page {
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(v-bind(itemPerLine), 1fr);
+		&:not(.virtual-page, .last-page) {
+			height: calc(v-bind(pageHeight) * 1px);
+		}
+		gap: 10px;
+		+ .icons-listing-page {
+			margin-top: 10px;
+		}
+	}
 	
 	.icon-preview {
-		flex-grow: 1;
+		width: unset;
 	}
 	
 }
