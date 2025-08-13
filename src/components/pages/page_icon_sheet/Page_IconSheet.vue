@@ -8,17 +8,15 @@ import H1 from "@/components/util/page/H1.vue";
 import P from "@/components/util/page/P.vue";
 import A from "@/components/util/page/A.vue";
 
-import { computed, reactive, Ref, ref, shallowRef, ShallowRef, watch, watchEffect } from 'vue';
+import { computed, reactive, ref, watchEffect } from 'vue';
 import { Icon } from "./icon";
-import { refDebounced, templateRef, useElementSize, useElementVisibility, useVirtualList } from '@vueuse/core';
+import { refDebounced, templateRef, useElementSize } from '@vueuse/core';
 
 // available icons.
 // read from a json which is from NerdFont repositories.
 // source: https://github.com/ryanoasis/nerd-fonts/blob/master/glyphnames.json
 
 import icons_metadata from "./glyphnames.json";
-import InputButton from '@/components/util/controller/InputButton.vue';
-import toast from '@/components/app_cover/toast/toast';
 import { nearestMultiplied, times } from '@/utils/math';
 import { UseElementVisibility } from '@vueuse/components';
 
