@@ -26,7 +26,7 @@ pub async fn open_shutter_screen<R: Runtime>(_app: tauri::AppHandle<R>, _window:
 		
 		match opened {
 			Ok(_) => {
-				println!("[ui][{}] Opened Arcaea Shutter Screen window successfully.", _window.label());
+				log::info!("[ui][{}] Opened Arcaea Shutter Screen window successfully.", _window.label());
 				Ok(())
 			},
 			Err(e) => Err(format!("Failed to open Arcaea Shutter Screen window: {}", e)),

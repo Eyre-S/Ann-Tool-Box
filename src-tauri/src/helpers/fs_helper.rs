@@ -4,21 +4,21 @@ use showfile::show_path_in_file_manager;
 
 #[tauri::command]
 pub async fn show_in_folder (path: String) -> Result<(), String> {
-	println!("opening directory in file manager: {}", path);
+	log::debug!("opening directory in file manager: {}", path);
 	let path = Path::new(&path)
 		.canonicalize();
 	if path.is_err() {
 		return Err(path.err().unwrap().to_string());
 	}
 	let path = path.unwrap();
-	println!("resolved absolute path: {}", path.display());
+	log::debug!("resolved absolute path: {}", path.display());
 	show_path_in_file_manager(&path);
 	return Ok(());
 }
 
 #[tauri::command]
 pub fn get_abs_path (path: &str) -> Result<String, String> {
-	println!("getting absolute path of: {}", path);
+	log::debug!("getting absolute path of: {}", path);
 	let path = Path::new(path)
 		.canonicalize();
 	if path.is_err() {
@@ -26,7 +26,7 @@ pub fn get_abs_path (path: &str) -> Result<String, String> {
 	}
 	let path = path.unwrap();
 	let path_abs_str = path.display().to_string();
-	println!("resolved absolute path: {}", &path_abs_str);
+	log::debug!("resolved absolute path: {}", &path_abs_str);
 	return Ok(path_abs_str);
 }
 

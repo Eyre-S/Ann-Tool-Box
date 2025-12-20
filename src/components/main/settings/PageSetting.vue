@@ -13,7 +13,7 @@ import DbgValue from '@/components/util/page/dbg/DbgValue.vue';
 import { UseMouse, UseMouseInElement, UseMousePressed } from '@vueuse/components';
 
 import { reactive, ref } from 'vue';
-import config, { __session_config, ConfigStore } from '@/config';
+import config, {__session_config, ConfigStore} from '@/config';
 import app from '@/app/app';
 import files, { open_in_file_manager } from '@/app/files';
 
@@ -31,7 +31,7 @@ interface appPathNode {
 }
 const appPaths: appPathNode[] = reactive([
 	{ name: 'workingDir', relative_value: "./" },
-	{ name: 'configDir', relative_value: ConfigStore.defaultFilePath },
+	{ name: 'configDir', relative_value: ConfigStore.storeFilePath },
 	{ name: 'home', relative_value: "~/" },
 	// { name: 'appData' },
 	// { name: 'userData' },

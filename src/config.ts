@@ -1,17 +1,23 @@
 import { core } from "@tauri-apps/api";
 import { Ref, computed, ref } from "vue";
+import {resolve} from "@tauri-apps/api/path";
+
+async function getStoreFilePath (): Promise<string> {
+	return resolve(await core.invoke<string>("get_current_config_dir"), "config.json");
+}
 
 export class ConfigStore {
-	
-	public static readonly defaultFilePath: string = "config.json";
-	
+	public static storeFilePath: string
 }
+
+ConfigStore.storeFilePath = await getStoreFilePath();
+console.log("resolved config file path:", ConfigStore.storeFilePath);
 
 class Store {
 	
 	private store: {[index: string]:any} = {}
 	
-	private storeFilePath = ConfigStore.defaultFilePath;
+	private storeFilePath = ConfigStore.storeFilePath;
 	
 	private constructor () {}
 	
