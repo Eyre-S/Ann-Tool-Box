@@ -3,6 +3,7 @@ use crate::helpers::fs_helper::get_abs_path;
 use crate::AnnToolBox;
 use std::env;
 use std::path::PathBuf;
+use std::sync::Mutex;
 use tauri::State;
 
 trait ConfigDirProvider {
@@ -71,23 +72,17 @@ pub fn get_config_dir () -> Result<PathBuf, Exception> {
 		Err(_) => Box::new(UserDataConfigDirProvider {})
 	};
 	
-	match config_dir_provider.get_config_dir() {
-		Ok(path_buf) => Ok(path_buf),
-		Err(err) => return Err(Exception::with_source(
-			format!("Cannot determine config directory (using {}).", config_dir_provider.provider_name()),
-			Box::new(err)
-		))
-	}
+	config_dir_provider.get_config_dir().map_err(|err| Exception::with_source(
+		format!("Cannot determine config directory (using {}).", config_dir_provider.provider_name()),
+		Box::new(err)
+	))
 	
 }
 
 #[tauri::command]
-pub fn get_current_config_dir (state: State<'_, AnnToolBox>) -> Result<String, String> {
-	// let app_context = match state.lock() {
-	// 	Ok(guard) => guard,
-	// 	Err(poisoned) => {
-	// 		return Err(format!("Cannot access global config directory: {}", poisoned))
-	// 	}
-	// };
-	Ok(state.config_dir.to_string_lossy().to_string())
+pub fn get_current_config_dir (app_context: State<'_, Mutex<AnnToolBox>>) -> Result<String, String> {
+	let app_context = app_context.lock().map_err(
+		|poisoned| format!("Cannot access global config directory: {}", poisoned)
+	)?;
+	Ok(app_context.config_dir.to_string_lossy().to_string())
 }

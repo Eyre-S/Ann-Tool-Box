@@ -45,6 +45,7 @@
 				"width": 650,
 				"height": 350,
 				"resizable": true,
+				"maximizable": false,
 				"decorations": false
 			}
 		],

@@ -6,28 +6,22 @@ use showfile::show_path_in_file_manager;
 pub async fn show_in_folder (path: String) -> Result<(), String> {
 	log::debug!("opening directory in file manager: {}", path);
 	let path = Path::new(&path)
-		.canonicalize();
-	if path.is_err() {
-		return Err(path.err().unwrap().to_string());
-	}
-	let path = path.unwrap();
+		.canonicalize()
+		.map_err(|err|err.to_string())?;
 	log::debug!("resolved absolute path: {}", path.display());
 	show_path_in_file_manager(&path);
-	return Ok(());
+	Ok(())
 }
 
 #[tauri::command]
 pub fn get_abs_path (path: &str) -> Result<String, String> {
 	log::debug!("getting absolute path of: {}", path);
 	let path = Path::new(path)
-		.canonicalize();
-	if path.is_err() {
-		return Err(path.err().unwrap().to_string());
-	}
-	let path = path.unwrap();
+		.canonicalize()
+		.map_err(|err|err.to_string())?;
 	let path_abs_str = path.display().to_string();
 	log::debug!("resolved absolute path: {}", &path_abs_str);
-	return Ok(path_abs_str);
+	Ok(path_abs_str)
 }
 
 #[tauri::command]

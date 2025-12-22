@@ -4,7 +4,8 @@
 use crate::helpers::errors::Exception;
 use simple_logger::SimpleLogger;
 use std::env;
-use std::path::PathBuf;
+use std::path::{Path};
+use std::sync::Mutex;
 use tauri::{Manager, Runtime};
 
 mod config;
@@ -12,7 +13,11 @@ mod screens;
 mod helpers;
 
 struct AnnToolBox {
-	config_dir: Box<PathBuf>
+	
+	config_dir: Box<Path>,
+	
+	// tauri_app: Option<Mutex<tauri::App>>
+	
 }
 
 fn load_app_context () -> Result<AnnToolBox, Exception> {
@@ -30,7 +35,8 @@ fn load_app_context () -> Result<AnnToolBox, Exception> {
 	log::info!("[main] Config directory resolved to: {}", config_dir.display());
 	
 	Ok(AnnToolBox {
-		config_dir: Box::new(config_dir)
+		config_dir: config_dir.into_boxed_path(),
+		// tauri_app: None
 	})
 	
 }
@@ -40,9 +46,6 @@ fn main() {
 	// initialize logger
 	SimpleLogger::new().init().unwrap();
 	
-	{
-		
-	}
 	// setup config directory
 	let app_context = match load_app_context() {
 		Ok(ctx) => ctx,
@@ -52,35 +55,41 @@ fn main() {
 		}
 	};
 	
-	let _builder =
-		tauri::Builder::default()
-			
-			.plugin(tauri_plugin_fs::init())
-			.plugin(tauri_plugin_clipboard_manager::init())
-			.plugin(tauri_plugin_shell::init())
-			
-			.invoke_handler(tauri::generate_handler![
-				open_devtools,
-				set_devtools,
-				whoami,
-				helpers::fs_helper::show_in_folder,
-				helpers::fs_helper::get_abs_path,
-				helpers::fs_helper::file_read_string,
-				helpers::fs_helper::file_write_string,
-				screens::arcaea_shutter_screen::open_shutter_screen,
-				screens::arcaea_shutter_screen::close_shutter_screen,
-				config::get_current_config_dir,
-			])
-			
-			.setup(|app| {
-				app.manage(app_context);
-				Ok(())
-			})
-			
-			.run(tauri::generate_context!())
-			.expect("error while running tauri application")
-			
-	;
+	let mut builder = tauri::Builder::default();
+	
+	builder = builder
+		.plugin(tauri_plugin_fs::init())
+		.plugin(tauri_plugin_clipboard_manager::init())
+		.plugin(tauri_plugin_shell::init());
+	
+	builder = builder.invoke_handler(tauri::generate_handler![
+		open_devtools,
+		set_devtools,
+		whoami,
+		helpers::fs_helper::show_in_folder,
+		helpers::fs_helper::get_abs_path,
+		helpers::fs_helper::file_read_string,
+		helpers::fs_helper::file_write_string,
+		screens::arcaea_shutter_screen::open_shutter_screen,
+		screens::arcaea_shutter_screen::close_shutter_screen,
+		config::get_current_config_dir,
+	]);
+	
+	builder = builder.setup(|app| {
+		app.manage(Mutex::new(app_context));
+		Ok(())
+	});
+	
+	let tauri_context = tauri::generate_context!();
+	let app = match builder.build(tauri_context) {
+		Ok(app) => app,
+		Err(err) => {
+			log::error!("[main] Failed to build tauri application: {}", err);
+			panic!("Failed to build tauri application: {}", err);
+		}
+	};
+	
+	app.run(|_, _|{});
 	
 }
 
