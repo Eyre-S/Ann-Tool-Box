@@ -4,25 +4,20 @@
 use crate::helpers::errors::Exception;
 use simple_logger::SimpleLogger;
 use std::env;
-use std::path::{Path};
-use std::sync::Mutex;
 use tauri::{Manager, Runtime};
+use crate::config::store::ConfigStore;
 
 mod config;
 mod screens;
 mod helpers;
 
 struct AnnToolBox {
-	
-	config_dir: Box<Path>,
-	
-	// tauri_app: Option<Mutex<tauri::App>>
-	
+	config_store: ConfigStore,
 }
 
 fn load_app_context () -> Result<AnnToolBox, Exception> {
 	
-	let config_dir = match config::get_config_dir() {
+	let config_store = match ConfigStore::get() {
 		Ok(dir) => dir,
 		Err(err) => {
 			return Err(Exception::with_source(
@@ -31,12 +26,10 @@ fn load_app_context () -> Result<AnnToolBox, Exception> {
 			));
 		}
 	};
-	
-	log::info!("[main] Config directory resolved to: {}", config_dir.display());
+	log::info!("[main] Config directory resolved to: {}", config_store.path.display());
 	
 	Ok(AnnToolBox {
-		config_dir: config_dir.into_boxed_path(),
-		// tauri_app: None
+		config_store
 	})
 	
 }
@@ -72,11 +65,11 @@ fn main() {
 		helpers::fs_helper::file_write_string,
 		screens::arcaea_shutter_screen::open_shutter_screen,
 		screens::arcaea_shutter_screen::close_shutter_screen,
-		config::get_current_config_dir,
+		config::store::get_config_store,
 	]);
 	
 	builder = builder.setup(|app| {
-		app.manage(Mutex::new(app_context));
+		app.manage(app_context);
 		Ok(())
 	});
 	
