@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
+import { useAppConfig } from "@/app/config.ts";
 import Toast from './Toast.vue';
 import toast, { Toast as Def } from './toast';
-import config from "@/config";
+
+const config = useAppConfig();
 
 const def = new Def({
 	

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 
-import config from "@/config";
+import { useAppConfig } from "@/app/config.ts";
+
+
+const config = useAppConfig();
 
 </script>
 

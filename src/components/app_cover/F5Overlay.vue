@@ -1,7 +1,9 @@
 <script setup lang="ts">
 
+import { useAppConfig } from "@/app/config.ts";
 import F5OverlayAdditionStatus from './F5Overlay.AdditionStatus.vue';
-import config from "@/config"
+
+const config = useAppConfig();
 
 </script>
 

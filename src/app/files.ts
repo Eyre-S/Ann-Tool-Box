@@ -3,7 +3,7 @@ import toast from "@/components/app_cover/toast/toast";
 import messages from "./messages";
 
 export function open_in_file_manager (path: string) {
-	if (path != undefined && path != null && path.length > 0)
+	if (path !== undefined && path !== null && path.length > 0)
 		core.invoke("show_in_folder", { path: path }).then(() => {
 			toast.add({ text: messages.filesystem.open_in_file_manager.success(), clearTimeout: toast.clear_timeout.standard });
 		}).catch((e) => {

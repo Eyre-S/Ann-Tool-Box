@@ -1,11 +1,13 @@
 <script setup lang="ts">
 
+import { useAppConfig } from "@/app/config.ts";
 import { computed, ref } from 'vue';
 import SidebarItem from './SidebarItem.vue';
 import { pages, page_setActive, page_active } from '../app-pages';
-import config from '@/config';
 import { refDebounced, useMouseInElement } from '@vueuse/core';
 import F5OverlayRecord from '../app_cover/F5Overlay.Record.vue';
+
+const config = useAppConfig();
 
 const sidebar_body = ref<HTMLElement|null>(null);
 const { isOutside: sidebar_body_notHovered } = useMouseInElement(sidebar_body);

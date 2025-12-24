@@ -1,14 +1,16 @@
 <script setup lang="ts">
 
+import { useAppConfig } from "@/app/config.ts";
 import { onMounted } from 'vue';
 
 import AppCover from './components/AppCover.vue';
 import AppBody from './components/AppBody.vue';
 import TitleBar from './components/title-bar/TitleBar.vue';
 
-import config from './config';
 import { open_devtools } from './app/app';
 import { shortcutKeyboardListener } from './shortcut';
+
+const config = useAppConfig();
 
 onMounted(() => {
 	

@@ -1,5 +1,5 @@
+import { useAppConfig } from "@/app/config.ts";
 import { Component, markRaw } from "vue";
-import config from '../config';
 
 export interface IPageConfigs {
 	title: string,
@@ -32,6 +32,7 @@ export class Page {
 	}
 	
 	public isShow (isInAfter: boolean): boolean {
+		const config = useAppConfig();
 		if (this.config.debugOnly && !config.dev.enabled.v.value) return false;
 		if (this.config.isPreview && !config.features.use_preview_features.v.value) return false;
 		if (this.config.isAfter) return isInAfter;

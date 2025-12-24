@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 
-import { ConfigNode } from '@/config';
+import { ConfigNode } from '@/app/config';
 import { computed, watch } from 'vue';
 
 import DbgOnly from '@/components/util/page/dbg/DbgOnly.vue';

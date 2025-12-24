@@ -1,4 +1,3 @@
-
 import { Ref, ref } from "vue";
 
 export class AppCoverController {

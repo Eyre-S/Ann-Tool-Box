@@ -12,8 +12,8 @@ import DbgValue from '@/components/util/page/dbg/DbgValue.vue';
 
 import { UseMouse, UseMouseInElement, UseMousePressed } from '@vueuse/components';
 
-import { reactive, ref } from 'vue';
-import config, {__session_config, ConfigStore} from '@/config';
+import { inject, reactive, ref } from 'vue';
+import { ConfigStore, useAppConfig } from '@/app/config';
 import app from '@/app/app';
 import files, { open_in_file_manager } from '@/app/files';
 
@@ -22,8 +22,10 @@ import { Dev_ComponentTest, Dev_FunctionTest } from "./SettingItems"
 // ------
 // System
 
+const config = useAppConfig();
+const configStore = inject(ConfigStore.cxtKey);
+
 interface appPathNode {
-	// name: "home" | "appData" | "userData" | "sessionData" | "temp" | "exe" | "module" | "desktop" | "documents" | "downloads" | "music" | "pictures" | "videos" | "recent" | "logs" | "crashDumps"
 	name: string,
 	value?: string,
 	relative_value: string,
@@ -31,8 +33,8 @@ interface appPathNode {
 }
 const appPaths: appPathNode[] = reactive([
 	{ name: 'workingDir', relative_value: "./" },
-	{ name: 'configDir', relative_value: ConfigStore.storeFilePath },
-	{ name: 'home', relative_value: "~/" },
+	// { name: 'userHome', relative_value: "~/" },
+	{ name: 'configDir', relative_value: "[x]" },
 	// { name: 'appData' },
 	// { name: 'userData' },
 	// { name: 'sessionData' },
@@ -49,14 +51,21 @@ const appPaths: appPathNode[] = reactive([
 	// { name: 'logs' },
 	// { name: 'crashDumps' }
 ]);
-for (const path of appPaths) {
-	files.to_abs(path.relative_value)
-		.then(v => path.value = v)
-		.catch(v => path.err = v)
+const configDir = ref<string|undefined>(undefined);
+async function initAppPaths () {
+	for (const path of appPaths) {
+		if (path.name === 'configDir') {
+			path.value = configStore?.getPath() || "[not loaded]";
+			configDir.value = path.value;
+			continue;
+		}
+		await files.to_abs(path.relative_value)
+			.then(v => path.value = v)
+			.catch(v => path.err = v)
+	}
 }
+initAppPaths();
 
-const pwd = ref<string|undefined>(undefined);
-files.to_abs("./").then(v => pwd.value = v)
 
 // ------
 // Dev Tools
@@ -86,10 +95,10 @@ function openDevTools () {
 				<template #intro>打开程序的用户文件页面。<br>包含用户的配置选项等等。</template>
 				<template #debug-info>
 					<template v-for="path of appPaths">
-						<DbgInfo>{{ path.name }}: <DbgValue><A no-color :href="path.value??'...'" :open-by="open_in_file_manager"></A></DbgValue></DbgInfo>
+						<DbgInfo>{{ path.name }}: <DbgValue><A no-color :href="path.value??'[loading...]'" :open-by="open_in_file_manager"></A></DbgValue></DbgInfo>
 					</template>
 				</template>
-				<InputButton @click="() => open_in_file_manager(pwd??'...')">Open user_data</InputButton>
+				<InputButton @click="() => open_in_file_manager(configDir??'[loading...]')">Open user_data</InputButton>
 			</SettingItem>
 			
 		</PageCard>
@@ -234,14 +243,15 @@ function openDevTools () {
 			
 		</PageCard>
 		
-		<PageCard v-if="config.dev.enabled.v.value && config.dev.setting_show_debug_info.v.value && config.dev.show_session_info.v.value">
-			<h2><I i="nf-md-bug"></I> 调试：__session</h2>
-			<SettingItem
-				v-for="session_config_item in __session_config"
-				group="__session"
-				:name="session_config_item.key"
-				:config-node-module="session_config_item"></SettingItem>
-		</PageCard>
+		<!-- fixme: Temporary unavailable due to config system refactor -->
+<!--		<PageCard v-if="config.dev.enabled.v.value && config.dev.setting_show_debug_info.v.value && config.dev.show_session_info.v.value">-->
+<!--			<h2><I i="nf-md-bug"></I> 调试：__session</h2>-->
+<!--			<SettingItem-->
+<!--				v-for="session_config_item in __session_config"-->
+<!--				group="__session"-->
+<!--				:name="session_config_item.key"-->
+<!--				:config-node-module="session_config_item"></SettingItem>-->
+<!--		</PageCard>-->
 		
 	</div>
 	

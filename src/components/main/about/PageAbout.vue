@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import { useRedeemManager } from "@/app/reddem.ts";
 import P from "@/components/util/page/P.vue";
 import H1 from "@/components/util/page/H1.vue";
 
@@ -16,9 +17,10 @@ import featured_icon from '@/assets/icon.png'
 import app_icon from "@/assets/icon.png";
 
 import { reactive, ref } from 'vue';
-import { tryReddem } from "@/reddem";
 import app from "@/app/app";
 import Badge from "@/components/util/wdiget/Badge.vue";
+
+const redeemManager = useRedeemManager();
 
 const app_version = ref<string>(app.app_version);
 const versions = reactive({
@@ -69,7 +71,7 @@ const credit_reddem_key = ref("");
 			<H1>Credit Reddem</H1>
 			<div class="input-box">
 				<InputText v-model="credit_reddem_key" placeholder="XXXX-XXXX-XXXX"></InputText>
-				<InputButton @click="tryReddem(credit_reddem_key)">Reddem!</InputButton>
+				<InputButton @click="redeemManager.redeem(credit_reddem_key)">Reddem!</InputButton>
 			</div>
 		</PageCard>
 		

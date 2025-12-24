@@ -1,12 +1,14 @@
 <script setup lang="ts">
 
+import { useAppConfig } from "@/app/config.ts";
 import Scrollable from './util/Scrollable.vue';
 import Sidebar from './sidebar/Sidebar.vue';
 import AppCoverToast from './app_cover/toast/AppCover.vue';
 
-import config from "@/config";
 import { page_active } from './app-pages';
 import F5Overlay from './app_cover/F5Overlay.vue';
+
+const config = useAppConfig();
 
 </script>
 
