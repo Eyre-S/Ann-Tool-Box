@@ -136,9 +136,10 @@ export const Dev_FunctionTest: Component[] = [
 			<SettingItem
 				group="dev"
 				name="Relaunch App"
-			>{() => <>
-				<InputButton onClick={devRelaunch}>重启！</InputButton>
-			</>}</SettingItem>
+			>{{
+				intro: () => <>重新启动程序。<br/>基于 tauri 的重启命令。在某些环境下可能无法正常工作。</>,
+				default: () => <InputButton onClick={devRelaunch}>重新启动！</InputButton>
+			}}</SettingItem>
 		</>)
 	}),
 	
@@ -150,9 +151,10 @@ export const Dev_FunctionTest: Component[] = [
 			<SettingItem
 				group="dev"
 				name="End App"
-			>{() => (<>
-				<InputButton onClick={devEnd}>结束程序！</InputButton>
-			</>)}</SettingItem>
+			>{{
+				intro: () => <>通过前端指令结束程序运行。</>,
+				default: () => <InputButton onClick={devEnd}>结束程序！</InputButton>
+			}}</SettingItem>
 		</>)
 	}),
 	

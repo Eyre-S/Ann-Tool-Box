@@ -13,11 +13,12 @@ export function set_devtools (enabled: boolean, window?: string): Promise<void> 
 }
 
 export async function relaunch (): Promise<void> {
-	toast.add({
-		type: toast.types.WARN,
-		text: "Relaunch is not implemented yet in Tauri version's app.",
-		clearTimeout: toast.clear_timeout.standard
-	})
+	return core.invoke("relaunch");
+	// toast.add({
+	// 	type: toast.types.WARN,
+	// 	text: "Relaunch is not implemented yet in Tauri version's app.",
+	// 	clearTimeout: toast.clear_timeout.standard
+	// })
 }
 
 export default {

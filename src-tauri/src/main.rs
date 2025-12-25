@@ -59,6 +59,7 @@ fn main() {
 		open_devtools,
 		set_devtools,
 		whoami,
+		relaunch,
 		helpers::fs_helper::show_in_folder,
 		helpers::fs_helper::get_abs_path,
 		helpers::fs_helper::file_read_string,
@@ -84,6 +85,12 @@ fn main() {
 	
 	app.run(|_, _|{});
 	
+}
+
+#[tauri::command]
+async fn relaunch <R: Runtime>(app: tauri::AppHandle<R>) {
+	log::info!("[ui][main] Relaunching application...");
+	app.restart();
 }
 
 #[tauri::command]
