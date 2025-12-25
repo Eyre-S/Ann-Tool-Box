@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import { useAppPageController } from "@/components/pages/page-controller.ts";
 import TitleItem from './TitleItem.vue';
 import WindowController from './WindowController.vue';
 import AppIconMenu from './AppIconMenu.vue';
@@ -9,10 +10,11 @@ import { computed, ref } from 'vue';
 
 import icon from '../../assets/icon.png';
 import { AppCoverController } from '../AppCoverController';
-import { page_active } from '../app-pages';
+
+const pageController = useAppPageController();
+const currentPage = pageController.currentPage;
 
 const showAppIconMenu = ref(false);
-
 const showAppIconMenuStyle = computed(() => { return {
 		display: showAppIconMenu.value ? 'block' : 'none'
 }})
@@ -42,8 +44,8 @@ function closeMenu (): void {
 	<div class="title-bar" data-tauri-drag-region>
 		
 		<TitleItem title="Ann. ToolBox" :icon="icon" @click="setupOpenMenu" clickable></TitleItem>
-		<div v-if="page_active.config.isHome !== true" class="separator"><I class="icon" i="nf-fa-chevron_right"></I></div>
-		<TitleItem v-if="page_active.config.isHome !== true" :title="page_active.config.title"></TitleItem>
+		<div v-if="currentPage.config.isHome !== true" class="separator"><I class="icon" i="nf-fa-chevron_right"></I></div>
+		<TitleItem v-if="currentPage.config.isHome !== true" :title="currentPage.config.title"></TitleItem>
 		
 		<div class="empty" data-tauri-drag-region></div>
 		

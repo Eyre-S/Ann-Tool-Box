@@ -1,6 +1,7 @@
+import { defineAppPage } from "@/components/pages/page.ts";
 import Page_IconSheet from "./Page_IconSheet.vue";
 
-export default {
+export default defineAppPage({
 	
 	page: Page_IconSheet,
 	
@@ -9,4 +10,4 @@ export default {
 		icon: 'nf-md-simple_icons'
 	}
 	
-}
+})

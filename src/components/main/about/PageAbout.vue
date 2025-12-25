@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { useRedeemManager } from "@/app/reddem.ts";
+import { useRedeemManager } from "@/app/redeem.ts";
 import P from "@/components/util/page/P.vue";
 import H1 from "@/components/util/page/H1.vue";
 

@@ -1,8 +1,8 @@
 {
 	
 	"build": {
-		"beforeDevCommand": "yarn js-dev",
-		"beforeBuildCommand": "yarn js-build",
+		"beforeDevCommand": "pnpm run js-dev",
+		"beforeBuildCommand": "pnpm run js-build",
 		"frontendDist": "../dist",
 		"devUrl": "http://localhost:1420"
 	},

@@ -1,14 +1,15 @@
 <script setup lang="ts">
 
 import { useAppConfig } from "@/app/config.ts";
+import { useAppPageController } from "@/components/pages/page-controller.ts";
 import Scrollable from './util/Scrollable.vue';
 import Sidebar from './sidebar/Sidebar.vue';
 import AppCoverToast from './app_cover/toast/AppCover.vue';
 
-import { page_active } from './app-pages';
 import F5Overlay from './app_cover/F5Overlay.vue';
 
 const config = useAppConfig();
+const pageController = useAppPageController();
 
 </script>
 
@@ -25,13 +26,13 @@ const config = useAppConfig();
 			<template v-if="config.ui.use_custom_scrollbar.v.value">
 				<main class="main-body">
 					<Scrollable :overflow="{x: 'hidden', y: 'overlay'}">
-						<component :is="page_active.component"></component>
+						<component :is="pageController.currentPage.value.component"></component>
 					</Scrollable>
 				</main>
 			</template>
 			<template v-else>
 				<main class="main-body" style="overflow-y: overlay;">
-					<component :is="page_active.component"></component>
+					<component :is="pageController.currentPage.value.component"></component>
 				</main>
 			</template>
 		</div>

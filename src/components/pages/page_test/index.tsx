@@ -1,5 +1,5 @@
 
-import { defineAppPage } from "@/components/pages";
+import { defineAppPage } from "@/components/pages/page.ts";
 
 import Page_Test from './Page_Test.vue';
 

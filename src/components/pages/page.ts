@@ -12,11 +12,12 @@ export interface IPageConfigs {
 
 export interface IPageDefinition {
 	page: Component,
+	id?: string,
 	config: IPageConfigs
 }
 
 export function defineAppPage (page: IPageDefinition): Page {
-	return new Page(page.page, page.config.title, page.config);
+	return new Page(page.page, page.id || page.config.title, page.config);
 }
 
 export class Page {

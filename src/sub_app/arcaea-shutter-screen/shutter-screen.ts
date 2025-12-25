@@ -1,7 +1,23 @@
 import { ShutterTheme } from "@/components/pages/page_arcaea_shutter/ArcaeaShutterBox.vue";
+import App from "@/sub_app/arcaea-shutter-screen/App.vue";
 import { TauriEvent } from "@/utils/tauri-helper";
+import { AppWindow, VueAppInitializer, WindowInitializer } from "@/window.ts";
 
 export const SHUTTER_SCREEN_ID = "arcaea-shutter-screen";
+
+export class ArcaeaShutterScreenWindowInitializer extends WindowInitializer {
+	public override async tryInitWindow (label: string): Promise<AppWindow | null> {
+		if (label === SHUTTER_SCREEN_ID) {
+			return new ArcaeaShutterScreenWindow(label, "Arcaea Shutter Screen", App);
+		} else {
+			return null;
+		}
+	}
+}
+
+export class ArcaeaShutterScreenWindow extends AppWindow {
+	protected override async getExternalInitializers (): Promise<VueAppInitializer[]> { return []; }
+}
 
 export interface ShutterScreenSyncData {
 	

@@ -1,6 +1,7 @@
+import { defineAppPage } from "../page.ts";
 import Page_Test from "./Page_List_Comp.vue";
 
-export default {
+export default defineAppPage({
 	
 	page: Page_Test,
 	
@@ -9,4 +10,4 @@ export default {
 		icon: 'nf-cod-list_selection',
 	}
 	
-}
+})

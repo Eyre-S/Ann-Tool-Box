@@ -29,7 +29,7 @@ mod provider {
 				let mut is_config_dir_set = false;
 				#[cfg(target_os = "windows")] {
 					config_dir.push("AppData");
-					config_dir.push("Local");
+					config_dir.push("Roaming");
 					config_dir.push("ann-tool-box");
 					is_config_dir_set = true;
 				}

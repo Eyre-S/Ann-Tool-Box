@@ -1,7 +1,9 @@
 import { AppConfig, useAppConfig } from "@/app/config.ts";
+import { VueAppInitializer } from "@/window.ts";
 import { inject, InjectionKey } from "vue";
 import app from "./app";
 import toast from "../components/app_cover/toast/toast";
+
 
 export class RedeemManager {
 	
@@ -21,6 +23,11 @@ export class RedeemManager {
 			text: "Redeem failed. Is the credit correct?",
 			clearTimeout: toast.clear_timeout.standard
 		});
+	}
+	
+	public static readonly setupForVue: VueAppInitializer = async (app) => {
+		const redeemManager = new RedeemManager();
+		app.provide(RedeemManager.cxtKey, redeemManager);
 	}
 	
 }

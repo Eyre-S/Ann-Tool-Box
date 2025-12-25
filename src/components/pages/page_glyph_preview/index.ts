@@ -1,7 +1,7 @@
-
+import { defineAppPage } from "@/components/pages/page.ts";
 import Page_GlyphPreview from './Page_GlyphPreview.vue';
 
-export default {
+export default defineAppPage({
 	
 	page: Page_GlyphPreview,
 	
@@ -10,4 +10,4 @@ export default {
 		icon: 'nf-md-format_font'
 	}
 	
-};
+});

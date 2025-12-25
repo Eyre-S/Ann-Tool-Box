@@ -1,3 +1,4 @@
+import { VueAppInitializer } from "@/window.ts";
 import { core } from "@tauri-apps/api";
 import { join } from "@tauri-apps/api/path";
 import { Ref, computed, ref, inject, InjectionKey } from "vue";
@@ -175,6 +176,15 @@ export namespace AppConfig {
 			}
 			
 		}
+	}
+	
+	export const setupForVue: VueAppInitializer = async (app) => {
+		const store = await ConfigStore.getFromBackend();
+		const configManager = await ConfigManager.init(store);
+		const configs = await AppConfig.setup(configManager);
+		app.provide(AppConfig.cxtKey, configs);
+		app.provide(ConfigStore.cxtKey, store);
+		app.provide(ConfigManager.cxtKey, configManager);
 	}
 	
 }

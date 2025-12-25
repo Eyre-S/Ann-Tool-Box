@@ -1,15 +1,16 @@
 <script setup lang="ts">
 
 import { useAppConfig } from "@/app/config.ts";
-import { Page } from '../pages';
+import { useAppPageController } from "@/components/pages/page-controller.ts";
+import { Page } from '../pages/page.ts';
 import MenuBody from '../util/menu/MenuBody.vue';
 import MenuItem from '../util/menu/MenuItem.vue';
 import MenuSeparator from "../util/menu/MenuSeparator.vue";
 import PageAbout from '../main/about/PageAbout.vue';
 import app from '@/app/app';
-import { page_setActive } from '../app-pages';
 
 const config = useAppConfig();
+const pageController = useAppPageController();
 
 const page_about = new Page(
 	PageAbout, 'about',
@@ -33,7 +34,7 @@ function relaunch() {
 <template>
 	<MenuBody>
 		
-		<MenuItem uname="About" @click="page_setActive(page_about)"></MenuItem>
+		<MenuItem uname="About" @click="pageController.switchTo(page_about)"></MenuItem>
 		
 		<MenuSeparator></MenuSeparator>
 		<template v-if="config.dev.enabled.v.value">

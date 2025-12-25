@@ -1,45 +1,38 @@
-import { AppConfig, ConfigManager, ConfigStore } from "@/app/config.ts";
-import { RedeemManager } from "@/app/reddem.ts";
-import { Component, createApp } from 'vue'
-import MainApp from './App.vue'
-import ArcaeaShutterScreen from './sub_app/arcaea-shutter-screen/App.vue';
+import { MainWindowInitializer } from "@/app.ts";
+import { ArcaeaShutterScreenWindowInitializer } from "@/sub_app/arcaea-shutter-screen/shutter-screen.ts";
+import { VueApp, WindowInitializer } from "@/window.ts";
+import { createApp } from 'vue'
 import { webview } from '@tauri-apps/api';
 
 async function main () {
-	switch (webview.getCurrentWebview().label) {
-		case 'arcaea-shutter-screen':
-			await initWindow('Arcaea Shutter Screen', ArcaeaShutterScreen);
+	
+	const currentWindow = webview.getCurrentWebview();
+	const windowInitializers: WindowInitializer[] = [
+		new MainWindowInitializer(),
+		new ArcaeaShutterScreenWindowInitializer(),
+	]
+	
+	let app: VueApp | null = null;
+	for (const initializer of windowInitializers) {
+		const window = await initializer.tryInitWindow(currentWindow.label);
+		if (window) {
+			console.log(`Initializing window ${currentWindow.label} as ${window.name}['${window.label}']`);
+			if (window.label !== currentWindow.label) {
+				throw new Error(`Window label mismatch: expected '${currentWindow.label}', got '${window.label}'`);
+			}
+			const thisApp = createApp(window.rootComponent);
+			await window.vueAppInitializer(thisApp)
+			thisApp.mount('#app');
+			app = thisApp;
+			console.log(`Mounted ${window.name} app.`);
 			break;
-		case 'main':
-			await initWindow('Main', MainApp, async (app) => {
-				
-				// Initialize App global state managers
-				const store = await ConfigStore.getFromBackend();
-				const configManager = await ConfigManager.init(store);
-				const configs = await AppConfig.setup(configManager);
-				app.provide(AppConfig.cxtKey, configs);
-				app.provide(ConfigStore.cxtKey, store);
-				app.provide(ConfigManager.cxtKey, configManager);
-				
-				// Initialize App Redeem Manager
-				const redeemManager = new RedeemManager();
-				app.provide(RedeemManager.cxtKey, redeemManager);
-				
-			});
-			break;
-		default:
-			throw new Error(`Unknown webview label: ${webview.getCurrentWebview().label}`);
+		}
 	}
-}
-
-async function initWindow (
-	name: string, rootComponent: Component,
-	setupFn: (app: ReturnType<typeof createApp>) => Promise<void> = async () => {}
-) {
-	const app = createApp(rootComponent);
-	await setupFn(app);
-	app.mount('#app');
-	console.log(`Mounted ${name} app.`);
+	
+	if (!app) {
+		throw new Error(`No window initializer found for window label '${currentWindow.label}'`);
+	}
+	
 }
 
 await main();

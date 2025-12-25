@@ -1,13 +1,14 @@
 <script setup lang="ts">
 
 import { useAppConfig } from "@/app/config.ts";
+import { useAppPageController } from "@/components/pages/page-controller.ts";
 import { computed, ref } from 'vue';
 import SidebarItem from './SidebarItem.vue';
-import { pages, page_setActive, page_active } from '../app-pages';
 import { refDebounced, useMouseInElement } from '@vueuse/core';
 import F5OverlayRecord from '../app_cover/F5Overlay.Record.vue';
 
 const config = useAppConfig();
+const pageController = useAppPageController();
 
 const sidebar_body = ref<HTMLElement|null>(null);
 const { isOutside: sidebar_body_notHovered } = useMouseInElement(sidebar_body);
@@ -48,29 +49,29 @@ function sidebarToggle () {
 						isSpecial :active="sidebarOpensInDefaults"
 						@click="sidebarToggle"></SidebarItem>
 				
-				<template v-for="page of pages">
+				<template v-for="page of pageController.pages">
 					<SidebarItem
 							v-if="page.isShow(false)"
 							:uname="page.config.title"
 							:icon="page.config.icon"
-							:active="page.id === page_active.id"
+							:active="page.id === pageController.currentPage.value.id"
 							:flagTestOnly="page.config.debugOnly"
 							:flagPreviewOnly="page.config.isPreview"
-							@click="page_setActive(page)">
+							@click="pageController.switchTo(page)">
 					</SidebarItem>
 				</template>
 				
 				<div class="empty"></div>
-				
-				<template v-for="page of pages">
+
+				<template v-for="page of pageController.pages">
 					<SidebarItem
-							v-if="page.isShow(true)"
-							:uname="page.config.title"
-							:icon="page.config.icon"
-							:active="page.id === page_active.id"
-							:flagTestOnly="page.config.debugOnly"
-							:flagPreviewOnly="page.config.isPreview"
-							@click="page_setActive(page)">
+						v-if="page.isShow(true)"
+						:uname="page.config.title"
+						:icon="page.config.icon"
+						:active="page.id === pageController.currentPage.value.id"
+						:flagTestOnly="page.config.debugOnly"
+						:flagPreviewOnly="page.config.isPreview"
+						@click="pageController.switchTo(page)">
 					</SidebarItem>
 				</template>
 				

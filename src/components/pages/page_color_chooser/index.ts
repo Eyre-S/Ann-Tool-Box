@@ -1,8 +1,9 @@
+import { defineAppPage } from "@/components/pages/page.ts";
 import Page_ColorChooser from "./Page_ColorChooser.vue";
 
-export default {
+export default defineAppPage({
 	
-	Page: Page_ColorChooser,
+	page: Page_ColorChooser,
 	
 	config: {
 		title: "Color Chooser",
@@ -10,4 +11,4 @@ export default {
 		isPreview: true,
 	}
 	
-}
+})

@@ -10,7 +10,6 @@
     "js-dev": "vite",
     "js-build": "vite build",
     "js-preview": "vite preview",
-    "tauri": "tauri",
     "dev": "tauri dev",
     "build": "tauri build --no-bundle",
     "bundle": "tauri bundle",
