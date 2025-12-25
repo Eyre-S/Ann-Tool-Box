@@ -8,9 +8,8 @@ use crate::helpers::errors::Exception;
 mod provider {
 	
 	use std::env;
-	use std::path::PathBuf;
+	use std::path::{Path, PathBuf};
 	use crate::helpers::errors::Exception;
-	use crate::helpers::fs_helper::get_abs_path;
 	
 	pub trait ConfigStoreProvider {
 		fn provider_name(&self) -> &'static str;
@@ -60,14 +59,7 @@ mod provider {
 	impl ConfigStoreProvider for FromUserDefined {
 		fn provider_name(&self) -> &'static str { "UserDefinedConfigDirProvider" }
 		fn get_config_dir (&self) -> Result<PathBuf, Exception> {
-			get_abs_path(&self.defined_path)
-				.map(PathBuf::from)
-				.map_err(|err| {
-					Exception::with_source(
-						"Cannot resolve config directory path.".into(),
-						Box::new(Exception::new(err))
-					)
-				})
+			Ok(Path::new(&self.defined_path).into())
 		}
 	}
 	
@@ -86,12 +78,40 @@ impl ConfigStore {
 			Err(_) => Box::new(FromUserData {})
 		};
 		
-		config_dir_provider.get_config_dir()
-			.map(|path| ConfigStore { path: path.into_boxed_path() })
+		let path = config_dir_provider.get_config_dir()
 			.map_err(|err| Exception::with_source(
 				format!("Cannot determine config directory (using {}).", config_dir_provider.provider_name()),
 				Box::new(err)
-			))
+			))?;
+		
+		log::info!("[ConfigStore] Get config directory '{}' using provider '{}'", path.display(), config_dir_provider.provider_name());
+		
+		// fallback create directory if not exists
+		let path_exists = path.try_exists()
+			.map_err(|err| Exception::with_source(
+				format!("Cannot access config directory '{}'.", path.display()),
+				Box::new(err)
+			))?;
+		if !path_exists {
+			log::info!("[ConfigStore] Config directory '{}' does not exist. Creating a new one!", path.display());
+			std::fs::create_dir_all(&path)
+				.map_err(|err| Exception::with_source(
+					format!("Cannot create config directory '{}'.", path.display()),
+					Box::new(err)
+				))?;
+		}
+		
+		// absolute path
+		let path = path.canonicalize()
+			.map_err(|err| Exception::with_source(
+				format!("Cannot canonicalize config directory '{}'.", path.display()),
+				Box::new(err)
+			))?;
+		
+		Ok(ConfigStore {
+			path: path.into_boxed_path()
+		})
+		
 	}
 	
 }

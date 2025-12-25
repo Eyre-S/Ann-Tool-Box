@@ -11,7 +11,7 @@ export class ConfigStore {
 	) {}
 	
 	public static async getFromBackend (): Promise<ConfigStore> {
-		const backendPath = await core.invoke<string>("get_current_config_dir");
+		const backendPath = await core.invoke<string>("get_config_store");
 		return new ConfigStore(
 			backendPath
 		)
